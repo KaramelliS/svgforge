@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="227" viewBox="0 0 520 227" role="img" aria-label="Languages">
+
+  <rect width="520" height="227" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Languages</text>
+  <circle cx="101" cy="126" r="62" fill="none" stroke="#24243e" stroke-width="22"/>
+  <circle cx="101" cy="126" r="62" fill="none" stroke="#a78bfa" stroke-width="22" stroke-dasharray="223.94 165.61" transform="rotate(-90.00 101 126)"/>
+  <circle cx="101" cy="126" r="62" fill="none" stroke="#7c3aed" stroke-width="22" stroke-dasharray="91.49 298.06" transform="rotate(118.80 101 126)"/>
+  <circle cx="101" cy="126" r="62" fill="none" stroke="#9263f4" stroke-width="22" stroke-dasharray="36.96 352.60" transform="rotate(205.20 101 126)"/>
+  <circle cx="101" cy="126" r="62" fill="none" stroke="#c4b5fd" stroke-width="22" stroke-dasharray="29.16 360.39" transform="rotate(241.20 101 126)"/>
+<text x="101" y="124" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">100</text>
+  <text x="101" y="142" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">total</text>
+
+  <rect x="207" y="54" width="12" height="12" rx="3" fill="#a78bfa"/>
+  <text x="227" y="64" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">TypeScript</text>
+  <text x="492" y="64" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">58.0%</text>
+  <rect x="207" y="82" width="12" height="12" rx="3" fill="#7c3aed"/>
+  <text x="227" y="92" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Python</text>
+  <text x="492" y="92" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">24.0%</text>
+  <rect x="207" y="110" width="12" height="12" rx="3" fill="#9263f4"/>
+  <text x="227" y="120" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Rust</text>
+  <text x="492" y="120" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">10.0%</text>
+  <rect x="207" y="138" width="12" height="12" rx="3" fill="#c4b5fd"/>
+  <text x="227" y="148" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Shell</text>
+  <text x="492" y="148" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">8.0%</text>
+
+</svg>

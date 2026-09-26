@@ -5,6 +5,10 @@ import { skills, type SkillsOptions } from "./cards/skills.js";
 import { terminal, type TerminalOptions } from "./cards/terminal.js";
 import { badge, type BadgeOptions } from "./cards/badge.js";
 import { quote, type QuoteOptions } from "./cards/quote.js";
+import { timeline, type TimelineOptions } from "./cards/timeline.js";
+import { contributions, type ContributionsOptions } from "./cards/contrib.js";
+import { donut, type DonutOptions } from "./cards/donut.js";
+import { divider, type DividerOptions } from "./cards/divider.js";
 
 export type Card =
   | ({ type: "banner"; out?: string } & BannerOptions)
@@ -12,7 +16,11 @@ export type Card =
   | ({ type: "skills"; out?: string } & SkillsOptions)
   | ({ type: "terminal"; out?: string } & TerminalOptions)
   | ({ type: "badge"; out?: string } & BadgeOptions)
-  | ({ type: "quote"; out?: string } & QuoteOptions);
+  | ({ type: "quote"; out?: string } & QuoteOptions)
+  | ({ type: "timeline"; out?: string } & TimelineOptions)
+  | ({ type: "contributions"; out?: string } & ContributionsOptions)
+  | ({ type: "donut"; out?: string } & DonutOptions)
+  | ({ type: "divider"; out?: string } & DividerOptions);
 
 export interface Manifest {
   theme?: string;
@@ -34,6 +42,14 @@ export function renderCard(card: Card, fallbackTheme?: string): string {
       return badge({ ...card, theme });
     case "quote":
       return quote({ ...card, theme });
+    case "timeline":
+      return timeline({ ...card, theme });
+    case "contributions":
+      return contributions({ ...card, theme });
+    case "donut":
+      return donut({ ...card, theme });
+    case "divider":
+      return divider({ ...card, theme });
     default: {
       const never: never = card;
       throw new Error(`unknown card type: ${(never as Card).type}`);

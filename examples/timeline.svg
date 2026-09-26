@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="208" viewBox="0 0 560 208" role="img" aria-label="Roadmap">
+
+  <rect width="560" height="208" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <rect x="0" y="0" width="8" height="208" rx="4" fill="#a78bfa"/>
+  <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Roadmap</text>
+  <line x1="40" y1="70" x2="40" y2="176" stroke="#302b63" stroke-width="2"/>
+
+  <circle cx="40" cy="76" r="5" fill="#a78bfa"/>
+  <text x="60" y="72" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="12">2024-01</text>
+  <text x="60" y="88" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">v1.0 — kernel and lenses shipped</text>
+  <circle cx="40" cy="120" r="5" fill="#a78bfa"/>
+  <text x="60" y="116" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="12">2024-06</text>
+  <text x="60" y="132" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">CI green on three runtimes</text>
+  <circle cx="40" cy="164" r="5" fill="#7c3aed"/>
+  <text x="60" y="160" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="12">2024-11</text>
+  <text x="60" y="176" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">v2.0 — indexes land</text>
+
+</svg>
