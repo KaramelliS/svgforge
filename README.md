@@ -39,6 +39,10 @@ import { banner } from "@kodyazicam/svgforge";
   <img src="examples/terminal.svg" alt="terminal" width="100%">
 </p>
 
+<p align="center">
+  <img src="examples/quote.svg" alt="quote" width="100%">
+</p>
+
 ## Table of contents
 
 - [Requirements](#requirements)
@@ -83,6 +87,7 @@ svgforge stats --item Stars=12 --item Forks=3 -o stats.svg
 svgforge skills --item TypeScript=90 --item Python=80 -o skills.svg
 svgforge terminal --line "$ hookyard --port 4242" --line "listening" -o term.svg
 svgforge badge --label license --value KYAL-1.0 -o badge.svg
+svgforge quote --text "Readable beats clever." --author KodYazicam -o quote.svg
 svgforge render examples/demo.json -o examples/
 svgforge themes
 ```
@@ -98,6 +103,7 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 | `skills` | `--title` `--item Name=0-100` (repeat) | Percentage bars (clamped 0–100; invalid → 0) |
 | `terminal` | `--title` `--line text` (repeat) | Fake shell; lines starting with `$` or `>` use the accent color |
 | `badge` | `--label` `--value` | Tiny pill |
+| `quote` | `--text` `--author` | Testimonial / pull-quote card; long text wraps, oversized words hard-split |
 
 All commands accept `--theme`.
 
@@ -114,7 +120,7 @@ Unknown names fall back to `midnight`.
 ## CLI
 
 ```text
-svgforge banner|stats|skills|terminal|badge [flags] [-o file.svg] [--theme name]
+svgforge banner|stats|skills|terminal|badge|quote [flags] [-o file.svg] [--theme name]
 svgforge render manifest.json -o ./outdir
 svgforge themes
 svgforge --help
@@ -180,7 +186,7 @@ const files = renderManifest({
 });
 ```
 
-Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `renderCard`, `renderManifest`, `safeOutputPath`, `THEMES`, `escapeXml`, `svgId`.
+Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `quote`, `renderCard`, `renderManifest`, `safeOutputPath`, `THEMES`, `escapeXml`, `svgId`.
 
 ## GitHub README usage
 

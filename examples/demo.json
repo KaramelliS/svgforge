@@ -46,6 +46,12 @@
       "label": "license",
       "value": "KYAL-1.0",
       "out": "badge.svg"
+    },
+    {
+      "type": "quote",
+      "quote": "Bilgi paylaştıkça çoğalır; kod okundukça güzelleşir.",
+      "author": "KodYazicam",
+      "out": "quote.svg"
     }
   ]
 }

@@ -6,6 +6,7 @@ import { stats } from "./cards/stats.js";
 import { skills } from "./cards/skills.js";
 import { terminal } from "./cards/terminal.js";
 import { badge } from "./cards/badge.js";
+import { quote } from "./cards/quote.js";
 import { renderManifest, safeOutputPath, type Manifest } from "./render.js";
 import { THEMES } from "./escape.js";
 import { invokedDirectly } from "./main.js";
@@ -21,6 +22,7 @@ Usage:
   svgforge skills --item TypeScript=90 --item Python=80 -o skills.svg
   svgforge terminal --line "$ node dist/cli.js ." --line "wrote prompt.md" -o term.svg
   svgforge badge --label license --value KYAL-1.0 -o badge.svg
+  svgforge quote --text "Readable beats clever." --author "KodYazicam" -o quote.svg
   svgforge render manifest.json -o ./assets
   svgforge themes
 
@@ -117,6 +119,21 @@ export function run(argv: string[]): number {
       const svg = badge({
         label: take(argv, "--label") ?? "label",
         value: take(argv, "--value") ?? "value",
+        theme,
+      });
+      if (out) writeOut(out, svg);
+      else process.stdout.write(svg);
+      return 0;
+    }
+    if (cmd === "quote") {
+      const text = take(argv, "--text") ?? take(argv, "--quote");
+      if (!text) {
+        console.error("quote requires --text");
+        return 1;
+      }
+      const svg = quote({
+        quote: text,
+        author: take(argv, "--author"),
         theme,
       });
       if (out) writeOut(out, svg);

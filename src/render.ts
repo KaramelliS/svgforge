@@ -4,13 +4,15 @@ import { stats, type StatsOptions } from "./cards/stats.js";
 import { skills, type SkillsOptions } from "./cards/skills.js";
 import { terminal, type TerminalOptions } from "./cards/terminal.js";
 import { badge, type BadgeOptions } from "./cards/badge.js";
+import { quote, type QuoteOptions } from "./cards/quote.js";
 
 export type Card =
   | ({ type: "banner"; out?: string } & BannerOptions)
   | ({ type: "stats"; out?: string } & StatsOptions)
   | ({ type: "skills"; out?: string } & SkillsOptions)
   | ({ type: "terminal"; out?: string } & TerminalOptions)
-  | ({ type: "badge"; out?: string } & BadgeOptions);
+  | ({ type: "badge"; out?: string } & BadgeOptions)
+  | ({ type: "quote"; out?: string } & QuoteOptions);
 
 export interface Manifest {
   theme?: string;
@@ -30,6 +32,8 @@ export function renderCard(card: Card, fallbackTheme?: string): string {
       return terminal({ ...card, theme });
     case "badge":
       return badge({ ...card, theme });
+    case "quote":
+      return quote({ ...card, theme });
     default: {
       const never: never = card;
       throw new Error(`unknown card type: ${(never as Card).type}`);
