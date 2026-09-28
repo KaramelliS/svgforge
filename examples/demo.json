@@ -1,19 +1,38 @@
 {
   "theme": "midnight",
+  "vars": {
+    "tool": "KodYazicam",
+    "tagline": "Kod yazıyorum, sistem kuruyorum, çözüm üretiyorum."
+  },
   "cards": [
     {
       "type": "banner",
-      "title": "KodYazicam",
-      "subtitle": "Kod yazıyorum, sistem kuruyorum, çözüm üretiyorum.",
+      "title": "{{tool}}",
+      "subtitle": "{{tagline}}",
       "out": "banner.svg"
+    },
+    {
+      "type": "wave",
+      "title": "{{tool}}",
+      "subtitle": "open source tooling",
+      "out": "wave.svg"
     },
     {
       "type": "stats",
       "title": "Open source",
       "items": [
-        { "label": "Tools shipped", "value": "5" },
-        { "label": "Stack", "value": "TS · Python · Discord" },
-        { "label": "License", "value": "KYAL-1.0" }
+        {
+          "label": "Tools shipped",
+          "value": "5"
+        },
+        {
+          "label": "Stack",
+          "value": "TS · Python · Discord"
+        },
+        {
+          "label": "License",
+          "value": "KYAL-1.0"
+        }
       ],
       "out": "stats.svg"
     },
@@ -21,11 +40,26 @@
       "type": "skills",
       "title": "Stack",
       "items": [
-        { "name": "TypeScript / Node", "level": 92 },
-        { "name": "React / Next.js", "level": 88 },
-        { "name": "Python / FastAPI", "level": 84 },
-        { "name": "Discord.js", "level": 86 },
-        { "name": "Docker / Linux", "level": 78 }
+        {
+          "name": "TypeScript / Node",
+          "level": 92
+        },
+        {
+          "name": "React / Next.js",
+          "level": 88
+        },
+        {
+          "name": "Python / FastAPI",
+          "level": 84
+        },
+        {
+          "name": "Discord.js",
+          "level": 86
+        },
+        {
+          "name": "Docker / Linux",
+          "level": 78
+        }
       ],
       "out": "skills.svg"
     },
@@ -48,43 +82,148 @@
       "out": "badge.svg"
     },
     {
+      "type": "divider",
+      "label": "v2 cards",
+      "out": "divider.svg"
+    },
+    {
+      "type": "progress",
+      "title": "Roadmap",
+      "value": 68,
+      "caption": "68 of 100 items shipped",
+      "out": "progress.svg"
+    },
+    {
+      "type": "donut",
+      "title": "Where the time goes",
+      "items": [
+        {
+          "label": "Code",
+          "value": 55
+        },
+        {
+          "label": "Docs",
+          "value": 30
+        },
+        {
+          "label": "Tests",
+          "value": 15
+        }
+      ],
+      "center": "100%",
+      "out": "donut.svg"
+    },
+    {
+      "type": "chart",
+      "title": "Clones per day",
+      "items": [
+        {
+          "label": "Mon",
+          "value": 12
+        },
+        {
+          "label": "Tue",
+          "value": 34
+        },
+        {
+          "label": "Wed",
+          "value": 28
+        },
+        {
+          "label": "Thu",
+          "value": 51
+        }
+      ],
+      "out": "chart.svg"
+    },
+    {
+      "type": "links",
+      "items": [
+        {
+          "text": "GitHub",
+          "url": "https://github.com/KodYazicam"
+        },
+        {
+          "text": "ctxpack",
+          "url": "https://github.com/KodYazicam/ctxpack"
+        },
+        {
+          "text": "svgforge",
+          "url": "https://github.com/KodYazicam/svgforge"
+        }
+      ],
+      "out": "links.svg"
+    },
+    {
       "type": "quote",
-      "quote": "Bilgi paylaştıkça çoğalır; kod okundukça güzelleşir.",
-      "author": "KodYazicam",
+      "text": "No third-party render service. Your README images are files you commit.",
+      "author": "svgforge",
       "out": "quote.svg"
     },
     {
-      "type": "timeline",
-      "title": "Roadmap",
+      "type": "code",
+      "title": "demo.ts",
+      "lang": "ts",
+      "lineNumbers": true,
+      "lines": [
+        "import { renderManifest } from \"@kodyazicam/svgforge\";",
+        "// one json in, one folder of svgs out",
+        "const files = renderManifest({ cards });",
+        "for (const card of files) write(card.file, card.svg);"
+      ],
+      "out": "code.svg"
+    },
+    {
+      "type": "project",
+      "name": "svgforge",
+      "host": "github.com/KodYazicam/svgforge",
+      "description": "Sixteen README card types from one offline CLI. Zero runtime dependencies, no network, no render API.",
       "items": [
-        { "date": "2024-01", "label": "v1.0 — kernel and lenses shipped" },
-        { "date": "2024-06", "label": "CI green on three runtimes" },
-        { "date": "2024-11", "label": "v2.0 — indexes land" }
+        {
+          "label": "Card types",
+          "value": "16"
+        },
+        {
+          "label": "Themes",
+          "value": "16"
+        },
+        {
+          "label": "Runtime deps",
+          "value": "0"
+        }
+      ],
+      "tags": [
+        "TypeScript",
+        "Node 20+",
+        "Offline"
+      ],
+      "out": "project.svg"
+    },
+    {
+      "type": "timeline",
+      "title": "Releases",
+      "items": [
+        {
+          "date": "2026-09-01",
+          "label": "v1.0 — five card types"
+        },
+        {
+          "date": "2026-09-26",
+          "label": "quote, timeline, contributions"
+        },
+        {
+          "date": "2026-09-28",
+          "label": "v2.0 — overrides + manifest vars"
+        }
       ],
       "out": "timeline.svg"
     },
     {
       "type": "contributions",
       "title": "Contributions",
-      "weeks": [[0,0,0,0,2,2,0],[0,3,0,1,0,0,0],[2,0,2,1,1,0,0],[1,0,0,0,1,1,0],[0,2,1,0,0,0,1],[1,0,0,0,0,4,0],[0,1,1,0,0,0,2],[0,2,2,0,4,0,0],[0,0,2,2,1,0,0],[0,0,0,0,1,0,3],[0,2,0,4,2,0,1],[2,1,0,0,3,1,0],[1,0,0,0,0,2,0],[1,0,0,1,1,4,0],[0,1,0,1,0,2,1],[0,2,0,0,0,1,1],[0,1,0,1,1,0,2],[2,0,0,0,3,0,0],[0,0,2,0,1,0,0],[0,0,0,0,1,2,0],[0,0,0,0,0,0,0],[1,0,0,4,0,3,1],[1,0,0,0,0,0,0],[1,1,1,0,0,0,0],[2,0,0,0,0,0,1],[2,2,0,0,0,1,4],[3,0,0,3,1,2,0],[4,0,0,0,0,0,0],[1,1,2,0,0,0,1],[1,0,0,4,0,2,0],[0,0,0,0,2,0,0],[0,0,0,0,0,0,2],[0,0,3,3,1,0,0],[0,0,0,1,0,0,2],[0,0,0,3,0,0,0],[2,0,0,0,0,0,0],[0,1,1,3,0,0,1],[2,3,0,0,0,1,0],[2,1,0,0,0,0,3],[0,0,1,1,1,0,0],[0,2,2,0,1,0,0],[1,0,0,0,0,0,0],[1,0,0,3,1,0,0],[0,4,0,0,4,0,1],[2,0,3,0,2,0,3],[1,0,2,0,0,0,0],[4,0,1,0,0,0,0],[2,3,1,2,2,3,0],[0,0,2,0,0,0,0],[0,0,2,2,1,0,0],[2,0,0,2,0,0,0],[0,2,0,0,0,0,3]],
+      "seed": 42,
       "total": 1337,
       "out": "contrib.svg"
-    },
-    {
-      "type": "donut",
-      "title": "Languages",
-      "slices": [
-        { "label": "TypeScript", "value": 58 },
-        { "label": "Python", "value": 24 },
-        { "label": "Rust", "value": 10 },
-        { "label": "Shell", "value": 8 }
-      ],
-      "out": "donut.svg"
-    },
-    {
-      "type": "divider",
-      "label": "docs",
-      "out": "divider.svg"
     }
   ]
 }

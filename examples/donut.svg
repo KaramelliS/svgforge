@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="520" height="227" viewBox="0 0 520 227" role="img" aria-label="Languages">
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="190" viewBox="0 0 460 190" role="img" aria-label="Where the time goes">
 
-  <rect width="520" height="227" rx="16" fill="#0f0c29" stroke="#302b63"/>
-  <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Languages</text>
-  <circle cx="101" cy="126" r="62" fill="none" stroke="#24243e" stroke-width="22"/>
-  <circle cx="101" cy="126" r="62" fill="none" stroke="#a78bfa" stroke-width="22" stroke-dasharray="223.94 165.61" transform="rotate(-90.00 101 126)"/>
-  <circle cx="101" cy="126" r="62" fill="none" stroke="#7c3aed" stroke-width="22" stroke-dasharray="91.49 298.06" transform="rotate(118.80 101 126)"/>
-  <circle cx="101" cy="126" r="62" fill="none" stroke="#9263f4" stroke-width="22" stroke-dasharray="36.96 352.60" transform="rotate(205.20 101 126)"/>
-  <circle cx="101" cy="126" r="62" fill="none" stroke="#c4b5fd" stroke-width="22" stroke-dasharray="29.16 360.39" transform="rotate(241.20 101 126)"/>
-<text x="101" y="124" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700">100</text>
-  <text x="101" y="142" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">total</text>
+  <g transform="rotate(-90 86 118)">
+  <circle cx="86" cy="118" r="54" fill="none" stroke="#a78bfa" stroke-width="18" stroke-dasharray="184.61 339.29" stroke-dashoffset="0.00"/>
+  <circle cx="86" cy="118" r="54" fill="none" stroke="#7c3aed" stroke-width="18" stroke-dasharray="99.79 339.29" stroke-dashoffset="-186.61"/>
+  <circle cx="86" cy="118" r="54" fill="none" stroke="#ffffff" stroke-width="18" stroke-dasharray="48.89 339.29" stroke-dashoffset="-288.40"/>
+  </g>
+  <text x="86" y="124" text-anchor="middle" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700">100%</text>
+  <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Where the time goes</text>
 
-  <rect x="207" y="54" width="12" height="12" rx="3" fill="#a78bfa"/>
-  <text x="227" y="64" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">TypeScript</text>
-  <text x="492" y="64" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">58.0%</text>
-  <rect x="207" y="82" width="12" height="12" rx="3" fill="#7c3aed"/>
-  <text x="227" y="92" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Python</text>
-  <text x="492" y="92" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">24.0%</text>
-  <rect x="207" y="110" width="12" height="12" rx="3" fill="#9263f4"/>
-  <text x="227" y="120" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Rust</text>
-  <text x="492" y="120" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">10.0%</text>
-  <rect x="207" y="138" width="12" height="12" rx="3" fill="#c4b5fd"/>
-  <text x="227" y="148" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Shell</text>
-  <text x="492" y="148" text-anchor="end" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="13">8.0%</text>
+  <rect x="172" y="76" width="10" height="10" rx="2" fill="#a78bfa"/>
+  <text x="192" y="86" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Code</text>
+  <text x="432" y="86" text-anchor="end" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">55 · 55%</text>
+  <rect x="172" y="106" width="10" height="10" rx="2" fill="#7c3aed"/>
+  <text x="192" y="116" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Docs</text>
+  <text x="432" y="116" text-anchor="end" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">30 · 30%</text>
+  <rect x="172" y="136" width="10" height="10" rx="2" fill="#ffffff"/>
+  <text x="192" y="146" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Tests</text>
+  <text x="432" y="146" text-anchor="end" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">15 · 15%</text>
 
 </svg>

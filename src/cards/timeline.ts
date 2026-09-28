@@ -1,19 +1,17 @@
-import { escapeXml, resolveTheme, wrap } from "../escape.js";
+import { cardTheme, escapeXml, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface TimelineItem {
   date: string;
   label: string;
 }
 
-export interface TimelineOptions {
+export interface TimelineOptions extends BaseCardOptions {
   title?: string;
   items: TimelineItem[];
-  theme?: string;
-  width?: number;
 }
 
 export function timeline(options: TimelineOptions): string {
-  const theme = resolveTheme(options.theme);
+  const theme = cardTheme(options);
   const width = options.width ?? 560;
   const items = options.items ?? [];
   const rowHeight = 44;

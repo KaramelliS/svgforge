@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="40" viewBox="0 0 720 40" role="img" aria-label="docs">
-<rect x="0" y="18" width="720" height="4" rx="2" fill="#24243e"/>
-  <rect x="0" y="18" width="252" height="4" rx="2" fill="#a78bfa"/>
-<rect x="280" y="8" width="160" height="24" rx="12" fill="#0f0c29" stroke="#302b63"/>
-  <text x="360" y="25" text-anchor="middle" fill="#c4b5fd" font-family="ui-monospace, Menlo, monospace" font-size="12">docs</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="40" viewBox="0 0 880 40" role="img" aria-label="v2 cards">
+
+  <rect x="0" y="19" width="374" height="2" fill="#302b63"/>
+  <rect x="506" y="19" width="374" height="2" fill="#302b63"/>
+  <rect x="388" y="9" width="104" height="22" rx="11" fill="#24243e" stroke="#302b63"/>
+  <text x="440" y="24" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="1.5">v2 cards</text>
+
 </svg>

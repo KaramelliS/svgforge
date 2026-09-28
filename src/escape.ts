@@ -14,7 +14,6 @@ export function svgId(seed: string, suffix = "g"): string {
   return `${suffix}-${safe}-${hash.toString(16)}`;
 }
 
-/** Linear blend of two hex colors; `t` 0 returns `a`, 1 returns `b`. */
 export function mixHex(a: string, b: string, t: number): string {
   const clamp = (v: number) => Math.max(0, Math.min(255, Math.round(v)));
   const parse = (hex: string): [number, number, number] => {
@@ -31,7 +30,6 @@ export function mixHex(a: string, b: string, t: number): string {
   return `#${[r, g, bl].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
 }
 
-/** Deterministic 32-bit PRNG (mulberry32) so seeded cards are reproducible. */
 export function seededRandom(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
@@ -113,6 +111,96 @@ export const THEMES: Record<string, Theme> = {
     accent2: "#3fb950",
     line: "#30363d",
   },
+  gruvbox: {
+    name: "gruvbox",
+    bg: "#282828",
+    bg2: "#3c3836",
+    text: "#ebdbb2",
+    muted: "#bdae93",
+    accent: "#fe8019",
+    accent2: "#8ec07c",
+    line: "#504945",
+  },
+  catppuccin: {
+    name: "catppuccin",
+    bg: "#1e1e2e",
+    bg2: "#181825",
+    text: "#cdd6f4",
+    muted: "#a6adc8",
+    accent: "#cba6f7",
+    accent2: "#89b4fa",
+    line: "#313244",
+  },
+  "catppuccin-latte": {
+    name: "catppuccin-latte",
+    bg: "#eff1f5",
+    bg2: "#e6e9ef",
+    text: "#4c4f69",
+    muted: "#6c6f85",
+    accent: "#8839ef",
+    accent2: "#1e66f5",
+    line: "#bcc0cc",
+  },
+  onedark: {
+    name: "onedark",
+    bg: "#282c34",
+    bg2: "#21252b",
+    text: "#abb2bf",
+    muted: "#7d838f",
+    accent: "#61afef",
+    accent2: "#c678dd",
+    line: "#3e4451",
+  },
+  monokai: {
+    name: "monokai",
+    bg: "#272822",
+    bg2: "#3e3d32",
+    text: "#f8f8f2",
+    muted: "#75715e",
+    accent: "#66d9ef",
+    accent2: "#fd971f",
+    line: "#49483e",
+  },
+  solarized: {
+    name: "solarized",
+    bg: "#002b36",
+    bg2: "#073642",
+    text: "#eee8d5",
+    muted: "#93a1a1",
+    accent: "#268bd2",
+    accent2: "#b58900",
+    line: "#586e75",
+  },
+  "solarized-light": {
+    name: "solarized-light",
+    bg: "#fdf6e3",
+    bg2: "#eee8d5",
+    text: "#586e75",
+    muted: "#93a1a1",
+    accent: "#268bd2",
+    accent2: "#d33682",
+    line: "#e4ddc8",
+  },
+  synthwave: {
+    name: "synthwave",
+    bg: "#1a1523",
+    bg2: "#241b2f",
+    text: "#f8f8f2",
+    muted: "#b7a6d9",
+    accent: "#ff71ce",
+    accent2: "#01cdfe",
+    line: "#3a2b4a",
+  },
+  paper: {
+    name: "paper",
+    bg: "#fafafa",
+    bg2: "#f0f0f0",
+    text: "#212121",
+    muted: "#616161",
+    accent: "#0d47a1",
+    accent2: "#1565c0",
+    line: "#e0e0e0",
+  },
   "github-light": {
     name: "github-light",
     bg: "#ffffff",
@@ -123,38 +211,112 @@ export const THEMES: Record<string, Theme> = {
     accent2: "#1a7f37",
     line: "#d0d7de",
   },
-  catppuccin: {
-    name: "catppuccin",
-    bg: "#1e1e2e",
-    bg2: "#313244",
-    text: "#cdd6f4",
-    muted: "#a6adc8",
-    accent: "#cba6f7",
-    accent2: "#89b4fa",
-    line: "#45475a",
-  },
-  gruvbox: {
-    name: "gruvbox",
-    bg: "#282828",
-    bg2: "#3c3836",
-    text: "#ebdbb2",
-    muted: "#bdae93",
-    accent: "#fe8019",
-    accent2: "#b8bb26",
-    line: "#504945",
-  },
   "rose-pine": {
     name: "rose-pine",
     bg: "#191724",
     bg2: "#1f1d2e",
     text: "#e0def4",
     muted: "#908caa",
-    accent: "#c4a7e7",
-    accent2: "#ebbcba",
+    accent: "#ebbcba",
+    accent2: "#31748f",
     line: "#26233a",
   },
 };
 
 export function resolveTheme(name?: string): Theme {
   return THEMES[name ?? "midnight"] ?? THEMES.midnight;
+}
+
+export const FONT_MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
+export const FONT_SANS = "ui-sans-serif, system-ui, sans-serif";
+
+export function fontStack(override: string | undefined, kind: "mono" | "sans"): string {
+  return override ? escapeXml(override) : kind === "mono" ? FONT_MONO : FONT_SANS;
+}
+
+const HEX = /^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+
+export function isValidColor(value: string): boolean {
+  return HEX.test(value);
+}
+
+export interface StyleOverrides {
+  bg?: string;
+  bg2?: string;
+  fg?: string;
+  muted?: string;
+  accent?: string;
+  accent2?: string;
+  line?: string;
+}
+
+export interface BaseCardOptions extends StyleOverrides {
+  theme?: string;
+  width?: number;
+  height?: number;
+  radius?: number;
+  font?: string;
+  flat?: boolean;
+}
+
+const COLOR_KEYS: Array<keyof StyleOverrides> = ["bg", "bg2", "fg", "muted", "accent", "accent2", "line"];
+
+export function applyOverrides(theme: Theme, overrides: StyleOverrides = {}): Theme {
+  const merged: Theme = { ...theme };
+  for (const key of COLOR_KEYS) {
+    const value = overrides[key];
+    if (value !== undefined) {
+      if (!isValidColor(value)) {
+        throw new Error(`invalid color for --${key}: ${value} (use #rrggbb)`);
+      }
+      merged[key === "fg" ? "text" : (key as Exclude<keyof StyleOverrides, "fg">)] = value;
+    }
+  }
+  return merged;
+}
+
+export function cardTheme(options: { theme?: string } & StyleOverrides): Theme {
+  return applyOverrides(resolveTheme(options.theme), options);
+}
+
+export function parsePositiveInt(value: string, flag: string): number {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0 || !Number.isInteger(n)) {
+    throw new Error(`invalid ${flag}: ${value} (use a positive integer)`);
+  }
+  return n;
+}
+
+export function wrapLines(text: string, maxChars: number): string[] {
+  if (maxChars < 4) maxChars = 4;
+  const out: string[] = [];
+  for (const paragraph of text.split(/\n/)) {
+    let current = "";
+    for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+      const chunks: string[] = [];
+      let rest = word;
+      while (rest.length > maxChars) {
+        chunks.push(rest.slice(0, maxChars));
+        rest = rest.slice(maxChars);
+      }
+      if (chunks.length) {
+        if (current) out.push(current);
+        for (const chunk of chunks) out.push(chunk);
+        current = rest;
+        continue;
+      }
+      if (!current) current = word;
+      else if (`${current} ${word}`.length <= maxChars) current += ` ${word}`;
+      else {
+        out.push(current);
+        current = word;
+      }
+    }
+    if (current) out.push(current);
+  }
+  return out.length ? out : [""];
+}
+
+export function approxTextWidth(text: string, fontSize: number): number {
+  return Math.ceil(text.length * fontSize * 0.6);
 }

@@ -4,11 +4,17 @@ import { stats, type StatsOptions } from "./cards/stats.js";
 import { skills, type SkillsOptions } from "./cards/skills.js";
 import { terminal, type TerminalOptions } from "./cards/terminal.js";
 import { badge, type BadgeOptions } from "./cards/badge.js";
+import { divider, type DividerOptions } from "./cards/divider.js";
+import { progress, type ProgressOptions } from "./cards/progress.js";
+import { donut, type DonutOptions } from "./cards/donut.js";
+import { chart, type ChartOptions } from "./cards/chart.js";
+import { links, type LinksOptions } from "./cards/links.js";
 import { quote, type QuoteOptions } from "./cards/quote.js";
+import { code, type CodeOptions } from "./cards/code.js";
+import { project, type ProjectOptions } from "./cards/project.js";
+import { wave, type WaveOptions } from "./cards/wave.js";
 import { timeline, type TimelineOptions } from "./cards/timeline.js";
 import { contributions, type ContributionsOptions } from "./cards/contrib.js";
-import { donut, type DonutOptions } from "./cards/donut.js";
-import { divider, type DividerOptions } from "./cards/divider.js";
 
 export type Card =
   | ({ type: "banner"; out?: string } & BannerOptions)
@@ -16,15 +22,61 @@ export type Card =
   | ({ type: "skills"; out?: string } & SkillsOptions)
   | ({ type: "terminal"; out?: string } & TerminalOptions)
   | ({ type: "badge"; out?: string } & BadgeOptions)
-  | ({ type: "quote"; out?: string } & QuoteOptions)
-  | ({ type: "timeline"; out?: string } & TimelineOptions)
-  | ({ type: "contributions"; out?: string } & ContributionsOptions)
+  | ({ type: "divider"; out?: string } & DividerOptions)
+  | ({ type: "progress"; out?: string } & ProgressOptions)
   | ({ type: "donut"; out?: string } & DonutOptions)
-  | ({ type: "divider"; out?: string } & DividerOptions);
+  | ({ type: "chart"; out?: string } & ChartOptions)
+  | ({ type: "links"; out?: string } & LinksOptions)
+  | ({ type: "quote"; out?: string } & QuoteOptions)
+  | ({ type: "code"; out?: string } & CodeOptions)
+  | ({ type: "project"; out?: string } & ProjectOptions)
+  | ({ type: "wave"; out?: string } & WaveOptions)
+  | ({ type: "timeline"; out?: string } & TimelineOptions)
+  | ({ type: "contributions"; out?: string } & ContributionsOptions);
+
+export const CARD_TYPES = [
+  "banner",
+  "stats",
+  "skills",
+  "terminal",
+  "badge",
+  "divider",
+  "progress",
+  "donut",
+  "chart",
+  "links",
+  "quote",
+  "code",
+  "project",
+  "wave",
+  "timeline",
+  "contributions",
+] as const;
 
 export interface Manifest {
   theme?: string;
+  vars?: Record<string, string | number>;
   cards: Card[];
+}
+
+const VAR_RE = /\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/g;
+
+function substituteString(value: string, vars: Record<string, string | number>): string {
+  return value.replace(VAR_RE, (whole, key: string) => (key in vars ? String(vars[key]) : whole));
+}
+
+export function substituteVars<T>(value: T, vars: Record<string, string | number> | undefined): T {
+  if (!vars || Object.keys(vars).length === 0) return value;
+  if (typeof value === "string") return substituteString(value, vars) as unknown as T;
+  if (Array.isArray(value)) return value.map((item) => substituteVars(item, vars)) as unknown as T;
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, item] of Object.entries(value as Record<string, unknown>)) {
+      out[substituteString(key, vars)] = substituteVars(item, vars);
+    }
+    return out as unknown as T;
+  }
+  return value;
 }
 
 export function renderCard(card: Card, fallbackTheme?: string): string {
@@ -40,16 +92,28 @@ export function renderCard(card: Card, fallbackTheme?: string): string {
       return terminal({ ...card, theme });
     case "badge":
       return badge({ ...card, theme });
+    case "divider":
+      return divider({ ...card, theme });
+    case "progress":
+      return progress({ ...card, theme });
+    case "donut":
+      return donut({ ...card, theme });
+    case "chart":
+      return chart({ ...card, theme });
+    case "links":
+      return links({ ...card, theme });
     case "quote":
       return quote({ ...card, theme });
+    case "code":
+      return code({ ...card, theme });
+    case "project":
+      return project({ ...card, theme });
+    case "wave":
+      return wave({ ...card, theme });
     case "timeline":
       return timeline({ ...card, theme });
     case "contributions":
       return contributions({ ...card, theme });
-    case "donut":
-      return donut({ ...card, theme });
-    case "divider":
-      return divider({ ...card, theme });
     default: {
       const never: never = card;
       throw new Error(`unknown card type: ${(never as Card).type}`);
@@ -77,10 +141,11 @@ export function renderManifest(manifest: Manifest): Array<{ file: string; svg: s
     if (!card || typeof card !== "object" || !("type" in card)) {
       throw new Error(`card ${index + 1} is missing type`);
     }
-    const file = card.out ?? `${card.type}-${index + 1}.svg`;
+    const resolved = substituteVars(card, manifest.vars);
+    const file = substituteString(card.out ?? `${card.type}-${index + 1}.svg`, manifest.vars ?? {});
     if (file.includes("..") || posix.isAbsolute(file) || file.startsWith("/") || /^[A-Za-z]:[\\/]/.test(file)) {
       throw new Error(`refusing path traversal in out: ${file}`);
     }
-    return { file, svg: renderCard(card, manifest.theme) };
+    return { file, svg: renderCard(resolved, manifest.theme) };
   });
 }

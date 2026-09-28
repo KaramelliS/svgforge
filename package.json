@@ -1,8 +1,8 @@
 {
   "name": "@kodyazicam/svgforge",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Generate GitHub README SVGs locally: banners, stat cards, skill bars, terminals. No third-party render service.",
+  "description": "Generate GitHub README SVGs locally: banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves. No third-party render service.",
   "keywords": [
     "svg",
     "readme",
@@ -10,7 +10,10 @@
     "badge",
     "card",
     "cli",
-    "banner"
+    "banner",
+    "donut",
+    "chart",
+    "wave"
   ],
   "license": "SEE LICENSE IN LICENSE",
   "author": "Batuhan (KodYazicam) <https://github.com/KodYazicam>",

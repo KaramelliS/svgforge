@@ -1,12 +1,11 @@
-import { escapeXml, mixHex, resolveTheme, seededRandom, wrap } from "../escape.js";
+import { cardTheme, escapeXml, mixHex, seededRandom, type BaseCardOptions, wrap } from "../escape.js";
 
-export interface ContributionsOptions {
+export interface ContributionsOptions extends BaseCardOptions {
   title?: string;
   /** 0-4 contribution level per day; `weeks[weekIndex][dayIndex]`. */
   weeks: number[][];
   /** Optional total shown under the title, e.g. "1 337 contributions". */
   total?: number;
-  theme?: string;
 }
 
 const CELL = 12;
@@ -63,7 +62,7 @@ function normalizeWeeks(weeks: unknown): number[][] {
 }
 
 export function contributions(options: ContributionsOptions): string {
-  const theme = resolveTheme(options.theme);
+  const theme = cardTheme(options);
   const weeks = normalizeWeeks(options.weeks);
   const colors = levelColors(theme.bg2, theme.accent);
   const left = 28;

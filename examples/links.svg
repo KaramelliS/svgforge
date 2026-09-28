@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="314" height="36" viewBox="0 0 314 36" role="img" aria-label="GitHub, ctxpack, svgforge">
+  <g transform="translate(0,0)"><a href="https://github.com/KodYazicam" target="_blank" rel="noopener">
+    <rect x="0" y="0" width="87" height="36" rx="18" fill="#24243e" stroke="#302b63"/>
+    <text x="43.5" y="23" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">GitHub</text>
+  </a></g>
+  <g transform="translate(101,0)"><a href="https://github.com/KodYazicam/ctxpack" target="_blank" rel="noopener">
+    <rect x="0" y="0" width="95" height="36" rx="18" fill="#24243e" stroke="#302b63"/>
+    <text x="47.5" y="23" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">ctxpack</text>
+  </a></g>
+  <g transform="translate(210,0)"><a href="https://github.com/KodYazicam/svgforge" target="_blank" rel="noopener">
+    <rect x="0" y="0" width="104" height="36" rx="18" fill="#24243e" stroke="#302b63"/>
+    <text x="52" y="23" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">svgforge</text>
+  </a></g>
+</svg>

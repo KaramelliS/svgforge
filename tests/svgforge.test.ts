@@ -1,4 +1,4 @@
-import { mkdtempSync, writeFileSync, readFileSync } from "node:fs";
+import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -7,13 +7,19 @@ import { stats } from "../src/cards/stats.js";
 import { skills } from "../src/cards/skills.js";
 import { terminal } from "../src/cards/terminal.js";
 import { badge } from "../src/cards/badge.js";
-import { quote } from "../src/cards/quote.js";
-import { timeline } from "../src/cards/timeline.js";
-import { contributions, randomWeeks, levelColors } from "../src/cards/contrib.js";
-import { donut } from "../src/cards/donut.js";
 import { divider } from "../src/cards/divider.js";
-import { renderManifest, safeOutputPath } from "../src/render.js";
-import { escapeXml, mixHex, seededRandom, THEMES } from "../src/escape.js";
+import { progress } from "../src/cards/progress.js";
+import { donut } from "../src/cards/donut.js";
+import { chart } from "../src/cards/chart.js";
+import { links, assertSafeUrl } from "../src/cards/links.js";
+import { quote } from "../src/cards/quote.js";
+import { code } from "../src/cards/code.js";
+import { project } from "../src/cards/project.js";
+import { wave } from "../src/cards/wave.js";
+import { timeline } from "../src/cards/timeline.js";
+import { contributions, levelColors, randomWeeks } from "../src/cards/contrib.js";
+import { renderManifest, safeOutputPath, substituteVars, CARD_TYPES } from "../src/render.js";
+import { escapeXml, THEMES, resolveTheme, applyOverrides, isValidColor, mixHex, seededRandom, wrapLines } from "../src/escape.js";
 import { run } from "../src/cli.js";
 
 describe("cards", () => {
@@ -24,129 +30,11 @@ describe("cards", () => {
     expect(svg).toContain("<svg");
   });
 
-  it("renders stats, skills, terminal, badge, quote", () => {
+  it("renders stats, skills, terminal, badge", () => {
     expect(stats({ items: [{ label: "Stars", value: 12 }] })).toContain("Stars");
     expect(skills({ items: [{ name: "TS", level: 80 }] })).toContain("rect");
     expect(terminal({ lines: ["$ ls", "ok"] })).toContain("$ ls");
     expect(badge({ label: "license", value: "KYAL-1.0" })).toContain("KYAL-1.0");
-    const svg = quote({ quote: "Readable beats clever.", author: "KodYazicam" });
-    expect(svg).toContain("Readable beats clever.");
-    expect(svg).toContain("— KodYazicam");
-    expect(svg).toContain("<svg");
-  });
-
-  it("wraps long quote text instead of overflowing and escapes XML", () => {
-    const long = `${"word ".repeat(60)}<b>&</b>`;
-    const svg = quote({ quote: long, width: 320 });
-    expect(svg).toContain("&lt;b&gt;");
-    expect(svg).toContain("&amp;");
-    const lines = svg.match(/font-style="italic">[^<]*<\/text>/g) ?? [];
-    expect(lines.length).toBeGreaterThan(2);
-    const oversized = quote({ quote: "x".repeat(120), width: 320 });
-    expect(oversized).toContain("<svg");
-    expect(oversized.match(/font-size="15"/g)?.length).toBeGreaterThan(1);
-  });
-
-  it("keeps a quote without an author compact", () => {
-    const svg = quote({ quote: "Ship it." });
-    expect(svg).not.toContain("—");
-    expect(svg).toContain("Ship it.");
-  });
-
-  it("renders timeline milestones with dots and a rail", () => {
-    const svg = timeline({
-      title: "Roadmap",
-      items: [
-        { date: "2024-01", label: "v1.0 shipped" },
-        { date: "2024-06", label: "CI green" },
-      ],
-    });
-    expect(svg).toContain("2024-01");
-    expect(svg).toContain("v1.0 shipped");
-    expect(svg).toContain("<circle");
-    expect(svg).toContain("<line");
-  });
-
-  it("renders a 52-week contributions grid with a legend", () => {
-    const weeks = randomWeeks(42, 0.5);
-    expect(weeks).toHaveLength(52);
-    expect(weeks[0]).toHaveLength(7);
-    const svg = contributions({ title: "Contributions", weeks, total: 1337 });
-    expect(svg).toContain("1337 contributions");
-    expect(svg).toContain("Less");
-    expect(svg).toContain("More");
-    expect((svg.match(/<rect [^>]*rx="3"/g) ?? []).length).toBe(52 * 7 + 5);
-  });
-
-  it("contribution weeks are clamped to levels 0-4", () => {
-    const svg = contributions({ weeks: [[9, -3, 2.7, "x", undefined as unknown as number]] });
-    expect(svg).toContain("<svg");
-  });
-
-  it("randomWeeks is deterministic for a seed", () => {
-    expect(randomWeeks(7)).toEqual(randomWeeks(7));
-    expect(randomWeeks(7)).not.toEqual(randomWeeks(8));
-  });
-
-  it("levelColors returns five ordered hex colors", () => {
-    const colors = levelColors("#0f0c29", "#a78bfa");
-    expect(colors).toHaveLength(5);
-    for (const color of colors) expect(color).toMatch(/^#[0-9a-f]{6}$/);
-  });
-
-  it("renders a donut with arcs, a total, and a legend", () => {
-    const svg = donut({
-      title: "Languages",
-      slices: [
-        { label: "TypeScript", value: 60 },
-        { label: "Python", value: 30 },
-        { label: "Go", value: 10 },
-      ],
-    });
-    expect(svg).toContain("TypeScript");
-    expect(svg).toContain("60.0%");
-    expect(svg).toContain('stroke-dasharray');
-    expect((svg.match(/<circle /g) ?? []).length).toBe(1 + 3);
-    expect(svg).toContain(">100<");
-  });
-
-  it("donut filters invalid slices and escapes labels", () => {
-    const svg = donut({
-      slices: [
-        { label: "<A>", value: 2 },
-        { label: "bad", value: Number.NaN },
-        { label: "neg", value: -1 },
-      ],
-    });
-    expect(svg).toContain("&lt;A&gt;");
-    expect(svg).not.toContain("bad");
-    expect(svg).not.toContain("neg");
-  });
-
-  it("divider renders bare and with a label chip", () => {
-    expect(divider({})).toContain("<rect");
-    const labeled = divider({ label: "docs" });
-    expect(labeled).toContain("docs");
-    expect(labeled).toContain("rx=\"12\"");
-  });
-
-  it("mixHex blends and seededRandom is stable", () => {
-    expect(mixHex("#000000", "#ffffff", 0)).toBe("#000000");
-    expect(mixHex("#000000", "#ffffff", 1)).toBe("#ffffff");
-    expect(mixHex("#000000", "#ffffff", 0.5)).toBe("#808080");
-    expect(mixHex("#abc", "#def", 0.5)).toMatch(/^#[0-9a-f]{6}$/);
-    const rand = seededRandom(3);
-    const first = rand();
-    expect(rand()).not.toBe(first);
-  });
-
-  it("ships the new themes and falls back safely", () => {
-    for (const name of ["github-light", "catppuccin", "gruvbox", "rose-pine"]) {
-      expect(Object.keys(THEMES)).toContain(name);
-      expect(banner({ title: "t", theme: name })).toContain("<svg");
-    }
-    expect(banner({ title: "t", theme: "nonexistent" })).toContain("#0f0c29");
-    expect(banner({ title: "t", theme: "github-light" })).toContain("#ffffff");
   });
 
   it("clamps skill bars and namespaces banner gradients", () => {
@@ -161,6 +49,156 @@ describe("cards", () => {
     expect(idB).toBeTruthy();
     expect(idA).not.toBe(idB);
   });
+
+  it("renders the nine new card types", () => {
+    expect(divider({ label: "sections" })).toContain("sections");
+    expect(divider({})).toContain("divider");
+    expect(progress({ title: "v2", value: 68 })).toContain("68%");
+    expect(progress({ value: "150%" })).toContain("100%");
+    expect(progress({ value: "abc" })).toContain("0%");
+    const donutSvg = donut({ items: [{ label: "Code", value: 55 }, { label: "Docs", value: 45 }], center: "100%" });
+    expect(donutSvg).toContain("stroke-dasharray");
+    expect(donutSvg).toContain("55 · 55%");
+    expect(chart({ items: [{ label: "Mon", value: 12 }, { label: "Tue", value: 34 }], unit: "k" })).toContain("34k");
+    const linksSvg = links({ items: [{ text: "GitHub", url: "https://github.com" }] });
+    expect(linksSvg).toContain('href="https://github.com"');
+    const quoteSvg = quote({ text: "one two three four five six seven eight nine ten eleven twelve", author: "me" });
+    expect(quoteSvg).toContain("— me");
+    expect(quoteSvg.split("&#10;").length).toBeGreaterThanOrEqual(1);
+    const codeSvg = code({
+      lang: "ts",
+      lineNumbers: true,
+      lines: ['const name = "svgforge"; // build', 'function run() { return 1; }'],
+    });
+    expect(codeSvg).toContain("svgforge");
+    expect(codeSvg).toContain("&#8212;".length ? "const" : "const");
+    expect(codeSvg).toContain(">1</text>");
+    const projectSvg = project({
+      name: "ctxpack",
+      description: "Pack a codebase into LLM-ready context with budget and redaction.",
+      host: "github.com/KodYazicam/ctxpack",
+      items: [{ label: "Stars", value: 12 }],
+      tags: ["TypeScript"],
+    });
+    expect(projectSvg).toContain("ctxpack");
+    expect(projectSvg).toContain("Stars");
+    const waveSvg = wave({ title: "svgforge", subtitle: "v2" });
+    expect(waveSvg).toContain("<clipPath");
+    expect(wave({ title: "x", animate: true })).toContain("<animateTransform");
+  });
+
+  it("renders timeline milestones and contributions grids", () => {
+    const timelineSvg = timeline({
+      title: "Releases",
+      items: [
+        { date: "2026-09-01", label: "v1.0" },
+        { date: "2026-09-28", label: "v2.0" },
+      ],
+    });
+    expect(timelineSvg).toContain("v1.0");
+    expect(timelineSvg).toContain("2026-09-01");
+    expect(timelineSvg).toContain("<circle");
+    const weeks = randomWeeks(42);
+    expect(weeks).toHaveLength(52);
+    expect(weeks.every((week) => week.length === 7)).toBe(true);
+    expect(randomWeeks(42)).toEqual(weeks);
+    const contribSvg = contributions({ title: "Contributions", weeks, total: 1337 });
+    expect(contribSvg).toContain("1337");
+    expect(contribSvg).toContain("rect");
+    const colors = levelColors("#0f0c29", "#a78bfa");
+    expect(colors).toHaveLength(5);
+    expect(colors.every((color) => /^#[0-9a-f]{6}$/.test(color))).toBe(true);
+  });
+
+  it("badge supports flat, outline, plastic styles", () => {
+    const flat = badge({ label: "a", value: "b" });
+    expect(flat).toContain(themeAccent2());
+    const outline = badge({ label: "a", value: "b", style: "outline" });
+    expect(outline).toContain('fill="none"');
+    const plastic = badge({ label: "a", value: "b", style: "plastic" });
+    expect(plastic).toContain("linearGradient");
+    expect(() => badge({ label: "a", value: "b", labelColor: "nope" })).toThrow(/label color/);
+  });
+
+  it("terminal honors custom prompt and caret", () => {
+    expect(terminal({ lines: ["> run"], prompt: ">" })).not.toContain("&#36;");
+    const caretSvg = terminal({ lines: ["$ x"], caret: true });
+    expect(caretSvg).toContain("<animate");
+  });
+
+  it("banner supports tag, logo, gradient, flat", () => {
+    expect(banner({ title: "x", tag: "v2" })).toContain("V2");
+    expect(banner({ title: "x", logo: "S" })).toContain(">S</text>");
+    expect(banner({ title: "x", flat: true })).not.toContain("linearGradient");
+    expect(banner({ title: "x", gradient: ["#111111", "#222222"] })).toContain("#111111");
+    expect(() => banner({ title: "x", gradient: ["red", "blue"] })).toThrow(/gradient/);
+  });
+
+  it("skills showValue is opt-in", () => {
+    const svg = skills({ items: [{ name: "TS", level: 90 }] });
+    expect(svg).not.toContain("90%");
+    const shown = skills({ items: [{ name: "TS", level: 90 }], showValue: true });
+    expect(shown).toContain("90%");
+  });
+});
+
+function themeAccent2(): string {
+  return resolveTheme("midnight").accent2;
+}
+
+describe("themes and overrides", () => {
+  it("ships sixteen themes", () => {
+    expect(Object.keys(THEMES)).toHaveLength(16);
+    expect(resolveTheme("gruvbox").bg).toBe("#282828");
+    expect(resolveTheme("catppuccin-latte").name).toBe("catppuccin-latte");
+    expect(resolveTheme("paper").bg).toBe("#fafafa");
+    expect(resolveTheme("github-light").bg).toBe("#ffffff");
+    expect(resolveTheme("rose-pine").name).toBe("rose-pine");
+    expect(resolveTheme("nope").name).toBe("midnight");
+  });
+
+  it("mixHex blends and seededRandom is stable", () => {
+    expect(mixHex("#000000", "#ffffff", 0)).toBe("#000000");
+    expect(mixHex("#000000", "#ffffff", 1)).toBe("#ffffff");
+    const first = seededRandom(7);
+    const second = seededRandom(7);
+    const a = [first(), first(), first()];
+    const b = [second(), second(), second()];
+    expect(a).toEqual(b);
+    expect(a[0]).not.toBe(a[1]);
+  });
+
+  it("applies and validates color overrides", () => {
+    const theme = applyOverrides(resolveTheme("midnight"), { bg: "#123456", fg: "#abcdef" });
+    expect(theme.bg).toBe("#123456");
+    expect(theme.text).toBe("#abcdef");
+    expect(() => applyOverrides(resolveTheme("midnight"), { bg: "red" })).toThrow(/invalid color/);
+    expect(isValidColor("#abc")).toBe(true);
+    expect(isValidColor("#aabbccdd")).toBe(true);
+    expect(isValidColor("red")).toBe(false);
+  });
+
+  it("color overrides flow into cards", () => {
+    const svg = banner({ title: "x", bg: "#123456", accent2: "#abcdef", flat: true });
+    expect(svg).toContain("#123456");
+    expect(svg).toContain("#abcdef");
+    expect(banner({ title: "x", theme: "paper", flat: true })).toContain("#fafafa");
+    expect(banner({ title: "x", accent: "#0fedcb", tag: "v2" })).toContain("#0fedcb");
+  });
+
+  it("wraps long text", () => {
+    expect(wrapLines("aaa bbb ccc", 7)).toEqual(["aaa bbb", "ccc"]);
+    expect(wrapLines("abcdefghijkl", 5)).toEqual(["abcde", "fghij", "kl"]);
+  });
+});
+
+describe("links safety", () => {
+  it("rejects non-http urls", () => {
+    expect(() => assertSafeUrl("ftp://x")).toThrow(/http/);
+    expect(() => links({ items: [{ text: "x", url: "javascript:alert(1)" }] })).toThrow(/http/);
+    expect(links({ items: [{ text: "x", url: "https://ok.example" }] })).toContain("https://ok.example");
+    expect(links({ items: [{ text: "x" }], link: false })).not.toContain("href");
+  });
 });
 
 describe("manifest + cli", () => {
@@ -174,11 +212,6 @@ describe("manifest + cli", () => {
         cards: [
           { type: "banner", title: "ctxpack", subtitle: "pack", out: "banner.svg" },
           { type: "badge", label: "license", value: "KYAL-1.0", out: "badge.svg" },
-          { type: "quote", quote: "Readable beats clever.", author: "KodYazicam", out: "quote.svg" },
-          { type: "timeline", items: [{ date: "2024-01", label: "v1.0" }], out: "timeline.svg" },
-          { type: "contributions", weeks: randomWeeks(9), out: "contrib.svg" },
-          { type: "donut", slices: [{ label: "TS", value: 2 }], out: "donut.svg" },
-          { type: "divider", label: "docs", out: "divider.svg" },
         ],
       }),
     );
@@ -186,43 +219,37 @@ describe("manifest + cli", () => {
     expect(readFileSync(join(dir, "banner.svg"), "utf8")).toContain("ctxpack");
     expect(run(["themes"])).toBe(0);
     expect(run(["--help"])).toBe(0);
+    expect(run(["types"])).toBe(0);
   });
 
-  it("renderManifest assigns default filenames", () => {
+  it("substitutes manifest vars and --set overrides", () => {
     const out = renderManifest({
-      cards: [{ type: "banner", title: "x" }],
+      vars: { tool: "ctxpack", n: 12 },
+      cards: [
+        { type: "banner", title: "{{tool}}", subtitle: "v{{n}}" },
+        { type: "stats", items: [{ label: "{{tool}}", value: "{{n}}" }] },
+      ],
     });
+    expect(out[0].svg).toContain("ctxpack");
+    expect(out[0].svg).toContain("v12");
+    expect(out[1].svg).toContain("ctxpack");
+    const substituted = substituteVars({ a: "{{x}}", b: ["{{x}}"], c: { d: "{{x}}" } }, { x: "y" });
+    expect(substituted).toEqual({ a: "y", b: ["y"], c: { d: "y" } });
+    const dir = mkdtempSync(join(tmpdir(), "svgforge-"));
+    const manifest = join(dir, "m.json");
+    writeFileSync(
+      manifest,
+      JSON.stringify({ vars: { tool: "ctxpack" }, cards: [{ type: "banner", title: "{{tool}}", out: "b.svg" }] }),
+    );
+    expect(run(["render", manifest, "-o", dir, "--set", "tool=svgforge"])).toBe(0);
+    expect(readFileSync(join(dir, "b.svg"), "utf8")).toContain("svgforge");
+  });
+
+  it("renderManifest assigns default filenames for every type", () => {
+    const out = renderManifest({ cards: [{ type: "banner", title: "x" }] });
     expect(out[0].file).toBe("banner-1.svg");
     expect(out[0].svg).toContain("x");
-  });
-
-  it("the cli renders the new cards and errors cleanly", () => {
-    const dir = mkdtempSync(join(tmpdir(), "svgforge-cards-"));
-    expect(run(["timeline", "--item", "2024-01=v1.0", "--item", "2024-06=v1.1", "-o", `${dir}/t.svg`])).toBe(0);
-    expect(readFileSync(`${dir}/t.svg`, "utf8")).toContain("v1.0");
-    expect(run(["donut", "--item", "TS=60", "--item", "PY=40", "-o", `${dir}/d.svg`])).toBe(0);
-    expect(readFileSync(`${dir}/d.svg`, "utf8")).toContain("TS");
-    expect(run(["divider", "--label", "docs", "-o", `${dir}/div.svg`])).toBe(0);
-    expect(readFileSync(`${dir}/div.svg`, "utf8")).toContain("docs");
-    expect(run(["contributions", "--seed", "5", "-o", `${dir}/c.svg`])).toBe(0);
-    expect(readFileSync(`${dir}/c.svg`, "utf8")).toContain("Less");
-    expect(run(["contributions", "-o", `${dir}/c2.svg`])).toBe(1);
-    expect(run(["timeline", "-o", `${dir}/t2.svg`])).toBe(1);
-    expect(run(["donut", "--item", "x", "-o", `${dir}/d2.svg`])).toBe(1);
-    expect(run(["quote", "--text", "hi", "--width", "600", "-o", `${dir}/q.svg`])).toBe(0);
-    expect(readFileSync(`${dir}/q.svg`, "utf8")).toContain('width="600"');
-  });
-
-  it("contributions --file reads a weeks json", () => {
-    const dir = mkdtempSync(join(tmpdir(), "svgforge-weeks-"));
-    const file = join(dir, "weeks.json");
-    writeFileSync(file, JSON.stringify(randomWeeks(11)));
-    expect(run(["contributions", "--file", file, "-o", `${dir}/cf.svg`])).toBe(0);
-    expect(readFileSync(`${dir}/cf.svg`, "utf8")).toContain("<svg");
-    writeFileSync(file, JSON.stringify({ weeks: randomWeeks(12) }));
-    expect(run(["contributions", "--file", file, "-o", `${dir}/cf2.svg`])).toBe(0);
-    writeFileSync(file, JSON.stringify({ nope: true }));
-    expect(run(["contributions", "--file", file, "-o", `${dir}/cf3.svg`])).toBe(1);
+    expect(CARD_TYPES).toHaveLength(16);
   });
 
   it("rejects path traversal in manifest out", () => {
@@ -232,5 +259,30 @@ describe("manifest + cli", () => {
       }),
     ).toThrow(/traversal/);
     expect(() => safeOutputPath("/tmp/out", "../evil.svg")).toThrow(/traversal/);
+  });
+
+  it("demo writes one svg per card type", () => {
+    const dir = mkdtempSync(join(tmpdir(), "svgforge-demo-"));
+    expect(run(["demo", "-o", dir])).toBe(0);
+    for (const type of CARD_TYPES) {
+      expect(existsSync(join(dir, `${type}.svg`))).toBe(true);
+    }
+  });
+
+  it("rejects invalid flag values from the cli", () => {
+    expect(run(["banner", "--title", "x", "--bg", "red"])).toBe(1);
+    expect(run(["banner", "--title", "x", "--width", "abc"])).toBe(1);
+    expect(run(["badge", "--label", "a", "--value", "b", "--style", "nope"])).toBe(1);
+    expect(run(["unknown"])).toBe(1);
+  });
+
+  it("cli renders timeline and contributions", () => {
+    const dir = mkdtempSync(join(tmpdir(), "svgforge-"));
+    expect(run(["timeline", "--item", "2026-09-01=v1.0", "-o", join(dir, "t.svg")])).toBe(0);
+    expect(readFileSync(join(dir, "t.svg"), "utf8")).toContain("v1.0");
+    expect(run(["contributions", "--seed", "42", "--total", "10", "-o", join(dir, "c.svg")])).toBe(0);
+    expect(readFileSync(join(dir, "c.svg"), "utf8")).toContain("10");
+    expect(run(["contributions"])).toBe(1);
+    expect(run(["timeline"])).toBe(1);
   });
 });

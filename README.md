@@ -4,8 +4,7 @@
 
 <p align="center">
   <strong>Generate GitHub README SVGs on your machine.</strong><br/>
-  Banners, stat cards, skill bars, terminals, badges, quotes, timelines,
-  contribution heatmaps, donut charts, dividers. No third-party render service.
+  Banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves, timelines, contribution graphs. No third-party render service.
 </p>
 
 <p align="center">
@@ -24,6 +23,7 @@ git clone https://github.com/KodYazicam/svgforge.git
 cd svgforge && npm ci && npm run build
 node dist/cli.js banner --title ctxpack --subtitle "Pack a codebase into LLM context" -o assets/banner.svg
 ```
+
 After `npm ci && npm run build`, the CLI is `node dist/cli.js`. `npm link` in this clone puts `svgforge` on your PATH. From another project that file-depends on this repo:
 
 ```ts
@@ -36,24 +36,16 @@ import { banner } from "@kodyazicam/svgforge";
 </p>
 
 <p align="center">
-  <img src="examples/terminal.svg" alt="terminal" width="100%">
-</p>
-
-<p align="center">
-  <img src="examples/timeline.svg" alt="timeline" width="100%">
-</p>
-
-<p align="center">
-  <img src="examples/contrib.svg" alt="contributions" width="100%">
+  <img src="examples/wave.svg" alt="wave" width="100%">
 </p>
 
 <p align="center">
   <img src="examples/donut.svg" alt="donut">
-  <img src="examples/quote.svg" alt="quote">
+  <img src="examples/progress.svg" alt="progress">
 </p>
 
 <p align="center">
-  <img src="examples/divider.svg" alt="divider" width="100%">
+  <img src="examples/terminal.svg" alt="terminal" width="100%">
 </p>
 
 ## Table of contents
@@ -63,6 +55,7 @@ import { banner } from "@kodyazicam/svgforge";
 - [Quick start](#quick-start)
 - [Card types](#card-types)
 - [Themes](#themes)
+- [Custom colors and layout](#custom-colors-and-layout)
 - [CLI](#cli)
 - [Manifest](#manifest)
 - [Path confinement](#path-confinement)
@@ -97,15 +90,22 @@ node dist/cli.js banner --title hello -o banner.svg
 ```bash
 svgforge banner --title hookyard --subtitle "Catch webhooks" --theme tokyonight -o banner.svg
 svgforge stats --item Stars=12 --item Forks=3 -o stats.svg
-svgforge skills --item TypeScript=90 --item Python=80 -o skills.svg
-svgforge terminal --line "$ hookyard --port 4242" --line "listening" -o term.svg
-svgforge badge --label license --value KYAL-1.0 -o badge.svg
-svgforge quote --text "Readable beats clever." --author KodYazicam -o quote.svg
-svgforge timeline --item 2024-01="v1.0 shipped" --item 2024-06="CI green" -o tl.svg
+svgforge skills --item TypeScript=90 --item Python=80 --show-value -o skills.svg
+svgforge terminal --line "$ hookyard --port 4242" --line "listening" --caret -o term.svg
+svgforge badge --label license --value KYAL-1.0 --style plastic -o badge.svg
+svgforge divider --label "more below" -o divider.svg
+svgforge progress --value 68 --caption "roadmap" -o progress.svg
+svgforge donut --item Code=55 --item Docs=30 --item Tests=15 --center 100% -o donut.svg
+svgforge chart --item Mon=12 --item Tue=34 --item Thu=51 -o chart.svg
+svgforge links --item GitHub=https://github.com/KodYazicam -o links.svg
+svgforge quote --text "Ship files, not fetches." --author "you" -o quote.svg
+svgforge code --lang ts --line 'const x = 1;' --line-numbers -o code.svg
+svgforge project --name ctxpack --description "Pack a codebase" --item Stars=12 --tag TypeScript -o project.svg
+svgforge wave --title "hello" --subtitle "v2" -o wave.svg
+svgforge timeline --item 2026-09-01=v1.0 --item 2026-09-28=v2.0 -o timeline.svg
 svgforge contributions --seed 42 --total 1337 -o contrib.svg
-svgforge donut --item TypeScript=60 --item Python=30 --item Go=10 -o donut.svg
-svgforge divider --label docs -o divider.svg
 svgforge render examples/demo.json -o examples/
+svgforge demo -o ./svgforge-demo
 svgforge themes
 ```
 
@@ -115,103 +115,112 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 
 | Type | Flags | Use |
 | --- | --- | --- |
-| `banner` | `--title` `--subtitle` | Hero header. Gradient IDs are unique per title so two banners on one README do not paint each other. |
+| `banner` | `--title` `--subtitle` `--tag` `--logo` `--gradient a,b` | Hero header. Gradient IDs are unique per title so two banners on one README do not paint each other. |
 | `stats` | `--title` `--item Label=Value` (repeat) | Label / value rows |
-| `skills` | `--title` `--item Name=0-100` (repeat) | Percentage bars (clamped 0–100; invalid → 0) |
-| `terminal` | `--title` `--line text` (repeat) | Fake shell; lines starting with `$` or `>` use the accent color |
-| `badge` | `--label` `--value` | Tiny pill |
-| `quote` | `--text` `--author` | Testimonial / pull-quote card; long text wraps, oversized words hard-split |
-| `timeline` | `--title` `--item Date=Label` (repeat) | Milestone rail with dots; last dot uses the second accent |
-| `contributions` | `--file weeks.json` or `--seed n [--density d]`, `--total`, `--title` | GitHub-style 52-week heatmap with a Less/More legend |
-| `donut` | `--title` `--item Label=Value` (repeat) | Donut chart (SVG arcs) with a legend and percentages; center shows the total |
-| `divider` | `--label` | Section separator; accent segment on the left, optional centered chip |
+| `skills` | `--title` `--item Name=0-100` (repeat) `--show-value` | Percentage bars (clamped 0–100; invalid → 0) |
+| `terminal` | `--title` `--line text` (repeat) `--prompt` `--caret` | Fake shell; lines starting with `$` (or your prompt) use the accent color. `--caret` blinks |
+| `badge` | `--label` `--value` `--style flat\|outline\|plastic` `--label-color` | Tiny pill |
+| `divider` | `--label` | Section separator, optionally with a centered pill |
+| `progress` | `--title` `--value 0-100` `--caption` | One milestone bar with the percent printed |
+| `donut` | `--title` `--item Label=Value` (repeat) `--center` `--unit` | Ring chart with legend; colors rotate through the theme |
+| `chart` | `--title` `--item Label=Value` (repeat) `--unit` | Horizontal bars scaled to your largest value (raw values, not 0–100) |
+| `links` | `--item Text=URL` (repeat) `--no-link` | Row of pill buttons; only `http(s)` urls are accepted |
+| `quote` | `--text` `--author` | Pull-quote card; long text wraps |
+| `code` | `--title` `--lang ts\|py\|sh` `--line` (repeat) `--line-numbers` | Snippet card with comment/string/keyword/number coloring |
+| `project` | `--name` `--description` `--host` `--item Label=Value` `--tag text` (repeat) | Repo card: name, blurb, stat columns, tag pills |
+| `wave` | `--title` `--subtitle` `--animate` | Layered sine-wave header, capsule-render style |
+| `timeline` | `--title` `--item Date=Label` (repeat) | Vertical milestone rail with dots |
+| `contributions` | `--title` `--seed n --density 0.4` or `--file weeks.json` `--total` | 52-week heatmap; `randomWeeks`/`levelColors` are exported for real data |
 
-All commands accept `--theme`. `stats`, `skills`, `terminal`, `quote`, `timeline`, `donut`, and `divider` also accept `--width` (minimum 320; dividers 120).
+All commands accept `--theme` and the [common flags](#custom-colors-and-layout).
 
 ## Themes
 
-`midnight` (default) · `tokyonight` · `dracula` · `nord` · `github` · `github-light` · `catppuccin` · `gruvbox` · `rose-pine`
+`midnight` (default) · `tokyonight` · `dracula` · `nord` · `github` · `github-light` · `gruvbox` · `catppuccin` · `catppuccin-latte` · `onedark` · `monokai` · `solarized` · `solarized-light` · `synthwave` · `rose-pine` · `paper`
 
 ```bash
 svgforge themes
 ```
 
-Unknown names fall back to `midnight`. The `github-light` theme is the one to pair with light-mode READMEs; every other theme is dark. `contributions` derives its five heat levels from the theme's accent, so each theme renders a matching heatmap.
+Unknown names fall back to `midnight`. For light GitHub UIs try `paper`, `github-light`, `catppuccin-latte`, or `solarized-light`.
+
+## Custom colors and layout
+
+Every card accepts these. Defaults reproduce the theme exactly — pass nothing and output is identical to v1.
+
+| Flag | Effect |
+| --- | --- |
+| `--bg`, `--bg2`, `--fg`, `--muted`, `--accent`, `--accent2`, `--line-color <#rrggbb>` | Override one theme color at a time |
+| `--width <px>`, `--height <px>` | Card size |
+| `--radius <px>` | Corner radius |
+| `--font <family>` | Replace the font stack everywhere on the card |
+| `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
+| `--gradient #aabbcc,#111111` | Custom two-stop gradient (`banner`) |
+
+```bash
+svgforge banner --title ctxpack --bg "#0b1220" --accent "#38bdf8" --flat -o banner.svg
+svgforge stats --item Stars=12 --theme paper --radius 4 -o stats.svg
+```
+
+Bad colors (`red`) and bad sizes (`--width abc`) exit 1 with the flag named in the message.
 
 ## CLI
 
 ```text
-svgforge banner|stats|skills|terminal|badge|quote|timeline|contributions|donut|divider
-       [flags] [-o file.svg] [--theme name] [--width n]
-svgforge render manifest.json -o ./outdir
-svgforge themes
-svgforge --help
-svgforge --version
+svgforge <card-type> [flags] [-o file.svg]
+svgforge render manifest.json -o ./outdir [--set key=value]
+svgforge demo [-o ./svgforge-demo]
+svgforge themes | types
+svgforge --help | --version
 ```
 
-`render` writes one file per card. Nested `out` paths are created (`assets/hero/banner.svg`) **inside** `-o`.
+`demo` writes one sample of each of the 16 card types — the fastest way to see everything a theme can do. `render` writes one file per card. Nested `out` paths are created (`assets/hero/banner.svg`) **inside** `-o`.
 
 ## Manifest
 
-`render` reads a JSON manifest and writes every card in one pass. Top-level `theme` applies to all cards; a per-card `theme` overrides it. `out` is the filename relative to `-o` (default `banner-1.svg`, `stats-2.svg`, … in card order).
-
-Every card shape, with all fields:
+`examples/demo.json`:
 
 ```json
 {
   "theme": "midnight",
+  "vars": { "tool": "ctxpack", "license": "KYAL-1.0" },
   "cards": [
-    { "type": "banner", "title": "ctxpack", "subtitle": "LLM context packer", "width": 880, "height": 160, "out": "banner.svg" },
-
-    { "type": "stats", "title": "Open source", "width": 480,
-      "items": [{ "label": "Tools shipped", "value": "5" }, { "label": "License", "value": "KYAL-1.0" }] },
-
-    { "type": "skills", "title": "Stack", "width": 520,
-      "items": [{ "name": "TypeScript", "level": 90 }, { "name": "Python", "level": 84 }] },
-
-    { "type": "terminal", "title": "kodyazicam@github", "width": 720,
-      "lines": ["$ node dist/cli.js . -o prompt.md", "wrote prompt.md  files=42"] },
-
-    { "type": "badge", "label": "license", "value": "KYAL-1.0" },
-
-    { "type": "quote", "quote": "Readable beats clever.", "author": "KodYazicam", "width": 480 },
-
-    { "type": "timeline", "title": "Roadmap", "width": 560,
-      "items": [{ "date": "2024-01", "label": "v1.0 shipped" }, { "date": "2024-06", "label": "CI green" }] },
-
-    { "type": "contributions", "title": "Contributions", "total": 1337,
-      "weeks": [[0,1,2,0,0,1,0], [1,3,0,0,2,0,1]] },
-
-    { "type": "donut", "title": "Languages", "width": 520,
-      "slices": [
-        { "label": "TypeScript", "value": 58 },
-        { "label": "Python", "value": 24, "color": "#ff79c6" }
-      ] },
-
-    { "type": "divider", "label": "docs", "width": 720 }
+    {
+      "type": "banner",
+      "title": "{{tool}}",
+      "subtitle": "LLM context packer",
+      "out": "banner.svg"
+    },
+    {
+      "type": "stats",
+      "title": "Open source",
+      "items": [
+        { "label": "License", "value": "{{license}}" }
+      ],
+      "out": "stats.svg"
+    }
   ]
 }
 ```
 
-Notes per card:
+`{{var}}` placeholders are replaced in every card field (including `out` filenames). `--set key=value` (repeat) overrides vars from the command line — handy for regenerating a profile README with a different username:
 
-- **contributions** — `weeks` is up to 52 arrays of 7 levels (`0–4`, clamped; shorter weeks are zero-padded; non-numeric values become `0`). Five heat colors are derived from the theme accent. `total` is optional display text.
-- **donut** — slices with non-positive or non-numeric `value` are dropped. An optional `color` (hex) overrides the theme palette. Percentages are computed from the surviving values; the center number is their sum.
-- **timeline** — the last item's dot uses `accent2` so "today" stands out.
-- **divider** — omit `label` for a bare 18px-high separator.
+```bash
+svgforge render profile.json -o ./assets --set tool=hookyard
+```
 
-`examples/demo.json` is a complete, committed example; `npm run examples` re-renders `examples/*.svg` from it.
+Per-card `theme` overrides the manifest default. If `out` is omitted, files are `banner-1.svg`, `stats-2.svg`, …
 
 ## Path confinement
 
-`out` values that contain `..`, that are absolute (`/etc/cron.d/pwn.svg`), or that would resolve outside `-o` are **rejected**. Do not feed an untrusted manifest to `render` and expect writes to stay in the output directory — and if you find a bypass, see [SECURITY.md](./SECURITY.md).
+`out` values that contain `..`, that are absolute (`/etc/cron.d/pwn.svg`), or that would resolve outside `-o` are **rejected**. `links` only accepts `http(s)` urls. Do not feed an untrusted manifest to `render` and expect writes to stay in the output directory — and if you find a bypass, see [SECURITY.md](./SECURITY.md).
 
 ## Library
 
 After `npm install /path/to/svgforge` (this clone):
 
 ```ts
-import { banner, skills, renderManifest, THEMES } from "@kodyazicam/svgforge";
+import { banner, donut, renderManifest, THEMES } from "@kodyazicam/svgforge";
 
 const svg = banner({
   title: "envsentinel",
@@ -221,13 +230,14 @@ const svg = banner({
 
 const files = renderManifest({
   theme: "midnight",
+  vars: { tool: "ctxpack" },
   cards: [{ type: "badge", label: "license", value: "KYAL-1.0", out: "badge.svg" }],
 });
 ```
 
-Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `quote`, `timeline`, `contributions`, `donut`, `divider`, `renderCard`, `renderManifest`, `safeOutputPath`, `THEMES`, `resolveTheme`, `escapeXml`, `svgId`, `mixHex`, `seededRandom`, `randomWeeks`, `levelColors`, plus the option/slice/item types.
+Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `divider`, `progress`, `donut`, `chart`, `links`, `quote`, `code`, `project`, `wave`, `timeline`, `contributions`, `randomWeeks`, `levelColors`, `renderCard`, `renderManifest`, `substituteVars`, `CARD_TYPES`, `safeOutputPath`, `THEMES`, `applyOverrides`, `cardTheme`, `isValidColor`, `escapeXml`, `svgId`, `mixHex`, `seededRandom`, `wrapLines`, `FONT_MONO`, `FONT_SANS`, `fontStack`.
 
-`mixHex(a, b, t)` blends two hex colors and `seededRandom(seed)` is a deterministic PRNG — both are what the derived palettes and the seeded contribution graphs use, and both are exported so your own cards can reuse them.
+Every card options object takes the same optional fields as the CLI flags (`theme`, `bg`, `fg`, `accent`, `width`, `radius`, `font`, …) — v1 call sites keep working unchanged.
 
 ## GitHub README usage
 
@@ -241,17 +251,15 @@ Commit the SVG, then:
 
 Relative paths work on GitHub, npm, and clones. Do not hotlink a render API if you want the image to survive that API.
 
-Dark GitHub UI: use `midnight`, `tokyonight`, `dracula`, or `github`. Light UI: `github-light` or `nord`.
+Dark GitHub UI: use `midnight`, `tokyonight`, `dracula`, `github`, `gruvbox`, `catppuccin`, `onedark`, `monokai`, `solarized`, or `synthwave`. Light UI: `paper`, `catppuccin-latte`, `solarized-light`; `nord` is the least dark of the rest.
 
 The KodYazicam profile README uses the same generator so a Vercel 402 cannot blank the header.
 
 ## Escaping and limits
 
-All user strings go through `escapeXml` (`& < > " '`). Titles like `A&B <C>` will not break the SVG.
+All user strings go through `escapeXml` (`& < > " '`). Titles like `A&B <C>` will not break the SVG, including inside `code` and `quote` cards.
 
-Skill `level` is clamped to 0–100. Non-numeric CLI values become 0. Donut slice values must be positive numbers; anything else is dropped before percentages are computed. Contribution weeks are clamped to 52 weeks of 7 levels, each level 0–4.
-
-Seeded things are **deterministic**: the same `--seed` renders byte-identical `contributions` output, and `randomWeeks(seed)` in the library returns the same array every call. No hidden `Math.random()` anywhere in a card.
+Skill `level` is clamped to 0–100. Non-numeric CLI values become 0. `progress` accepts `68` or `68%`. `chart` bars scale to your largest value.
 
 Fonts are generic (`ui-monospace`, `ui-sans-serif`) so GitHub’s renderer does not need webfonts.
 
@@ -262,21 +270,20 @@ Fonts are generic (`ui-monospace`, `ui-sans-serif`) so GitHub’s renderer does 
 | Blank / tiny image on GitHub | Wait for cache; hard-refresh. Path must be committed, not gitignored |
 | Theme ignored | Name must be one of `svgforge themes`. Unknown names fall back to `midnight` |
 | `--item` parsed wrong | Use `Label=Value` with no spaces around `=`, or quote: `--item "Stars=12"` |
-| `contributions` exits 1 | Pass `--seed <n>` (demo data) or `--file weeks.json` (real data). The file must be a JSON array (or `{ "weeks": [...] }`) |
-| `contributions --file` shape | Up to 52 arrays of 7 numbers `0–4`; shorter weeks are zero-padded |
-| `donut` exits 1 | Needs at least one `--item Label=Value` with a positive numeric value |
+| `invalid color for --bg` | Colors must be `#rrggbb`-style hex, one flag per color |
+| `invalid --line` / `--text` | You passed a color where text belongs, or vice versa: theme border color is `--line-color` |
 | `render` missing files | Pass `-o` directory; check `out` filenames in the JSON |
 | `refusing path traversal` | `out` tried to leave the output directory. Use a relative name |
 | Two banners look identical | Old files used `id="g"`. Rebuild with this version (unique gradient ids) |
 | XML entity in title | Already escaped. If you double-escape you will see `&amp;amp;` |
+| Animated wave/terminal is static on GitHub | GitHub serves SVGs through its sanitizer; animation works in browsers and some embeds. Treat `--animate`/`--caret` as best-effort |
+| Links card does nothing on GitHub | GitHub renders repo images via `<img>`; anchors are ignored there. They work on your own site |
 
 ## FAQ
 
-**Can it fetch GitHub stats live?** No. That is the point. Pass numbers you control. For the contributions heatmap, feed your real daily counts via `--file` (52 arrays of levels), or use `--seed` for a stand-in graph while the README is young.
+**Can it fetch GitHub stats live?** No. That is the point. Pass numbers you control.
 
-**Where do contribution levels come from?** You map them: 0 = no activity, 1–4 = buckets you choose (1–3, 4–7, 8–11, 12+ commits, say). svgforge never invents data unless you ask it to (`--seed`).
-
-**Animated banners?** Not in v1. Static SVG only.
+**Animated banners?** Opt-in and best-effort: `wave --animate` (translating wave layers) and `terminal --caret` (blinking caret) use SMIL. Static everywhere else.
 
 **Can I edit the SVG in Figma?** Yes. It is plain SVG.
 

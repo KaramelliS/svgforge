@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="240" viewBox="0 0 520 240" role="img" aria-label="Clones per day">
+
+  <rect width="520" height="240" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Clones per day</text>
+
+  <text x="28" y="78" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Mon</text>
+  <rect x="150" y="66" width="320" height="12" rx="6" fill="#24243e"/>
+  <rect x="150" y="66" width="75" height="12" rx="6" fill="#a78bfa"/>
+  <text x="484" y="78" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">12</text>
+  <text x="28" y="118" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Tue</text>
+  <rect x="150" y="106" width="320" height="12" rx="6" fill="#24243e"/>
+  <rect x="150" y="106" width="213" height="12" rx="6" fill="#a78bfa"/>
+  <text x="484" y="118" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">34</text>
+  <text x="28" y="158" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Wed</text>
+  <rect x="150" y="146" width="320" height="12" rx="6" fill="#24243e"/>
+  <rect x="150" y="146" width="176" height="12" rx="6" fill="#a78bfa"/>
+  <text x="484" y="158" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">28</text>
+  <text x="28" y="198" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">Thu</text>
+  <rect x="150" y="186" width="320" height="12" rx="6" fill="#24243e"/>
+  <rect x="150" y="186" width="320" height="12" rx="6" fill="#a78bfa"/>
+  <text x="484" y="198" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">51</text>
+
+</svg>

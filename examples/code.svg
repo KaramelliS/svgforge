@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="152" viewBox="0 0 640 152" role="img" aria-label="demo.ts">
+
+  <rect width="640" height="152" rx="14" fill="#0f0c29" stroke="#302b63"/>
+  <circle cx="28" cy="24" r="6" fill="#ff5f56"/>
+  <circle cx="48" cy="24" r="6" fill="#ffbd2e"/>
+  <circle cx="68" cy="24" r="6" fill="#27c93f"/>
+  <text x="96" y="28" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">demo.ts</text>
+  <text x="24" y="66" text-anchor="end" fill="#c4b5fd" fill-opacity="0.6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">1</text>
+  <text x="64" y="66" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#ffffff"><tspan fill="#a78bfa" font-weight="600">import</tspan><tspan fill="#ffffff"> { </tspan><tspan fill="#ffffff">renderManifest</tspan><tspan fill="#ffffff"> } </tspan><tspan fill="#a78bfa" font-weight="600">from</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#7c3aed">&quot;@kodyazicam/svgforge&quot;</tspan><tspan fill="#ffffff">;</tspan></text>
+  <text x="24" y="86" text-anchor="end" fill="#c4b5fd" fill-opacity="0.6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">2</text>
+  <text x="64" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#ffffff"><tspan fill="#c4b5fd">// one json in, one folder of svgs out</tspan></text>
+  <text x="24" y="106" text-anchor="end" fill="#c4b5fd" fill-opacity="0.6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">3</text>
+  <text x="64" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#ffffff"><tspan fill="#a78bfa" font-weight="600">const</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ffffff">files</tspan><tspan fill="#ffffff"> = </tspan><tspan fill="#ffffff" font-weight="600">renderManifest</tspan><tspan fill="#ffffff">({ </tspan><tspan fill="#ffffff">cards</tspan><tspan fill="#ffffff"> });</tspan></text>
+  <text x="24" y="126" text-anchor="end" fill="#c4b5fd" fill-opacity="0.6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">4</text>
+  <text x="64" y="126" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#ffffff"><tspan fill="#a78bfa" font-weight="600">for</tspan><tspan fill="#ffffff"> (</tspan><tspan fill="#a78bfa" font-weight="600">const</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ffffff">card</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ffffff">of</tspan><tspan fill="#ffffff"> </tspan><tspan fill="#ffffff">files</tspan><tspan fill="#ffffff">) </tspan><tspan fill="#ffffff" font-weight="600">write</tspan><tspan fill="#ffffff">(</tspan><tspan fill="#ffffff">card</tspan><tspan fill="#ffffff">.</tspan><tspan fill="#ffffff">file</tspan><tspan fill="#ffffff">, </tspan><tspan fill="#ffffff">card</tspan><tspan fill="#ffffff">.</tspan><tspan fill="#ffffff">svg</tspan><tspan fill="#ffffff">);</tspan></text>
+
+</svg>
