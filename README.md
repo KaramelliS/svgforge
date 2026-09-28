@@ -48,6 +48,8 @@ import { banner } from "@kodyazicam/svgforge";
   <img src="examples/terminal.svg" alt="terminal" width="100%">
 </p>
 
+> **[ALL-SVG-FORMS.md](./ALL-SVG-FORMS.md)** — every card type as a rendered image, with the exact command and flags that produce it.
+
 ## Table of contents
 
 - [Requirements](#requirements)
@@ -132,7 +134,7 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 | `timeline` | `--title` `--item Date=Label` (repeat) | Vertical milestone rail with dots |
 | `contributions` | `--title` `--seed n --density 0.4` or `--file weeks.json` `--total` | 52-week heatmap; `randomWeeks`/`levelColors` are exported for real data |
 
-All commands accept `--theme` and the [common flags](#custom-colors-and-layout).
+All commands accept `--theme` and the [common flags](#custom-colors-and-layout). Rendered examples with copy-paste commands per card: [ALL-SVG-FORMS.md](./ALL-SVG-FORMS.md).
 
 ## Themes
 
