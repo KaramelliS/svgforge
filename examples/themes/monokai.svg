@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="monokai">
+
+<defs>
+    <linearGradient id="grad-monokaimonokai-3a2b5424" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#272822"/>
+      <stop offset="55%" stop-color="#49483e"/>
+      <stop offset="100%" stop-color="#3e3d32"/>
+    </linearGradient>
+  </defs>
+  <rect width="880" height="160" rx="16" fill="url(#grad-monokaimonokai-3a2b5424)"/>
+  <circle cx="810" cy="40" r="90" fill="#fd971f" fill-opacity="0.18"/>
+  <text x="44" y="48" fill="#66d9ef" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="44" y="84" fill="#f8f8f2" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">monokai</text>
+  <text x="44" y="120" fill="#75715e" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+
+</svg>

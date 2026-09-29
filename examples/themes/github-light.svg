@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="github-light">
+
+<defs>
+    <linearGradient id="grad-github-lightgithub-light-b0055dfc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#d0d7de"/>
+      <stop offset="100%" stop-color="#f6f8fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="880" height="160" rx="16" fill="url(#grad-github-lightgithub-light-b0055dfc)"/>
+  <circle cx="810" cy="40" r="90" fill="#1a7f37" fill-opacity="0.18"/>
+  <text x="44" y="48" fill="#0969da" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="44" y="84" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">github-light</text>
+  <text x="44" y="120" fill="#656d76" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+
+</svg>

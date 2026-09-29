@@ -176,6 +176,8 @@ All commands accept `--theme` and the [common flags](#custom-colors-and-layout).
 svgforge themes
 ```
 
+Rendered sample of every theme: [ALL-SVG-FORMS.md](./ALL-SVG-FORMS.md#theme-gallery).
+
 Unknown names fall back to `midnight`. For light GitHub UIs try `paper`, `github-light`, `catppuccin-latte`, or `solarized-light`.
 
 ## Custom colors and layout

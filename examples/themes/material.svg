@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="material">
+
+<defs>
+    <linearGradient id="grad-materialmaterial-5f57a05c" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#263238"/>
+      <stop offset="55%" stop-color="#37474f"/>
+      <stop offset="100%" stop-color="#1e272c"/>
+    </linearGradient>
+  </defs>
+  <rect width="880" height="160" rx="16" fill="url(#grad-materialmaterial-5f57a05c)"/>
+  <circle cx="810" cy="40" r="90" fill="#c3e88d" fill-opacity="0.18"/>
+  <text x="44" y="48" fill="#82aaff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="44" y="84" fill="#eeffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">material</text>
+  <text x="44" y="120" fill="#b0bec5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+
+</svg>

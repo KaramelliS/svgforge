@@ -18,6 +18,7 @@ default `midnight` theme.
 [figure](#figure) · [mark](#mark) · [profile](#profile) · [steps](#steps) ·
 [pills](#pills) · [callout](#callout) · [compare](#compare) · [social](#social) ·
 [checklist](#checklist) · [cover](#cover) ·
+[theme gallery](#theme-gallery) ·
 [common flags](#common-flags-every-card) · [themes](#themes) · [manifests](#manifests)
 
 ---
@@ -665,6 +666,186 @@ A large hero. `--shadow` adds a soft drop shadow; it works on every card.
 
 ```bash
 svgforge cover --kicker "local svg" --title svgforge --subtitle "zero network" --shadow
+```
+
+## Theme gallery
+
+One banner per built-in theme. Same command, only `--theme` changes.
+
+### midnight
+
+![midnight](examples/themes/midnight.svg)
+
+```bash
+svgforge banner --theme midnight --title midnight --subtitle "svgforge theme" --tag THEME
+```
+
+### tokyonight
+
+![tokyonight](examples/themes/tokyonight.svg)
+
+```bash
+svgforge banner --theme tokyonight --title tokyonight --subtitle "svgforge theme" --tag THEME
+```
+
+### dracula
+
+![dracula](examples/themes/dracula.svg)
+
+```bash
+svgforge banner --theme dracula --title dracula --subtitle "svgforge theme" --tag THEME
+```
+
+### nord
+
+![nord](examples/themes/nord.svg)
+
+```bash
+svgforge banner --theme nord --title nord --subtitle "svgforge theme" --tag THEME
+```
+
+### github
+
+![github](examples/themes/github.svg)
+
+```bash
+svgforge banner --theme github --title github --subtitle "svgforge theme" --tag THEME
+```
+
+### gruvbox
+
+![gruvbox](examples/themes/gruvbox.svg)
+
+```bash
+svgforge banner --theme gruvbox --title gruvbox --subtitle "svgforge theme" --tag THEME
+```
+
+### catppuccin
+
+![catppuccin](examples/themes/catppuccin.svg)
+
+```bash
+svgforge banner --theme catppuccin --title catppuccin --subtitle "svgforge theme" --tag THEME
+```
+
+### catppuccin-latte
+
+![catppuccin-latte](examples/themes/catppuccin-latte.svg)
+
+```bash
+svgforge banner --theme catppuccin-latte --title catppuccin-latte --subtitle "svgforge theme" --tag THEME
+```
+
+### onedark
+
+![onedark](examples/themes/onedark.svg)
+
+```bash
+svgforge banner --theme onedark --title onedark --subtitle "svgforge theme" --tag THEME
+```
+
+### monokai
+
+![monokai](examples/themes/monokai.svg)
+
+```bash
+svgforge banner --theme monokai --title monokai --subtitle "svgforge theme" --tag THEME
+```
+
+### solarized
+
+![solarized](examples/themes/solarized.svg)
+
+```bash
+svgforge banner --theme solarized --title solarized --subtitle "svgforge theme" --tag THEME
+```
+
+### solarized-light
+
+![solarized-light](examples/themes/solarized-light.svg)
+
+```bash
+svgforge banner --theme solarized-light --title solarized-light --subtitle "svgforge theme" --tag THEME
+```
+
+### synthwave
+
+![synthwave](examples/themes/synthwave.svg)
+
+```bash
+svgforge banner --theme synthwave --title synthwave --subtitle "svgforge theme" --tag THEME
+```
+
+### tokyo-night-storm
+
+![tokyo-night-storm](examples/themes/tokyo-night-storm.svg)
+
+```bash
+svgforge banner --theme tokyo-night-storm --title tokyo-night-storm --subtitle "svgforge theme" --tag THEME
+```
+
+### kanagawa
+
+![kanagawa](examples/themes/kanagawa.svg)
+
+```bash
+svgforge banner --theme kanagawa --title kanagawa --subtitle "svgforge theme" --tag THEME
+```
+
+### everforest
+
+![everforest](examples/themes/everforest.svg)
+
+```bash
+svgforge banner --theme everforest --title everforest --subtitle "svgforge theme" --tag THEME
+```
+
+### ayu
+
+![ayu](examples/themes/ayu.svg)
+
+```bash
+svgforge banner --theme ayu --title ayu --subtitle "svgforge theme" --tag THEME
+```
+
+### horizon
+
+![horizon](examples/themes/horizon.svg)
+
+```bash
+svgforge banner --theme horizon --title horizon --subtitle "svgforge theme" --tag THEME
+```
+
+### material
+
+![material](examples/themes/material.svg)
+
+```bash
+svgforge banner --theme material --title material --subtitle "svgforge theme" --tag THEME
+```
+
+### paper
+
+![paper](examples/themes/paper.svg)
+
+```bash
+svgforge banner --theme paper --title paper --subtitle "svgforge theme" --tag THEME
+```
+
+### github-light
+
+![github-light](examples/themes/github-light.svg)
+
+```bash
+svgforge banner --theme github-light --title github-light --subtitle "svgforge theme" --tag THEME
+```
+
+### rose-pine
+
+![rose-pine](examples/themes/rose-pine.svg)
+
+```bash
+svgforge banner --theme rose-pine --title rose-pine --subtitle "svgforge theme" --tag THEME
 ```
 
 ## Common flags (every card)
