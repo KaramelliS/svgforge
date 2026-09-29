@@ -21,7 +21,7 @@ capsule-render, github-readme-stats, and typing SVGs look great until the CDN is
 ```bash
 git clone https://github.com/KodYazicam/svgforge.git
 cd svgforge && npm ci && npm run build
-node dist/cli.js banner --title ctxpack --subtitle "Pack a codebase into LLM context" -o assets/banner.svg
+node dist/cli.js banner --title mytool --subtitle "Pack a codebase into LLM context" -o assets/banner.svg
 ```
 
 After `npm ci && npm run build`, the CLI is `node dist/cli.js`. `npm link` in this clone puts `svgforge` on your PATH. From another project that file-depends on this repo:
@@ -70,7 +70,7 @@ import { banner } from "@kodyazicam/svgforge";
 
 ## Requirements
 
-- Node.js **20+**
+- Node.js **22+**
 - No canvas, no browser, no network
 
 ## Install
@@ -90,10 +90,10 @@ node dist/cli.js banner --title hello -o banner.svg
 ## Quick start
 
 ```bash
-svgforge banner --title hookyard --subtitle "Catch webhooks" --theme tokyonight -o banner.svg
+svgforge banner --title myapp --subtitle "Catch webhooks" --theme tokyonight -o banner.svg
 svgforge stats --item Stars=12 --item Forks=3 -o stats.svg
 svgforge skills --item TypeScript=90 --item Python=80 --show-value -o skills.svg
-svgforge terminal --line "$ hookyard --port 4242" --line "listening" --caret -o term.svg
+svgforge terminal --line "$ myapp --port 4242" --line "listening" --caret -o term.svg
 svgforge badge --label license --value KYAL-1.0 --style plastic -o badge.svg
 svgforge divider --label "more below" -o divider.svg
 svgforge progress --value 68 --caption "roadmap" -o progress.svg
@@ -102,7 +102,7 @@ svgforge chart --item Mon=12 --item Tue=34 --item Thu=51 -o chart.svg
 svgforge links --item GitHub=https://github.com/KodYazicam -o links.svg
 svgforge quote --text "Ship files, not fetches." --author "you" -o quote.svg
 svgforge code --lang ts --line 'const x = 1;' --line-numbers -o code.svg
-svgforge project --name ctxpack --description "Pack a codebase" --item Stars=12 --tag TypeScript -o project.svg
+svgforge project --name mytool --description "Pack a codebase" --item Stars=12 --tag TypeScript -o project.svg
 svgforge wave --title "hello" --subtitle "v2" -o wave.svg
 svgforge timeline --item 2026-09-01=v1.0 --item 2026-09-28=v2.0 -o timeline.svg
 svgforge contributions --seed 42 --total 1337 -o contrib.svg
@@ -142,7 +142,7 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 | `progress` | `--title` `--value 0-100` `--caption` | One milestone bar with the percent printed |
 | `donut` | `--title` `--item Label=Value` (repeat) `--center` `--unit` | Ring chart with legend; colors rotate through the theme |
 | `chart` | `--title` `--item Label=Value` (repeat) `--unit` | Horizontal bars scaled to your largest value (raw values, not 0–100) |
-| `links` | `--item Text=URL` (repeat) `--no-link` | Row of pill buttons; only `http(s)` urls are accepted |
+| `links` | `--item Text=URL` (repeat) `--link` | Row of pill buttons. Anchors are off by default; `--link` enables them. Only `http(s)` urls are accepted |
 | `quote` | `--text` `--author` | Pull-quote card; long text wraps |
 | `code` | `--title` `--lang ts\|py\|sh` `--line` (repeat) `--line-numbers` | Snippet card with comment/string/keyword/number coloring |
 | `project` | `--name` `--description` `--host` `--item Label=Value` `--tag text` (repeat) | Repo card: name, blurb, stat columns, tag pills |
@@ -198,7 +198,7 @@ Every card accepts these. Defaults reproduce the theme exactly — pass nothing 
 | `--gradient #aabbcc,#111111` | Custom two-stop gradient (`banner`) |
 
 ```bash
-svgforge banner --title ctxpack --bg "#0b1220" --accent "#38bdf8" --flat -o banner.svg
+svgforge banner --title mytool --bg "#0b1220" --accent "#38bdf8" --flat -o banner.svg
 svgforge stats --item Stars=12 --theme paper --radius 4 -o stats.svg
 ```
 
@@ -223,7 +223,7 @@ svgforge --help | --version
 ```json
 {
   "theme": "midnight",
-  "vars": { "tool": "ctxpack", "license": "KYAL-1.0" },
+  "vars": { "tool": "mytool", "license": "KYAL-1.0" },
   "cards": [
     {
       "type": "banner",
@@ -233,7 +233,7 @@ svgforge --help | --version
     },
     {
       "type": "stats",
-      "title": "Open source",
+      "title": "Free to use",
       "items": [
         { "label": "License", "value": "{{license}}" }
       ],
@@ -246,14 +246,14 @@ svgforge --help | --version
 `{{var}}` placeholders are replaced in every card field (including `out` filenames). `--set key=value` (repeat) overrides vars from the command line — handy for regenerating a profile README with a different username:
 
 ```bash
-svgforge render profile.json -o ./assets --set tool=hookyard
+svgforge render profile.json -o ./assets --set tool=myapp
 ```
 
 Per-card `theme` overrides the manifest default. If `out` is omitted, files are `banner-1.svg`, `stats-2.svg`, …
 
 ## Path confinement
 
-`out` values that contain `..`, that are absolute (`/etc/cron.d/pwn.svg`), or that would resolve outside `-o` are **rejected**. `links` only accepts `http(s)` urls. Do not feed an untrusted manifest to `render` and expect writes to stay in the output directory — and if you find a bypass, see [SECURITY.md](./SECURITY.md).
+`{{var}}` substitution runs first. The path check then runs on the substituted `out` value. Values that contain `..`, that are absolute (`/etc/cron.d/pwn.svg`), or that would resolve outside `-o` are **rejected**. `links` only accepts `http(s)` urls. If you find a bypass, see [SECURITY.md](./SECURITY.md).
 
 ## Library
 
@@ -263,21 +263,21 @@ After `npm install /path/to/svgforge` (this clone):
 import { banner, donut, renderManifest, THEMES } from "@kodyazicam/svgforge";
 
 const svg = banner({
-  title: "envsentinel",
+  title: "mylib",
   subtitle: "Lint your .env",
   theme: "nord",
 });
 
 const files = renderManifest({
   theme: "midnight",
-  vars: { tool: "ctxpack" },
+  vars: { tool: "mytool" },
   cards: [{ type: "badge", label: "license", value: "KYAL-1.0", out: "badge.svg" }],
 });
 ```
 
-Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `divider`, `progress`, `donut`, `chart`, `links`, `quote`, `code`, `project`, `wave`, `timeline`, `contributions`, `counter`, `sparkline`, `gauge`, `radar`, `columns`, `rating`, `figure`, `mark`, `randomWeeks`, `levelColors`, `renderCard`, `renderManifest`, `substituteVars`, `CARD_TYPES`, `safeOutputPath`, `THEMES`, `applyOverrides`, `cardTheme`, `isValidColor`, `escapeXml`, `svgId`, `mixHex`, `seededRandom`, `scaleSvg`, `borderAttr`, `wrapLines`, `FONT_MONO`, `FONT_SANS`, `fontStack`.
+Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `divider`, `progress`, `donut`, `chart`, `links`, `quote`, `code`, `project`, `wave`, `timeline`, `contributions`, `randomWeeks`, `levelColors`, `counter`, `sparkline`, `gauge`, `radar`, `columns`, `rating`, `figure`, `mark`, `profile`, `steps`, `pills`, `callout`, `compare`, `social`, `checklist`, `cover`, `renderCard`, `renderManifest`, `safeOutputPath`, `substituteVars`, `CARD_TYPES`, `THEMES`, `FONT_MONO`, `FONT_SANS`.
 
-Every card options object takes the same optional fields as the CLI flags (`theme`, `bg`, `fg`, `accent`, `width`, `radius`, `font`, …) — v1 call sites keep working unchanged.
+Every card options object takes the same optional fields as the CLI flags (`theme`, `bg`, `fg`, `accent`, `width`, `radius`, `font`, …).
 
 ## GitHub README usage
 
@@ -292,8 +292,6 @@ Commit the SVG, then:
 Relative paths work on GitHub, npm, and clones. Do not hotlink a render API if you want the image to survive that API.
 
 Dark GitHub UI: use `midnight`, `tokyonight`, `dracula`, `github`, `gruvbox`, `catppuccin`, `onedark`, `monokai`, `solarized`, or `synthwave`. Light UI: `paper`, `catppuccin-latte`, `solarized-light`; `nord` is the least dark of the rest.
-
-The KodYazicam profile README uses the same generator so a Vercel 402 cannot blank the header.
 
 ## Escaping and limits
 
