@@ -16,32 +16,32 @@ export function mark(options: MarkOptions): string {
   }
   const shape = options.shape ?? "squircle";
   const gid = svgId(`${letter}|${shape}|${theme.name}`, "mark");
-  let gradientStops: string;
+  let defs = "";
+  let fill = theme.accent;
   if (options.gradient) {
     const [from, to] = options.gradient;
     if (!isValidColor(from) || !isValidColor(to)) {
       throw new Error("invalid --gradient colors (use #rrggbb,#rrggbb)");
     }
-    gradientStops = `<stop offset="0%" stop-color="${from}"/><stop offset="100%" stop-color="${to}"/>`;
-  } else {
-    gradientStops = `<stop offset="0%" stop-color="${theme.accent}"/><stop offset="100%" stop-color="${theme.accent2}"/>`;
+    defs = `
+  <defs>
+    <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${from}"/><stop offset="100%" stop-color="${to}"/>
+    </linearGradient>
+  </defs>`;
+    fill = `url(#${gid})`;
   }
   let shapeRect: string;
   if (shape === "circle") {
-    shapeRect = `<circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="url(#${gid})"/>`;
+    shapeRect = `<circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${fill}"/>`;
   } else {
     const rx = shape === "squircle" ? Math.round(size * 0.22) : options.radius ?? 8;
-    shapeRect = `<rect width="${size}" height="${size}" rx="${rx}" fill="url(#${gid})"/>`;
+    shapeRect = `<rect width="${size}" height="${size}" rx="${rx}" fill="${fill}"/>`;
   }
   const fontSize = letter.length === 1 ? 76 : letter.length === 2 ? 54 : 40;
-  const inner = `
-  <defs>
-    <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
-      ${gradientStops}
-    </linearGradient>
-  </defs>
+  const inner = `${defs}
   ${shapeRect}
-  <text x="${size / 2}" y="${size / 2 + fontSize * 0.35}" text-anchor="middle" fill="${theme.text}" font-family="${sans}" font-size="${fontSize}" font-weight="800">${escapeXml(letter)}</text>
+  <text x="${size / 2}" y="${size / 2 + fontSize * 0.35}" text-anchor="middle" fill="${theme.bg}" font-family="${sans}" font-size="${fontSize}" font-weight="800">${escapeXml(letter)}</text>
 `;
   return wrap(`mark ${letter}`, inner, size, size, options);
 }

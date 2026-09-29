@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="rose-pine">
 
-<defs>
-    <linearGradient id="grad-rose-pinerose-pine-60065fe0" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#191724"/>
-      <stop offset="55%" stop-color="#26233a"/>
-      <stop offset="100%" stop-color="#1f1d2e"/>
-    </linearGradient>
-  </defs>
-  <rect width="880" height="160" rx="16" fill="url(#grad-rose-pinerose-pine-60065fe0)"/>
-  <circle cx="810" cy="40" r="90" fill="#31748f" fill-opacity="0.18"/>
-  <text x="44" y="48" fill="#ebbcba" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
-  <text x="44" y="84" fill="#e0def4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">rose-pine</text>
-  <text x="44" y="120" fill="#908caa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+<rect width="880" height="160" rx="16" fill="#191724" stroke="#26233a" stroke-width="1"/>
+  <rect x="28" y="52" width="4" height="80" rx="2" fill="#ebbcba"/>
+  <circle cx="808" cy="52" r="40" fill="none" stroke="#31748f" stroke-opacity="0.35" stroke-width="1.5"/>
+  <circle cx="808" cy="52" r="4" fill="#31748f" fill-opacity="0.8"/>
+  <text x="52" y="48" fill="#ebbcba" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="52" y="84" fill="#e0def4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">rose-pine</text>
+  <text x="52" y="120" fill="#908caa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
 
 </svg>

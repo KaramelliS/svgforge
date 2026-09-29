@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
+import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface RadarItem {
   label: string;
@@ -50,7 +50,6 @@ export function radar(options: RadarOptions): string {
     })
     .join("\n");
   const valuePoints = items.map((item, i) => point(i, (maxR * item.value) / 100));
-  const gid = svgId(`${options.title ?? "radar"}|${theme.name}`, "radar");
   const polygon = valuePoints.map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ") + " Z";
   const dots = valuePoints
     .map((p) => `  <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="${theme.accent}"/>`)
@@ -65,17 +64,11 @@ export function radar(options: RadarOptions): string {
     })
     .join("\n");
   const inner = `
-  <defs>
-    <radialGradient id="${gid}" cx="50%" cy="50%" r="60%">
-      <stop offset="0%" stop-color="${theme.accent}" stop-opacity="0.10"/>
-      <stop offset="100%" stop-color="${theme.accent2}" stop-opacity="0.42"/>
-    </radialGradient>
-  </defs>
   <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
   <text x="28" y="38" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Radar")}</text>
 ${rings}
 ${spokes}
-  <path d="${polygon}" fill="url(#${gid})" stroke="${theme.accent}" stroke-width="2" stroke-linejoin="round"/>
+  <path d="${polygon}" fill="${theme.accent}" fill-opacity="0.14" stroke="${theme.accent}" stroke-width="2" stroke-linejoin="round"/>
 ${dots}
 ${labels}
   <text x="${width - 28}" y="${height - 20}" text-anchor="end" fill="${theme.muted}" font-family="${mono}" font-size="12">${STAR} 0–100</text>

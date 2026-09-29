@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="onedark">
 
-<defs>
-    <linearGradient id="grad-onedarkonedark-4cd515bc" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#282c34"/>
-      <stop offset="55%" stop-color="#3e4451"/>
-      <stop offset="100%" stop-color="#21252b"/>
-    </linearGradient>
-  </defs>
-  <rect width="880" height="160" rx="16" fill="url(#grad-onedarkonedark-4cd515bc)"/>
-  <circle cx="810" cy="40" r="90" fill="#c678dd" fill-opacity="0.18"/>
-  <text x="44" y="48" fill="#61afef" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
-  <text x="44" y="84" fill="#abb2bf" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">onedark</text>
-  <text x="44" y="120" fill="#7d838f" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+<rect width="880" height="160" rx="16" fill="#282c34" stroke="#3e4451" stroke-width="1"/>
+  <rect x="28" y="52" width="4" height="80" rx="2" fill="#61afef"/>
+  <circle cx="808" cy="52" r="40" fill="none" stroke="#c678dd" stroke-opacity="0.35" stroke-width="1.5"/>
+  <circle cx="808" cy="52" r="4" fill="#c678dd" fill-opacity="0.8"/>
+  <text x="52" y="48" fill="#61afef" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="52" y="84" fill="#abb2bf" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">onedark</text>
+  <text x="52" y="120" fill="#7d838f" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
 
 </svg>

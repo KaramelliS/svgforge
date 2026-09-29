@@ -106,7 +106,7 @@ Common flags (every card type):
   --bg/--bg2/--fg/--muted/--accent/--accent2/--line-color <#rrggbb>
                         override theme colors
   --font <family>       override the font stack
-  --flat                solid background instead of gradient
+  --flat                solid background (default; gradients are opt-in via --gradient)
   --border-width <px>   card outline thickness (0 hides it)
   --shadow              soft drop shadow
   --opacity <0-1|0-100> fade the whole card

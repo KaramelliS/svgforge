@@ -1,5 +1,7 @@
 import { cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
 
+// Wave layers are flat fills; the background is a solid color by default.
+
 export interface WaveOptions extends BaseCardOptions {
   title: string;
   subtitle?: string;
@@ -23,17 +25,8 @@ export function wave(options: WaveOptions): string {
   const height = options.height ?? 200;
   const radius = options.radius ?? 16;
   const sans = fontStack(options.font, "sans");
-  const gid = svgId(`${options.title}|${theme.name}`, "wave");
   const clip = svgId(`${options.title}|${theme.name}`, "clip");
-  const bg = options.flat
-    ? `<rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}"/>`
-    : `  <defs>
-    <linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${theme.bg}"/>
-      <stop offset="100%" stop-color="${theme.bg2}"/>
-    </linearGradient>
-  </defs>
-  <rect width="${width}" height="${height}" rx="${radius}" fill="url(#${gid})"/>`;
+  const bg = `<rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}" stroke-width="1"/>`;
   const y1 = Math.round(height * 0.62);
   const y2 = Math.round(height * 0.72);
   const y3 = Math.round(height * 0.82);

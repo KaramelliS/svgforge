@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="tokyonight">
 
-<defs>
-    <linearGradient id="grad-tokyonighttokyonight-5041da3c" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a1b26"/>
-      <stop offset="55%" stop-color="#3b4261"/>
-      <stop offset="100%" stop-color="#24283b"/>
-    </linearGradient>
-  </defs>
-  <rect width="880" height="160" rx="16" fill="url(#grad-tokyonighttokyonight-5041da3c)"/>
-  <circle cx="810" cy="40" r="90" fill="#bb9af7" fill-opacity="0.18"/>
-  <text x="44" y="48" fill="#7aa2f7" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
-  <text x="44" y="84" fill="#c0caf5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">tokyonight</text>
-  <text x="44" y="120" fill="#9aa5ce" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+<rect width="880" height="160" rx="16" fill="#1a1b26" stroke="#3b4261" stroke-width="1"/>
+  <rect x="28" y="52" width="4" height="80" rx="2" fill="#7aa2f7"/>
+  <circle cx="808" cy="52" r="40" fill="none" stroke="#bb9af7" stroke-opacity="0.35" stroke-width="1.5"/>
+  <circle cx="808" cy="52" r="4" fill="#bb9af7" fill-opacity="0.8"/>
+  <text x="52" y="48" fill="#7aa2f7" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="52" y="84" fill="#c0caf5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">tokyonight</text>
+  <text x="52" y="120" fill="#9aa5ce" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
 
 </svg>

@@ -25,7 +25,8 @@ default `midnight` theme.
 
 ## banner
 
-Hero header with a diagonal gradient. Gradient IDs are unique per title, so
+Hero header with a flat background, thin border, and an accent bar. A diagonal
+gradient is opt-in via `--gradient` — gradient IDs are unique per title, so
 two banners on one README never paint each other. Default 880×160.
 
 ![banner](examples/banner.svg)
@@ -42,8 +43,8 @@ svgforge banner \
 | `--title` `--subtitle` | Main text (subtitle optional) |
 | `--tag` | Small uppercase kicker above the title |
 | `--logo` | Text/emoji mark before the title |
-| `--gradient #aabbcc,#111111` | Custom two-stop gradient |
-| `--flat` | Solid `--bg` fill instead of the gradient |
+| `--gradient #aabbcc,#111111` | Custom two-stop gradient (default is flat) |
+| `--flat` | Solid `--bg` fill (default; kept for compatibility) |
 
 ---
 
@@ -65,7 +66,7 @@ svgforge wave \
 | --- | --- |
 | `--title` `--subtitle` | Centered text |
 | `--animate` | Translating wave layers (SMIL — experimental, best in browsers) |
-| `--flat` | Solid background |
+| `--flat` | Solid background (default) |
 
 ---
 

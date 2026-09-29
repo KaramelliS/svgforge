@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
+import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface SparklineOptions extends BaseCardOptions {
   title?: string;
@@ -40,7 +40,6 @@ export function sparkline(options: SparklineOptions): string {
     const y = plotY + plotH - plotH * clamp01((value - min) / span);
     return { x, y, value };
   });
-  const gid = svgId(`${options.title ?? "spark"}|${theme.name}`, "spark");
   let line: string;
   if (options.smooth) {
     let path = `M${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`;
@@ -63,17 +62,11 @@ export function sparkline(options: SparklineOptions): string {
   const minLabel = `${Math.round(min * 10) / 10}${unit}`;
   const maxLabel = `${Math.round(max * 10) / 10}${unit}`;
   const inner = `
-  <defs>
-    <linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${theme.accent}" stop-opacity="0.30"/>
-      <stop offset="100%" stop-color="${theme.accent}" stop-opacity="0.02"/>
-    </linearGradient>
-  </defs>
   <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
   <text x="28" y="38" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Sparkline")}</text>
   <text x="28" y="${plotY + 12}" fill="${theme.muted}" font-family="${mono}" font-size="12">${escapeXml(maxLabel)}</text>
   <text x="28" y="${plotY + plotH}" fill="${theme.muted}" font-family="${mono}" font-size="12">${escapeXml(minLabel)}</text>
-  <path d="${areaPath}" fill="url(#${gid})" stroke="none" opacity="${options.area === false ? 0 : 1}"/>
+  <path d="${areaPath}" fill="${theme.accent}" fill-opacity="${options.area === false ? 0 : 0.08}" stroke="none"/>
   <path d="${line}" fill="none" stroke="${theme.accent}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 ${dots}
   <circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="5.5" fill="${theme.accent2}"/>

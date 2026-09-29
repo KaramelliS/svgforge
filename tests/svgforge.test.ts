@@ -49,13 +49,15 @@ describe("cards", () => {
     const svg = skills({ items: [{ name: "X", level: 150 }] });
     expect(svg).toContain('width="464"');
     expect(escapeXml("<")).toBe("&lt;");
-    const a = banner({ title: "one" });
-    const b = banner({ title: "two" });
+    const a = banner({ title: "one", gradient: ["#111111", "#222222"] });
+    const b = banner({ title: "two", gradient: ["#111111", "#222222"] });
     const idA = a.match(/id="(grad-[^"]+)"/)?.[1];
     const idB = b.match(/id="(grad-[^"]+)"/)?.[1];
     expect(idA).toBeTruthy();
     expect(idB).toBeTruthy();
     expect(idA).not.toBe(idB);
+    // default banners are flat: no gradient defs at all
+    expect(banner({ title: "one" })).not.toContain("Gradient");
   });
 
   it("renders the nine new card types", () => {

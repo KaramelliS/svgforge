@@ -133,7 +133,7 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 
 | Type | Flags | Use |
 | --- | --- | --- |
-| `banner` | `--title` `--subtitle` `--tag` `--logo` `--gradient a,b` | Hero header. Gradient IDs are unique per title so two banners on one README do not paint each other. |
+| `banner` | `--title` `--subtitle` `--tag` `--logo` `--gradient a,b` | Hero header, flat by default. `--gradient` is opt-in; gradient IDs are unique per title so two banners on one README do not paint each other. |
 | `stats` | `--title` `--item Label=Value` (repeat) | Label / value rows |
 | `skills` | `--title` `--item Name=0-100` (repeat) `--show-value` | Percentage bars (clamped 0–100; invalid → 0) |
 | `terminal` | `--title` `--line text` (repeat) `--prompt` `--caret` | Fake shell; lines starting with `$` (or your prompt) use the accent color. `--caret` blinks |
@@ -190,12 +190,12 @@ Every card accepts these. Defaults reproduce the theme exactly — pass nothing 
 | `--width <px>`, `--height <px>` | Card size |
 | `--radius <px>` | Corner radius |
 | `--font <family>` | Replace the font stack everywhere on the card |
-| `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
+| `--flat` | Solid background — the default; kept for compatibility (`banner`, `wave`) |
 | `--border-width <px>` | Outline thickness, `0` hides it |
 | `--shadow` | Soft drop shadow |
 | `--opacity <0-1 or 0-100>` | Fade the whole card |
 | `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
-| `--gradient #aabbcc,#111111` | Custom two-stop gradient (`banner`) |
+| `--gradient #aabbcc,#111111` | Custom two-stop gradient background (`banner`, `mark`) |
 
 ```bash
 svgforge banner --title mytool --bg "#0b1220" --accent "#38bdf8" --flat -o banner.svg
