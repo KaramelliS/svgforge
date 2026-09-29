@@ -28,5 +28,5 @@ export function cover(options: CoverOptions): string {
   <text x="48" y="${height * 0.56}" fill="${theme.text}" font-family="${sans}" font-size="48" font-weight="800">${escapeXml(options.title)}</text>
   <text x="48" y="${height * 0.72}" fill="${theme.muted}" font-family="${sans}" font-size="18">${escapeXml(options.subtitle ?? "")}</text>
 `;
-  return wrap(options.title, inner, width, height);
+  return wrap(options.title, inner, width, height, options);
 }

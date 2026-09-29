@@ -59,5 +59,5 @@ export function badge(options: BadgeOptions): string {
   <text x="${left + right / 2}" y="19" text-anchor="middle" fill="${theme.text}" font-family="${sans}" font-size="12" font-weight="700">${escapeXml(options.value)}</text>
 `;
   }
-  return wrap(`${options.label}: ${options.value}`, inner, width, height);
+  return wrap(`${options.label}: ${options.value}`, inner, width, height, options);
 }

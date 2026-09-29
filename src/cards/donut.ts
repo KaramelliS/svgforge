@@ -64,5 +64,5 @@ ${segments}
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Donut")}</text>
 ${legendRows}
 `;
-  return wrap(options.title ?? "donut", inner, width, height);
+  return wrap(options.title ?? "donut", inner, width, height, options);
 }

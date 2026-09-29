@@ -28,5 +28,5 @@ export function divider(options: DividerOptions): string {
   <rect x="${width / 2 + 40}" y="${y - 1}" width="${width / 2 - 40}" height="2" fill="${theme.line}"/>
 `;
   }
-  return wrap(options.label ?? "divider", inner, width, height);
+  return wrap(options.label ?? "divider", inner, width, height, options);
 }

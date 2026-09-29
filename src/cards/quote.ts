@@ -31,5 +31,5 @@ export function quote(options: QuoteOptions): string {
   <text x="30" y="82" fill="${theme.accent}" font-family="${sans}" font-size="64" font-weight="700">“</text>
 ${body}${author}
 `;
-  return wrap(options.text.slice(0, 40), inner, width, height);
+  return wrap(options.text.slice(0, 40), inner, width, height, options);
 }

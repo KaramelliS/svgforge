@@ -31,5 +31,5 @@ export function checklist(options: ChecklistOptions): string {
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Checklist")}</text>
 ${rows}
 `;
-  return wrap(options.title ?? "checklist", inner, width, height);
+  return wrap(options.title ?? "checklist", inner, width, height, options);
 }

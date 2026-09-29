@@ -22,5 +22,5 @@ export function counter(options: CounterOptions): string {
   <text x="28" y="38" fill="${theme.muted}" font-family="${sans}" font-size="14">${escapeXml(options.title ?? "Counter")}</text>
   <text x="28" y="98" fill="${theme.text}" font-family="${mono}" font-size="${fontSize}" font-weight="700">${escapeXml(text)}</text>
 `;
-  return wrap(options.title ?? "counter", inner, width, height);
+  return wrap(options.title ?? "counter", inner, width, height, options);
 }

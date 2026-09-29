@@ -35,5 +35,5 @@ export function timeline(options: TimelineOptions): string {
   <line x1="${railX}" y1="70" x2="${railX}" y2="${railEnd - 20}" stroke="${theme.line}" stroke-width="2"/>
 ${body}
 `;
-  return wrap(options.title ?? "timeline", inner, width, height);
+  return wrap(options.title ?? "timeline", inner, width, height, options);
 }

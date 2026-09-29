@@ -23,10 +23,10 @@ import { sparkline } from "../src/cards/sparkline.js";
 import { gauge } from "../src/cards/gauge.js";
 import { radar } from "../src/cards/radar.js";
 import { columns } from "../src/cards/columns.js";
-import { rating } from "../src/cards/rating.js";
 import { figure } from "../src/cards/figure.js";
 import { mark } from "../src/cards/mark.js";
-import { renderManifest, safeOutputPath, substituteVars, CARD_TYPES } from "../src/render.js";
+import { renderManifest, renderCard, safeOutputPath, substituteVars, CARD_TYPES, type Card } from "../src/render.js";
+import { rating } from "../src/cards/rating.js";
 import { escapeXml, THEMES, resolveTheme, applyOverrides, isValidColor, mixHex, seededRandom, scaleSvg, wrapLines } from "../src/escape.js";
 import { run } from "../src/cli.js";
 
@@ -304,6 +304,53 @@ describe("manifest + cli", () => {
     expect(scaled).toContain('width="440"');
     expect(scaled).toContain('viewBox="0 0 880 160"');
     expect(stats({ items: [{ label: "A", value: 1 }], borderWidth: 0 })).toContain('stroke-width="0"');
+  });
+
+  it("renders every card type as one svg document", () => {
+    const samples: Card[] = [
+      { type: "banner", title: "t" },
+      { type: "stats", items: [{ label: "A", value: 1 }] },
+      { type: "skills", items: [{ name: "TS", level: 80 }] },
+      { type: "terminal", lines: ["$ ok"] },
+      { type: "badge", label: "a", value: "b" },
+      { type: "divider", label: "x" },
+      { type: "progress", value: 40 },
+      { type: "donut", items: [{ label: "A", value: 1 }, { label: "B", value: 2 }] },
+      { type: "chart", items: [{ label: "A", value: 2 }] },
+      { type: "links", items: [{ text: "GitHub", url: "https://github.com" }] },
+      { type: "quote", text: "hi" },
+      { type: "code", lines: ["const x = 1;"] },
+      { type: "project", name: "svgforge" },
+      { type: "wave", title: "w" },
+      { type: "timeline", items: [{ date: "2026", label: "now" }] },
+      { type: "contributions", weeks: [[0, 1, 2, 3, 4, 1, 0]], total: 11 },
+      { type: "counter", value: 9 },
+      { type: "sparkline", values: [1, 2, 3] },
+      { type: "gauge", value: 50 },
+      { type: "radar", items: [{ label: "A", value: 1 }, { label: "B", value: 2 }, { label: "C", value: 3 }] },
+      { type: "columns", items: [{ label: "A", value: 1 }] },
+      { type: "rating", value: 4.5 },
+      { type: "figure", url: "https://example.com/a.svg" },
+      { type: "mark", letter: "K" },
+      { type: "profile", name: "Ada" },
+      { type: "steps", items: ["one", "two"] },
+      { type: "pills", tags: ["ts"] },
+      { type: "callout", text: "note" },
+      { type: "compare", left: "a", right: "b", items: [{ label: "x", left: "1", right: "2" }] },
+      { type: "social", items: [{ name: "GitHub", handle: "@a" }] },
+      { type: "checklist", items: [{ text: "done", done: true }] },
+      { type: "cover", title: "svgforge", shadow: true },
+    ];
+    expect(samples.map((card) => card.type).sort()).toEqual([...CARD_TYPES].sort());
+    for (const card of samples) {
+      const svg = renderCard(card);
+      expect(svg.startsWith("<?xml"), card.type).toBe(true);
+      expect(svg.match(/<svg /g)?.length, card.type).toBe(1);
+      expect(svg.includes("</svg>"), card.type).toBe(true);
+      expect(svg.includes("<"), card.type).toBe(true);
+    }
+    expect(renderCard(samples[samples.length - 1])).toContain("feDropShadow");
+    expect(rating({ value: 4.5 })).toContain("<path");
   });
 
   it("cli renders timeline and contributions", () => {

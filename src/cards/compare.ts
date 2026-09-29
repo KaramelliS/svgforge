@@ -35,5 +35,5 @@ export function compare(options: CompareOptions): string {
   <text x="${rightX}" y="64" fill="${theme.accent}" font-family="${sans}" font-size="13" font-weight="700">${escapeXml(options.right)}</text>
 ${rows}
 `;
-  return wrap(options.title ?? "compare", inner, width, height);
+  return wrap(options.title ?? "compare", inner, width, height, options);
 }

@@ -71,5 +71,5 @@ export function project(options: ProjectOptions): string {
 ${desc}${statRows}
 ${tagRows}
 `;
-  return wrap(options.name, inner, width, height);
+  return wrap(options.name, inner, width, height, options);
 }

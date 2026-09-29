@@ -79,5 +79,5 @@ ${dots}
   <circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="5.5" fill="${theme.accent2}"/>
   <text x="${width - 28}" y="${height - 22}" text-anchor="end" fill="${theme.text}" font-family="${mono}" font-size="14" font-weight="700">${escapeXml(`${raw[raw.length - 1]}${unit}`)}</text>
 `;
-  return wrap(options.title ?? "sparkline", inner, width, height);
+  return wrap(options.title ?? "sparkline", inner, width, height, options);
 }

@@ -34,5 +34,5 @@ export function profile(options: ProfileOptions): string {
   <text x="112" y="108" fill="${theme.muted}" font-family="${sans}" font-size="14">${escapeXml(options.bio ?? "")}</text>
 ${statCols}
 `;
-  return wrap(options.name, inner, width, height);
+  return wrap(options.name, inner, width, height, options);
 }

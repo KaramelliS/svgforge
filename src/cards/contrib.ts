@@ -101,5 +101,5 @@ export function contributions(options: ContributionsOptions): string {
   ${legend}
   <text x="${swatchStart + colors.length * (CELL + GAP + 6) + 6}" y="${legendY + CELL - 3}" fill="${theme.muted}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">More</text>
 `;
-  return wrap(options.title ?? "contributions", inner, width, height);
+  return wrap(options.title ?? "contributions", inner, width, height, options);
 }

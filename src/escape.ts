@@ -41,10 +41,21 @@ export function seededRandom(seed: number): () => number {
   };
 }
 
-export function wrap(id: string, inner: string, width: number, height: number): string {
+export function wrap(
+  id: string,
+  inner: string,
+  width: number,
+  height: number,
+  options: { shadow?: boolean } = {},
+): string {
+  const filterId = svgId(id, "shadow");
+  const defs = options.shadow
+    ? `<defs><filter id="${filterId}" x="-8%" y="-8%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.28"/></filter></defs>\n`
+    : "";
+  const group = options.shadow ? `<g filter="url(#${filterId})">\n${inner}\n</g>` : inner;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeXml(id)}">
-${inner}
+${defs}${group}
 </svg>
 `;
 }

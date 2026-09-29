@@ -37,5 +37,5 @@ export function progress(options: ProgressOptions): string {
   <rect x="28" y="${barY}" width="${barWidth}" height="12" rx="6" fill="${theme.bg2}"/>
   <rect x="28" y="${barY}" width="${filled}" height="12" rx="6" fill="${theme.accent}"/>${caption}
 `;
-  return wrap(options.title ?? "progress", inner, width, height);
+  return wrap(options.title ?? "progress", inner, width, height, options);
 }

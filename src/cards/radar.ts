@@ -80,5 +80,5 @@ ${dots}
 ${labels}
   <text x="${width - 28}" y="${height - 20}" text-anchor="end" fill="${theme.muted}" font-family="${mono}" font-size="12">${STAR} 0–100</text>
 `;
-  return wrap(options.title ?? "radar", inner, width, height);
+  return wrap(options.title ?? "radar", inner, width, height, options);
 }

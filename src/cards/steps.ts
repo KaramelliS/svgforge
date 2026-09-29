@@ -30,5 +30,5 @@ export function steps(options: StepsOptions): string {
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Steps")}</text>
 ${body}
 `;
-  return wrap(options.title ?? "steps", inner, width, height);
+  return wrap(options.title ?? "steps", inner, width, height, options);
 }

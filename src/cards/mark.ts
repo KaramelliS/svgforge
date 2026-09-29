@@ -43,5 +43,5 @@ export function mark(options: MarkOptions): string {
   ${shapeRect}
   <text x="${size / 2}" y="${size / 2 + fontSize * 0.35}" text-anchor="middle" fill="${theme.text}" font-family="${sans}" font-size="${fontSize}" font-weight="800">${escapeXml(letter)}</text>
 `;
-  return wrap(`mark ${letter}`, inner, size, size);
+  return wrap(`mark ${letter}`, inner, size, size, options);
 }

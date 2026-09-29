@@ -28,5 +28,5 @@ export function social(options: SocialOptions): string {
   <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}${shadowAttr(gid, options.shadow)}/>
 ${rows}
 `;
-  return wrap(items.map((item) => item.name).join(", "), inner, width, height);
+  return wrap(items.map((item) => item.name).join(", "), inner, width, height, options);
 }

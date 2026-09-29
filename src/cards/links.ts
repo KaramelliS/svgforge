@@ -43,10 +43,5 @@ export function links(options: LinksOptions): string {
     return positioned;
   });
   const inner = pills.join("\n");
-  return wrap(
-    items.map((item) => item.text).join(", "),
-    inner,
-    width,
-    height,
-  );
+  return wrap(items.map((item) => item.text).join(", "), inner, width, height, options);
 }

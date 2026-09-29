@@ -43,5 +43,5 @@ export function chart(options: ChartOptions): string {
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Chart")}</text>
 ${body}
 `;
-  return wrap(options.title ?? "chart", inner, width, height);
+  return wrap(options.title ?? "chart", inner, width, height, options);
 }

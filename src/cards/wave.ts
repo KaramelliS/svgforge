@@ -58,5 +58,5 @@ ${bg}
   <text x="${width / 2}" y="${titleY}" text-anchor="middle" fill="${theme.text}" font-family="${sans}" font-size="42" font-weight="700">${escapeXml(options.title)}</text>
 ${options.subtitle ? `  <text x="${width / 2}" y="${titleY + 36}" text-anchor="middle" fill="${theme.muted}" font-family="${sans}" font-size="16">${escapeXml(options.subtitle)}</text>` : ""}
 `;
-  return wrap(options.title, inner, width, height);
+  return wrap(options.title, inner, width, height, options);
 }

@@ -30,5 +30,5 @@ export function figure(options: FigureOptions): string {
   <image href="${escapeXml(assertHttpsUrl(options.url))}" x="12" y="12" width="${width - 24}" height="${(options.caption ? height - 52 : height) - 24}" preserveAspectRatio="${fit}" clip-path="url(#fig-clip-${width}x${height})"/>
 ${options.caption ? `  <text x="${width / 2}" y="${captionY}" text-anchor="middle" fill="${theme.muted}" font-family="${sans}" font-size="13">${escapeXml(options.caption)}</text>` : ""}
 `;
-  return wrap(options.alt ?? options.caption ?? "figure", inner, width, height);
+  return wrap(options.alt ?? options.caption ?? "figure", inner, width, height, options);
 }

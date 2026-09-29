@@ -38,5 +38,5 @@ export function terminal(options: TerminalOptions): string {
   <text x="96" y="28" fill="${theme.muted}" font-family="${sans}" font-size="12">${escapeXml(options.title ?? "terminal")}</text>
   ${body}${caret}
 `;
-  return wrap(options.title ?? "terminal", inner, width, height);
+  return wrap(options.title ?? "terminal", inner, width, height, options);
 }

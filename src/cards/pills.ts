@@ -34,5 +34,5 @@ export function pills(options: PillsOptions): string {
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Stack")}</text>
 ${chips.join("\n")}
 `;
-  return wrap(options.title ?? "pills", inner, width, height);
+  return wrap(options.title ?? "pills", inner, width, height, options);
 }

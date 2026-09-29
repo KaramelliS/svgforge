@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface RatingOptions extends BaseCardOptions {
   title?: string;
@@ -6,8 +6,15 @@ export interface RatingOptions extends BaseCardOptions {
   count?: number;
 }
 
-const STAR = "★";
-const HALF = "½";
+function starPath(x: number, y: number, r: number): string {
+  const pts: string[] = [];
+  for (let i = 0; i < 10; i += 1) {
+    const radius = i % 2 === 0 ? r : r * 0.42;
+    const angle = -Math.PI / 2 + (i * Math.PI) / 5;
+    pts.push(`${(x + radius * Math.cos(angle)).toFixed(1)},${(y + radius * Math.sin(angle)).toFixed(1)}`);
+  }
+  return `M${pts.join("L")}Z`;
+}
 
 export function rating(options: RatingOptions): string {
   const theme = cardTheme(options);
@@ -19,47 +26,37 @@ export function rating(options: RatingOptions): string {
   }
   const count = Math.max(1, Math.min(10, options.count ?? 5));
   const value = Math.max(0, Math.min(count, raw));
-  const full = Math.floor(value);
-  const half = value - full >= 0.25 && value - full < 0.75;
-  const rounded = half ? full + 0.5 : Math.round(value * 2) / 2;
+  const full = Math.floor(value + 1e-9);
+  const fraction = value - full;
   const width = options.width ?? 380;
   const radius = options.radius ?? 16;
   const height = 132;
-  const gid = svgId(`rating|${theme.name}`, "half");
-  const starSize = 26;
-  const startX = 28;
-  const gap = 6;
-  const stars: string[] = [];
-  for (let i = 0; i < count; i += 1) {
-    const x = startX + i * (starSize + gap);
-    const isFull = i < full || (i === full && !half && rounded > i);
-    const isHalf = i === full && half;
-    if (isFull) {
-      stars.push(
-        `  <text x="${x}" y="88" fill="${theme.accent}" font-family="${sans}" font-size="${starSize}">${STAR}</text>`,
-      );
-    } else if (isHalf) {
-      stars.push(
-        `  <g clip-path="url(#${gid})">
-    <text x="${x}" y="88" fill="${theme.accent}" font-family="${sans}" font-size="${starSize}">${STAR}</text>
-  </g>
-  <text x="${x}" y="88" fill="${theme.bg2}" font-family="${sans}" font-size="${starSize}">${STAR}</text>`,
-      );
-    } else {
-      stars.push(
-        `  <text x="${x}" y="88" fill="${theme.bg2}" font-family="${sans}" font-size="${starSize}">${STAR}</text>`,
-      );
+  const gid = svgId(`rating|${theme.name}|${value}`, "half");
+  const r = 12;
+  const gap = 8;
+  const startX = 40;
+  const cy = 86;
+  const stars = Array.from({ length: count }, (_, i) => {
+    const cx = startX + i * (r * 2 + gap);
+    const path = starPath(cx, cy, r);
+    if (i < full) return `  <path d="${path}" fill="${theme.accent}"/>`;
+    if (i === full && fraction >= 0.25) {
+      return `  <path d="${path}" fill="${theme.bg2}"/>
+  <path d="${path}" fill="${theme.accent}" clip-path="url(#${gid})"/>`;
     }
-  }
-  const valueText = rounded.toFixed(1).replace(/\.0$/, "");
+    return `  <path d="${path}" fill="${theme.bg2}"/>`;
+  }).join("\n");
+  const shown = (Math.round(value * 2) / 2).toFixed(1).replace(/\.0$/, "");
+  const clipX = startX + full * (r * 2 + gap) - r;
+  const clipW = fraction >= 0.75 ? r * 2 : r;
   const inner = `
   <defs>
-    <clipPath id="${gid}"><rect x="0" y="0" width="${startX + full * (starSize + gap) + starSize / 2}" height="${height}"/></clipPath>
+    <clipPath id="${gid}"><rect x="${clipX}" y="0" width="${clipW}" height="${height}"/></clipPath>
   </defs>
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
-  <text x="28" y="38" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Rating")}</text>
-${stars.join("\n")}
-  <text x="${width - 28}" y="88" text-anchor="end" fill="${theme.text}" font-family="${mono}" font-size="18" font-weight="700">${valueText}/${count}</text>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
+  <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Rating")}</text>
+${stars}
+  <text x="${width - 28}" y="92" text-anchor="end" fill="${theme.text}" font-family="${mono}" font-size="18" font-weight="700">${shown}/${count}</text>
 `;
-  return wrap(options.title ?? "rating", inner, width, height);
+  return wrap(options.title ?? "rating", inner, width, height, options);
 }

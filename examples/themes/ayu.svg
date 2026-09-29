@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="ayu">
+<defs><filter id="shadow-ayu-17b3d" x="-8%" y="-8%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.28"/></filter></defs>
+<g filter="url(#shadow-ayu-17b3d)">
 
 <defs>
     <linearGradient id="grad-ayuayu-e0616dfe" x1="0" y1="0" x2="1" y2="1">
@@ -14,4 +16,5 @@
   <text x="44" y="84" fill="#bfbdb6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">ayu</text>
   <text x="44" y="120" fill="#646870" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
 
+</g>
 </svg>

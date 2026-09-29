@@ -50,5 +50,5 @@ export function gauge(options: GaugeOptions): string {
   <text x="${cx - r}" y="${cy + 30}" fill="${theme.muted}" font-family="${mono}" font-size="12">${escapeXml(String(low))}</text>
   <text x="${cx + r}" y="${cy + 30}" text-anchor="end" fill="${theme.muted}" font-family="${mono}" font-size="12">${escapeXml(String(high))}</text>
 `;
-  return wrap(options.title ?? "gauge", inner, width, height);
+  return wrap(options.title ?? "gauge", inner, width, height, options);
 }

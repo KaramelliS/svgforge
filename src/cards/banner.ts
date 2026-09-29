@@ -57,5 +57,5 @@ ${gradientFill}
   <text x="${textX}" y="${titleY}" fill="${theme.text}" font-family="${mono}" font-size="40" font-weight="700">${escapeXml(options.title)}</text>
   <text x="${textX}" y="${subtitleY}" fill="${theme.muted}" font-family="${sans}" font-size="18">${escapeXml(options.subtitle ?? "")}</text>
 `;
-  return wrap(options.title, inner, width, height);
+  return wrap(options.title, inner, width, height, options);
 }

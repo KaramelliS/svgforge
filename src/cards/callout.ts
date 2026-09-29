@@ -24,5 +24,5 @@ export function callout(options: CalloutOptions): string {
   <text x="68" y="40" fill="${theme.text}" font-family="${sans}" font-size="16" font-weight="700">${escapeXml(options.title ?? tone)}</text>
   <text x="68" y="68" fill="${theme.muted}" font-family="${sans}" font-size="14">${escapeXml(options.text)}</text>
 `;
-  return wrap(options.title ?? "callout", inner, width, height);
+  return wrap(options.title ?? "callout", inner, width, height, options);
 }

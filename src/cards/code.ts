@@ -104,5 +104,5 @@ export function code(options: CodeOptions): string {
   <text x="96" y="28" fill="${theme.muted}" font-family="${sans}" font-size="12">${escapeXml(options.title ?? options.lang ?? "code")}</text>
 ${body}
 `;
-  return wrap(options.title ?? "code", inner, width, height);
+  return wrap(options.title ?? "code", inner, width, height, options);
 }

@@ -49,5 +49,5 @@ export function columns(options: ColumnsOptions): string {
   <line x1="28" y1="${baseline}" x2="${width - 28}" y2="${baseline}" stroke="${theme.line}" stroke-width="2"/>
 ${bars}
 `;
-  return wrap(options.title ?? "columns", inner, width, height);
+  return wrap(options.title ?? "columns", inner, width, height, options);
 }
