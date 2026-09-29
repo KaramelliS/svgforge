@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # add 26 after LTS (Oct 2026)
         node: [22, 24]
     steps:
       - uses: actions/checkout@v5
