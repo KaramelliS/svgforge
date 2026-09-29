@@ -8,8 +8,14 @@ export interface FigureOptions extends BaseCardOptions {
 }
 
 export function assertHttpsUrl(url: string): string {
-  if (!/^https:\/\//i.test(url)) {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
     throw new Error(`figure only accepts https urls, got: ${url}`);
+  }
+  if (parsed.protocol !== "https:" || parsed.username !== "" || parsed.password !== "") {
+    throw new Error(`figure only accepts https urls without credentials, got: ${url}`);
   }
   return url;
 }
@@ -25,6 +31,7 @@ export function figure(options: FigureOptions): string {
   const imageHeight = (options.caption ? height - 52 : height) - 24;
   const clipId = `fig-${width}x${height}x${imageHeight}`;
   const inner = `
+  <desc>External image — may not render in GitHub README</desc>
   <defs>
     <clipPath id="${clipId}">
       <rect x="12" y="12" width="${width - 24}" height="${imageHeight}" rx="${Math.max(0, radius - 8)}"/>

@@ -11,3 +11,11 @@ User strings (titles, labels, terminal lines) are XML-escaped (`& < > " '`).
 ## Reporting
 
 Open a private advisory on [KodYazicam/svgforge](https://github.com/KodYazicam/svgforge/security/advisories/new).
+
+## External images
+
+`figure` embeds an `https` URL in `<image href>`. The URL must not contain userinfo (`user:pass@host`). GitHub README images are served through Camo, so the embedded image often does not appear. Opening the SVG file directly still fetches that host.
+
+## Animation
+
+`wave --animate` and `terminal --caret` emit SMIL (`<animate>`, `<animateTransform>`). The default examples are static. SMIL is not script. Renderers that strip SMIL keep the unanimated frame.
