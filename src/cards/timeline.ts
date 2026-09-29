@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface TimelineItem {
   date: string;
@@ -29,7 +29,7 @@ export function timeline(options: TimelineOptions): string {
     .join("");
   const railEnd = 64 + items.length * rowHeight;
   const inner = `
-  <rect width="${width}" height="${height}" rx="16" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="16" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <rect x="0" y="0" width="8" height="${height}" rx="4" fill="${theme.accent}"/>
   <text x="28" y="36" fill="${theme.text}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">${escapeXml(options.title ?? "Timeline")}</text>
   <line x1="${railX}" y1="70" x2="${railX}" y2="${railEnd - 20}" stroke="${theme.line}" stroke-width="2"/>

@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, wrapLines, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, wrapLines, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface QuoteOptions extends BaseCardOptions {
   text: string;
@@ -27,7 +27,7 @@ export function quote(options: QuoteOptions): string {
     : "";
   const height = 52 + lines.length * lineHeight + (options.author ? 44 : 20);
   const inner = `
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="30" y="82" fill="${theme.accent}" font-family="${sans}" font-size="64" font-weight="700">“</text>
 ${body}${author}
 `;

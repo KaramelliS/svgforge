@@ -19,6 +19,14 @@ export {
   levelColors,
   type ContributionsOptions,
 } from "./cards/contrib.js";
+export { counter, type CounterOptions } from "./cards/counter.js";
+export { sparkline, type SparklineOptions } from "./cards/sparkline.js";
+export { gauge, type GaugeOptions } from "./cards/gauge.js";
+export { radar, type RadarOptions, type RadarItem } from "./cards/radar.js";
+export { columns, type ColumnsOptions, type ColumnItem } from "./cards/columns.js";
+export { rating, type RatingOptions } from "./cards/rating.js";
+export { figure, type FigureOptions, assertHttpsUrl } from "./cards/figure.js";
+export { mark, type MarkOptions } from "./cards/mark.js";
 export {
   renderCard,
   renderManifest,
@@ -39,9 +47,12 @@ export {
   mixHex,
   seededRandom,
   wrapLines,
+  scaleSvg,
+  borderAttr,
   FONT_MONO,
   FONT_SANS,
   fontStack,
+  parseScale,
   type Theme,
   type StyleOverrides,
   type BaseCardOptions,

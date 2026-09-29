@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="132" viewBox="0 0 480 132" role="img" aria-label="npm downloads">
+
+  <rect width="480" height="132" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <rect x="0" y="0" width="8" height="132" rx="4" fill="#a78bfa"/>
+  <text x="28" y="38" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">npm downloads</text>
+  <text x="28" y="98" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="54" font-weight="700">1337/mo</text>
+
+</svg>

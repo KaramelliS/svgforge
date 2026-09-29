@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="132" viewBox="0 0 380 132" role="img" aria-label="Community rating">
+
+  <defs>
+    <clipPath id="half-ratingmidnight-8723fe4f"><rect x="0" y="0" width="169" height="132"/></clipPath>
+  </defs>
+  <rect width="380" height="132" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <text x="28" y="38" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Community rating</text>
+  <text x="28" y="88" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26">★</text>
+  <text x="60" y="88" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26">★</text>
+  <text x="92" y="88" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26">★</text>
+  <text x="124" y="88" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26">★</text>
+  <g clip-path="url(#half-ratingmidnight-8723fe4f)">
+    <text x="156" y="88" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26">★</text>
+  </g>
+  <text x="156" y="88" fill="#24243e" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26">★</text>
+  <text x="352" y="88" text-anchor="end" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700">4.5/5</text>
+
+</svg>

@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface ChartItem {
   label: string;
@@ -39,7 +39,7 @@ export function chart(options: ChartOptions): string {
     .join("");
   const height = 64 + items.length * 40 + 16;
   const inner = `
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Chart")}</text>
 ${body}
 `;

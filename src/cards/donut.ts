@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface DonutItem {
   label: string;
@@ -57,6 +57,7 @@ export function donut(options: DonutOptions): string {
     ? `\n  <text x="${cx}" y="${cy + 6}" text-anchor="middle" fill="${theme.text}" font-family="${mono}" font-size="18" font-weight="700">${escapeXml(options.center)}</text>`
     : "";
   const inner = `
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <g transform="rotate(-90 ${cx} ${cy})">
 ${segments}
   </g>${centerText}

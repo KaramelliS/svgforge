@@ -177,11 +177,11 @@
       "type": "project",
       "name": "svgforge",
       "host": "github.com/KodYazicam/svgforge",
-      "description": "Sixteen README card types from one offline CLI. Zero runtime dependencies, no network, no render API.",
+      "description": "Twenty-four README card types from one offline CLI. Zero runtime dependencies, no network, no render API.",
       "items": [
         {
           "label": "Card types",
-          "value": "16"
+          "value": "24"
         },
         {
           "label": "Themes",
@@ -224,6 +224,111 @@
       "seed": 42,
       "total": 1337,
       "out": "contrib.svg"
+    },
+    {
+      "type": "counter",
+      "title": "npm downloads",
+      "value": 1337,
+      "suffix": "/mo",
+      "out": "counter.svg"
+    },
+    {
+      "type": "sparkline",
+      "title": "Traffic",
+      "values": [
+        4,
+        9,
+        6,
+        12,
+        8,
+        15,
+        11,
+        18,
+        14,
+        22
+      ],
+      "unit": "k",
+      "smooth": true,
+      "out": "sparkline.svg"
+    },
+    {
+      "type": "gauge",
+      "title": "Coverage",
+      "value": 96,
+      "unit": "%",
+      "out": "gauge.svg"
+    },
+    {
+      "type": "radar",
+      "title": "Skill spread",
+      "items": [
+        {
+          "label": "Frontend",
+          "value": 90
+        },
+        {
+          "label": "Backend",
+          "value": 85
+        },
+        {
+          "label": "DevOps",
+          "value": 70
+        },
+        {
+          "label": "Docs",
+          "value": 80
+        },
+        {
+          "label": "Testing",
+          "value": 75
+        }
+      ],
+      "out": "radar.svg"
+    },
+    {
+      "type": "columns",
+      "title": "Issues closed",
+      "items": [
+        {
+          "label": "Mon",
+          "value": 3
+        },
+        {
+          "label": "Tue",
+          "value": 7
+        },
+        {
+          "label": "Wed",
+          "value": 5
+        },
+        {
+          "label": "Thu",
+          "value": 9
+        },
+        {
+          "label": "Fri",
+          "value": 12
+        }
+      ],
+      "out": "columns.svg"
+    },
+    {
+      "type": "rating",
+      "title": "Community rating",
+      "value": 4.5,
+      "count": 5,
+      "out": "rating.svg"
+    },
+    {
+      "type": "figure",
+      "url": "https://raw.githubusercontent.com/KodYazicam/svgforge/main/examples/wave.svg",
+      "caption": "figure embeds any https image",
+      "out": "figure.svg"
+    },
+    {
+      "type": "mark",
+      "letter": "K",
+      "out": "mark.svg"
     }
   ]
 }

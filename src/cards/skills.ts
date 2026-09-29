@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface SkillItem {
   name: string;
@@ -35,7 +35,7 @@ export function skills(options: SkillsOptions): string {
     })
     .join("");
   const inner = `
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Skills")}</text>
 ${body}
 `;

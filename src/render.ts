@@ -15,6 +15,14 @@ import { project, type ProjectOptions } from "./cards/project.js";
 import { wave, type WaveOptions } from "./cards/wave.js";
 import { timeline, type TimelineOptions } from "./cards/timeline.js";
 import { contributions, type ContributionsOptions } from "./cards/contrib.js";
+import { counter, type CounterOptions } from "./cards/counter.js";
+import { sparkline, type SparklineOptions } from "./cards/sparkline.js";
+import { gauge, type GaugeOptions } from "./cards/gauge.js";
+import { radar, type RadarOptions } from "./cards/radar.js";
+import { columns, type ColumnsOptions } from "./cards/columns.js";
+import { rating, type RatingOptions } from "./cards/rating.js";
+import { figure, type FigureOptions } from "./cards/figure.js";
+import { mark, type MarkOptions } from "./cards/mark.js";
 
 export type Card =
   | ({ type: "banner"; out?: string } & BannerOptions)
@@ -32,7 +40,15 @@ export type Card =
   | ({ type: "project"; out?: string } & ProjectOptions)
   | ({ type: "wave"; out?: string } & WaveOptions)
   | ({ type: "timeline"; out?: string } & TimelineOptions)
-  | ({ type: "contributions"; out?: string } & ContributionsOptions);
+  | ({ type: "contributions"; out?: string } & ContributionsOptions)
+  | ({ type: "counter"; out?: string } & CounterOptions)
+  | ({ type: "sparkline"; out?: string } & SparklineOptions)
+  | ({ type: "gauge"; out?: string } & GaugeOptions)
+  | ({ type: "radar"; out?: string } & RadarOptions)
+  | ({ type: "columns"; out?: string } & ColumnsOptions)
+  | ({ type: "rating"; out?: string } & RatingOptions)
+  | ({ type: "figure"; out?: string } & FigureOptions)
+  | ({ type: "mark"; out?: string } & MarkOptions);
 
 export const CARD_TYPES = [
   "banner",
@@ -51,6 +67,14 @@ export const CARD_TYPES = [
   "wave",
   "timeline",
   "contributions",
+  "counter",
+  "sparkline",
+  "gauge",
+  "radar",
+  "columns",
+  "rating",
+  "figure",
+  "mark",
 ] as const;
 
 export interface Manifest {
@@ -114,6 +138,22 @@ export function renderCard(card: Card, fallbackTheme?: string): string {
       return timeline({ ...card, theme });
     case "contributions":
       return contributions({ ...card, theme });
+    case "counter":
+      return counter({ ...card, theme });
+    case "sparkline":
+      return sparkline({ ...card, theme });
+    case "gauge":
+      return gauge({ ...card, theme });
+    case "radar":
+      return radar({ ...card, theme });
+    case "columns":
+      return columns({ ...card, theme });
+    case "rating":
+      return rating({ ...card, theme });
+    case "figure":
+      return figure({ ...card, theme });
+    case "mark":
+      return mark({ ...card, theme });
     default: {
       const never: never = card;
       throw new Error(`unknown card type: ${(never as Card).type}`);

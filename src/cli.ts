@@ -17,8 +17,25 @@ import { project } from "./cards/project.js";
 import { wave } from "./cards/wave.js";
 import { timeline } from "./cards/timeline.js";
 import { contributions, randomWeeks } from "./cards/contrib.js";
+import { counter } from "./cards/counter.js";
+import { sparkline } from "./cards/sparkline.js";
+import { gauge } from "./cards/gauge.js";
+import { radar } from "./cards/radar.js";
+import { columns } from "./cards/columns.js";
+import { rating } from "./cards/rating.js";
+import { figure } from "./cards/figure.js";
+import { mark } from "./cards/mark.js";
 import { CARD_TYPES, renderCard, renderManifest, safeOutputPath, substituteVars, type Card, type Manifest } from "./render.js";
-import { isValidColor, parsePositiveInt, THEMES, type BaseCardOptions, type StyleOverrides } from "./escape.js";
+import {
+  isValidColor,
+  parseNonNegativeInt,
+  parsePositiveInt,
+  parseScale,
+  scaleSvg,
+  THEMES,
+  type BaseCardOptions,
+  type StyleOverrides,
+} from "./escape.js";
 import { invokedDirectly } from "./main.js";
 import { packageVersion } from "./version.js";
 
@@ -37,6 +54,7 @@ Card types (see below for their flags):
   banner stats skills terminal badge
   divider progress donut chart links quote code project wave
   timeline contributions
+  counter sparkline gauge radar columns rating figure mark
 
 Card flags:
   banner    --title --subtitle [--tag text] [--logo text] [--gradient #aabbcc,#111111]
@@ -55,6 +73,14 @@ Card flags:
   wave      --title --subtitle [--animate]
   timeline  --title --item Date=Label (repeat)
   contributions --title [--seed n --density 0.4 | --file weeks.json] [--total n]
+  counter   --title --value [--prefix text] [--suffix text]
+  sparkline --title --values 3,5,2,8 [--unit] [--smooth] [--no-area]
+  gauge     --title --value [--min 0 --hi 100] [--unit]
+  radar     --title --item Axis=0-100 (repeat, min 3) [--levels 4]
+  columns   --title --item Label=Value (repeat) [--unit]
+  rating    --title --value 0-5 [--count 5]
+  figure    --url https://... [--caption] [--alt] [--fit cover|contain]
+  mark      --letter K [--shape circle|square|squircle] [--gradient #a,#b]
 
 Common flags (every card type):
   --theme <name>        one of \`svgforge themes\` (default midnight)
@@ -64,6 +90,8 @@ Common flags (every card type):
                         override theme colors
   --font <family>       override the font stack
   --flat                solid background instead of gradient
+  --border-width <px>   card outline thickness (0 hides it)
+  --scale <0.1-4>       shrink/grow the rendered size (viewBox untouched)
   -o, --out <path>      output file (directory for render/demo)
 
 Manifest:
@@ -102,6 +130,8 @@ interface Common {
   radius?: number;
   font?: string;
   flat?: boolean;
+  scale?: number;
+  borderWidth?: number;
   overrides: StyleOverrides;
 }
 
@@ -126,12 +156,16 @@ function parseCommon(argv: string[]): Common {
   const width = take(argv, "--width");
   const height = take(argv, "--height");
   const radius = take(argv, "--radius");
+  const scale = take(argv, "--scale");
+  const borderWidth = take(argv, "--border-width");
   return {
     theme: take(argv, "--theme"),
     out: take(argv, "-o") ?? take(argv, "--out"),
     width: width !== undefined ? parsePositiveInt(width, "--width") : undefined,
     height: height !== undefined ? parsePositiveInt(height, "--height") : undefined,
     radius: radius !== undefined ? parsePositiveInt(radius, "--radius") : undefined,
+    scale: scale !== undefined ? parseScale(scale, "--scale") : undefined,
+    borderWidth: borderWidth !== undefined ? parseNonNegativeInt(borderWidth, "--border-width") : undefined,
     font: take(argv, "--font"),
     flat: has(argv, "--flat"),
     overrides,
@@ -146,6 +180,7 @@ function base(common: Common): BaseCardOptions {
     radius: common.radius,
     font: common.font,
     flat: common.flat,
+    borderWidth: common.borderWidth,
     ...common.overrides,
   };
 }
@@ -156,9 +191,10 @@ function writeOut(target: string, svg: string): void {
   console.log(`wrote ${target}`);
 }
 
-function emit(svg: string, out: string | undefined): number {
-  if (out) writeOut(out, svg);
-  else process.stdout.write(svg);
+function emit(svg: string, out: string | undefined, scale?: number): number {
+  const scaled = scale ? scaleSvg(svg, scale) : svg;
+  if (out) writeOut(out, scaled);
+  else process.stdout.write(scaled);
   return 0;
 }
 
@@ -173,8 +209,8 @@ function demoCards(common: Common): Array<{ file: string; card: Card }> {
   const b = base(common);
   return [
     { file: "banner.svg", card: { ...b, type: "banner", title: "svgforge", subtitle: "Generate README SVGs locally" } },
-    { file: "wave.svg", card: { ...b, type: "wave", title: "svgforge", subtitle: "one command, sixteen cards" } },
-    { file: "stats.svg", card: { ...b, type: "stats", title: "Stats", items: [{ label: "Cards", value: "16" }, { label: "Themes", value: "16" }, { label: "Deps", value: "0" }] } },
+    { file: "wave.svg", card: { ...b, type: "wave", title: "svgforge", subtitle: "one command, twenty-four cards" } },
+    { file: "stats.svg", card: { ...b, type: "stats", title: "Stats", items: [{ label: "Cards", value: "24" }, { label: "Themes", value: "16" }, { label: "Deps", value: "0" }] } },
     { file: "skills.svg", card: { ...b, type: "skills", title: "Skills", items: [{ name: "TypeScript", level: 90 }, { name: "Python", level: 80 }] } },
     { file: "terminal.svg", card: { ...b, type: "terminal", title: "bash", lines: ["$ svgforge demo -o ./demo", "wrote demo/banner.svg", "wrote demo/wave.svg"] } },
     { file: "badge.svg", card: { ...b, type: "badge", label: "license", value: "KYAL-1.0" } },
@@ -185,9 +221,17 @@ function demoCards(common: Common): Array<{ file: string; card: Card }> {
     { file: "links.svg", card: { ...b, type: "links", items: [{ text: "GitHub", url: "https://github.com/KodYazicam/svgforge" }, { text: "Issues", url: "https://github.com/KodYazicam/svgforge/issues" }] } },
     { file: "quote.svg", card: { ...b, type: "quote", text: "No third-party render service. Your README images are files you commit.", author: "svgforge" } },
     { file: "code.svg", card: { ...b, type: "code", title: "demo.ts", lang: "ts", lineNumbers: true, lines: ["const cards = renderManifest(manifest);", "// writes one svg per card", "for (const c of cards) write(c.file, c.svg);"] } },
-    { file: "project.svg", card: { ...b, type: "project", name: "svgforge", host: "github.com/KodYazicam/svgforge", description: "Sixteen README card types from one offline CLI. Zero dependencies, no network.", items: [{ label: "Cards", value: "16" }, { label: "Themes", value: "16" }, { label: "Runtime deps", value: "0" }], tags: ["TypeScript", "Node 20+"] } },
+    { file: "project.svg", card: { ...b, type: "project", name: "svgforge", host: "github.com/KodYazicam/svgforge", description: "Twenty-four README card types from one offline CLI. Zero dependencies, no network.", items: [{ label: "Cards", value: "24" }, { label: "Themes", value: "16" }, { label: "Runtime deps", value: "0" }], tags: ["TypeScript", "Node 20+"] } },
     { file: "timeline.svg", card: { ...b, type: "timeline", title: "Releases", items: [{ date: "2026-09-01", label: "v1.0 — five card types" }, { date: "2026-09-26", label: "quote, timeline, contributions" }, { date: "2026-09-28", label: "v2.0 — overrides + manifest vars" }] } },
     { file: "contributions.svg", card: { ...b, type: "contributions", title: "Contributions", weeks: randomWeeks(42), total: 1337 } },
+    { file: "counter.svg", card: { ...b, type: "counter", title: "npm downloads", value: 1337, prefix: "", suffix: "/mo" } },
+    { file: "sparkline.svg", card: { ...b, type: "sparkline", title: "Traffic", values: [4, 9, 6, 12, 8, 15, 11, 18, 14, 22], unit: "k", smooth: true } },
+    { file: "gauge.svg", card: { ...b, type: "gauge", title: "Coverage", value: 96, unit: "%" } },
+    { file: "radar.svg", card: { ...b, type: "radar", title: "Skill spread", items: [{ label: "Frontend", value: 90 }, { label: "Backend", value: 85 }, { label: "DevOps", value: 70 }, { label: "Docs", value: 80 }, { label: "Testing", value: 75 }] } },
+    { file: "columns.svg", card: { ...b, type: "columns", title: "Issues closed", items: [{ label: "Mon", value: 3 }, { label: "Tue", value: 7 }, { label: "Wed", value: 5 }, { label: "Thu", value: 9 }, { label: "Fri", value: 12 }] } },
+    { file: "rating.svg", card: { ...b, type: "rating", title: "Community rating", value: 4.5, count: 5 } },
+    { file: "figure.svg", card: { ...b, type: "figure", url: "https://raw.githubusercontent.com/KodYazicam/svgforge/main/examples/wave.svg", caption: "figure embeds any https image" } },
+    { file: "mark.svg", card: { ...b, type: "mark", letter: "K" } },
   ];
 }
 
@@ -230,6 +274,7 @@ export function run(argv: string[]): number {
           gradient: gradientPair,
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "stats") {
@@ -238,6 +283,7 @@ export function run(argv: string[]): number {
       return emit(
         stats({ ...base(common), title: take(argv, "--title") ?? "Stats", items }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "skills") {
@@ -255,6 +301,7 @@ export function run(argv: string[]): number {
           showValue: has(argv, "--show-value"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "terminal") {
@@ -269,6 +316,7 @@ export function run(argv: string[]): number {
           caret: has(argv, "--caret"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "badge") {
@@ -285,10 +333,11 @@ export function run(argv: string[]): number {
           labelColor: take(argv, "--label-color"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "divider") {
-      return emit(divider({ ...base(common), label: take(argv, "--label") }), common.out);
+      return emit(divider({ ...base(common), label: take(argv, "--label") }), common.out, common.scale);
     }
     if (cmd === "progress") {
       const value = take(argv, "--value");
@@ -302,6 +351,7 @@ export function run(argv: string[]): number {
           showValue: !has(argv, "--no-value"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "donut") {
@@ -319,6 +369,7 @@ export function run(argv: string[]): number {
           unit: take(argv, "--unit"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "chart") {
@@ -335,6 +386,7 @@ export function run(argv: string[]): number {
           unit: take(argv, "--unit"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "links") {
@@ -346,12 +398,13 @@ export function run(argv: string[]): number {
       return emit(
         links({ ...base(common), items, link: !has(argv, "--no-link") }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "quote") {
       const text = take(argv, "--text");
       if (text === undefined) throw new Error("quote needs --text");
-      return emit(quote({ ...base(common), text, author: take(argv, "--author") }), common.out);
+      return emit(quote({ ...base(common), text, author: take(argv, "--author") }), common.out, common.scale);
     }
     if (cmd === "code") {
       const lines = takeAll(argv, "--line");
@@ -365,6 +418,7 @@ export function run(argv: string[]): number {
           lineNumbers: has(argv, "--line-numbers"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "project") {
@@ -379,6 +433,7 @@ export function run(argv: string[]): number {
           tags: takeAll(argv, "--tag"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "wave") {
@@ -390,6 +445,7 @@ export function run(argv: string[]): number {
           animate: has(argv, "--animate"),
         }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "timeline") {
@@ -401,6 +457,7 @@ export function run(argv: string[]): number {
       return emit(
         timeline({ ...base(common), title: take(argv, "--title") ?? "Timeline", items }),
         common.out,
+        common.scale,
       );
     }
     if (cmd === "contributions") {
@@ -432,6 +489,153 @@ export function run(argv: string[]): number {
           total: Number.isFinite(total) ? total : undefined,
         }),
         common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "counter") {
+      const value = take(argv, "--value");
+      if (value === undefined) throw new Error("counter needs --value");
+      return emit(
+        counter({
+          ...base(common),
+          title: take(argv, "--title") ?? "Counter",
+          value,
+          prefix: take(argv, "--prefix"),
+          suffix: take(argv, "--suffix"),
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "sparkline") {
+      const values = (take(argv, "--values") ?? "")
+        .split(",")
+        .map((part) => Number(part.trim()))
+        .filter((n) => Number.isFinite(n));
+      if (values.length < 2) throw new Error("sparkline needs --values 3,5,2,8 (at least two numbers)");
+      return emit(
+        sparkline({
+          ...base(common),
+          title: take(argv, "--title") ?? "Sparkline",
+          values,
+          unit: take(argv, "--unit"),
+          smooth: has(argv, "--smooth"),
+          area: !has(argv, "--no-area"),
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "gauge") {
+      const value = take(argv, "--value");
+      if (value === undefined) throw new Error("gauge needs --value");
+      const min = take(argv, "--min");
+      const max = take(argv, "--hi") ?? take(argv, "--max");
+      return emit(
+        gauge({
+          ...base(common),
+          title: take(argv, "--title") ?? "Gauge",
+          value,
+          min: min !== undefined ? Number(min) : undefined,
+          max: max !== undefined ? Number(max) : undefined,
+          unit: take(argv, "--unit"),
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "radar") {
+      const items = parsePairItems(takeAll(argv, "--item")).map((item) => ({
+        label: item.label,
+        value: Number(item.value),
+      }));
+      if (items.length < 3) throw new Error("radar needs at least three --item Axis=level");
+      const levels = take(argv, "--levels");
+      return emit(
+        radar({
+          ...base(common),
+          title: take(argv, "--title") ?? "Radar",
+          items,
+          levels: levels !== undefined ? Number(levels) : undefined,
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "columns") {
+      const items = parsePairItems(takeAll(argv, "--item")).map((item) => ({
+        label: item.label,
+        value: Number(item.value),
+      }));
+      if (items.length === 0) throw new Error("columns needs --item Label=Value");
+      return emit(
+        columns({
+          ...base(common),
+          title: take(argv, "--title") ?? "Columns",
+          items,
+          unit: take(argv, "--unit"),
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "rating") {
+      const value = take(argv, "--value");
+      if (value === undefined) throw new Error("rating needs --value (0–5)");
+      const count = take(argv, "--count");
+      return emit(
+        rating({
+          ...base(common),
+          title: take(argv, "--title") ?? "Rating",
+          value,
+          count: count !== undefined ? Number(count) : undefined,
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "figure") {
+      const url = take(argv, "--url");
+      if (url === undefined) throw new Error("figure needs --url https://...");
+      const fit = take(argv, "--fit");
+      if (fit !== undefined && !["cover", "contain"].includes(fit)) {
+        throw new Error(`invalid --fit: ${fit} (cover | contain)`);
+      }
+      return emit(
+        figure({
+          ...base(common),
+          url,
+          caption: take(argv, "--caption"),
+          alt: take(argv, "--alt"),
+          fit: fit as "cover" | "contain" | undefined,
+        }),
+        common.out,
+        common.scale,
+      );
+    }
+    if (cmd === "mark") {
+      const letter = take(argv, "--letter") ?? take(argv, "--text");
+      if (letter === undefined) throw new Error("mark needs --letter K");
+      const shape = take(argv, "--shape");
+      if (shape !== undefined && !["circle", "square", "squircle"].includes(shape)) {
+        throw new Error(`invalid --shape: ${shape} (circle | square | squircle)`);
+      }
+      const gradient = take(argv, "--gradient");
+      let gradientPair: [string, string] | undefined;
+      if (gradient) {
+        const parts = gradient.split(",").map((part) => part.trim());
+        if (parts.length !== 2) throw new Error("--gradient expects #rrggbb,#rrggbb");
+        gradientPair = [parts[0], parts[1]];
+      }
+      return emit(
+        mark({
+          ...base(common),
+          letter,
+          shape: shape as "circle" | "square" | "squircle" | undefined,
+          gradient: gradientPair,
+        }),
+        common.out,
+        common.scale,
       );
     }
     if (cmd === "render") {

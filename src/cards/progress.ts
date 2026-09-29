@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface ProgressOptions extends BaseCardOptions {
   title?: string;
@@ -32,7 +32,7 @@ export function progress(options: ProgressOptions): string {
     ? `\n  <text x="28" y="${barY + 34}" fill="${theme.muted}" font-family="${sans}" font-size="13">${escapeXml(options.caption)}</text>`
     : "";
   const inner = `
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Progress")}</text>${valueText}
   <rect x="28" y="${barY}" width="${barWidth}" height="12" rx="6" fill="${theme.bg2}"/>
   <rect x="28" y="${barY}" width="${filled}" height="12" rx="6" fill="${theme.accent}"/>${caption}

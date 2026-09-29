@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface TerminalOptions extends BaseCardOptions {
   title?: string;
@@ -31,7 +31,7 @@ export function terminal(options: TerminalOptions): string {
   </rect>`
     : "";
   const inner = `
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <circle cx="28" cy="24" r="6" fill="#ff5f56"/>
   <circle cx="48" cy="24" r="6" fill="#ffbd2e"/>
   <circle cx="68" cy="24" r="6" fill="#27c93f"/>

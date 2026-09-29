@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="460" height="190" viewBox="0 0 460 190" role="img" aria-label="Where the time goes">
 
+  <rect width="460" height="190" rx="16" fill="#0f0c29" stroke="#302b63"/>
   <g transform="rotate(-90 86 118)">
   <circle cx="86" cy="118" r="54" fill="none" stroke="#a78bfa" stroke-width="18" stroke-dasharray="184.61 339.29" stroke-dashoffset="0.00"/>
   <circle cx="86" cy="118" r="54" fill="none" stroke="#7c3aed" stroke-width="18" stroke-dasharray="99.79 339.29" stroke-dashoffset="-186.61"/>

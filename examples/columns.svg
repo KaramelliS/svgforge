@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="260" viewBox="0 0 560 260" role="img" aria-label="Issues closed">
+
+  <rect width="560" height="260" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <text x="28" y="38" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Issues closed</text>
+  <line x1="28" y1="212" x2="532" y2="212" stroke="#302b63" stroke-width="2"/>
+
+  <rect x="48.2" y="175.0" width="60.5" height="37.0" rx="4" fill="#a78bfa"/>
+  <text x="78.4" y="167.0" text-anchor="middle" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">3</text>
+  <text x="78.4" y="230" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Mon</text>
+  <rect x="149.0" y="125.7" width="60.5" height="86.3" rx="4" fill="#a78bfa"/>
+  <text x="179.2" y="117.7" text-anchor="middle" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">7</text>
+  <text x="179.2" y="230" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Tue</text>
+  <rect x="249.8" y="150.3" width="60.5" height="61.7" rx="4" fill="#a78bfa"/>
+  <text x="280.0" y="142.3" text-anchor="middle" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">5</text>
+  <text x="280.0" y="230" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Wed</text>
+  <rect x="350.6" y="101.0" width="60.5" height="111.0" rx="4" fill="#a78bfa"/>
+  <text x="380.8" y="93.0" text-anchor="middle" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">9</text>
+  <text x="380.8" y="230" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Thu</text>
+  <rect x="451.4" y="64.0" width="60.5" height="148.0" rx="4" fill="#a78bfa"/>
+  <text x="481.6" y="56.0" text-anchor="middle" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">12</text>
+  <text x="481.6" y="230" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Fri</text>
+
+</svg>

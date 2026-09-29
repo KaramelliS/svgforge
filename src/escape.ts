@@ -257,6 +257,7 @@ export interface BaseCardOptions extends StyleOverrides {
   radius?: number;
   font?: string;
   flat?: boolean;
+  borderWidth?: number;
 }
 
 const COLOR_KEYS: Array<keyof StyleOverrides> = ["bg", "bg2", "fg", "muted", "accent", "accent2", "line"];
@@ -285,6 +286,40 @@ export function parsePositiveInt(value: string, flag: string): number {
     throw new Error(`invalid ${flag}: ${value} (use a positive integer)`);
   }
   return n;
+}
+
+export function parseNonNegativeInt(value: string, flag: string, max = 16): number {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 0 || n > max || !Number.isInteger(n)) {
+    throw new Error(`invalid ${flag}: ${value} (use an integer from 0 to ${max})`);
+  }
+  return n;
+}
+
+export function parseScale(value: string, flag: string): number {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 0.1 || n > 4) {
+    throw new Error(`invalid ${flag}: ${value} (use a number between 0.1 and 4)`);
+  }
+  return n;
+}
+
+/** ` stroke-width="N"` for the card background rect; empty when unset. */
+export function borderAttr(options: { borderWidth?: number }): string {
+  const width = options.borderWidth;
+  if (width === undefined) return "";
+  if (!Number.isFinite(width) || width < 0 || width > 16) return "";
+  return ` stroke-width="${width}"`;
+}
+
+/** Multiply an SVG's intrinsic size (width/height attributes) keeping the viewBox. */
+export function scaleSvg(svg: string, factor: number): string {
+  if (!Number.isFinite(factor) || factor === 1) return svg;
+  return svg.replace(
+    /(<svg xmlns="[^"]+" width=")(\d+)(" height=")(\d+)(")/,
+    (_whole, head: string, w: string, mid: string, h: string, tail: string) =>
+      `${head}${Math.round(Number(w) * factor)}${mid}${Math.round(Number(h) * factor)}${tail}`,
+  );
 }
 
 export function wrapLines(text: string, maxChars: number): string[] {

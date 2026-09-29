@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, wrapLines, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, wrapLines, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface ProjectStat {
   label: string;
@@ -66,7 +66,7 @@ export function project(options: ProjectOptions): string {
     ? `\n  <text x="28" y="${hostY}" fill="${theme.muted}" font-family="${mono}" font-size="12">${escapeXml(options.host)}</text>`
     : "";
   const inner = `
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="28" y="${nameY}" fill="${theme.text}" font-family="${sans}" font-size="22" font-weight="700">${escapeXml(options.name)}</text>${host}
 ${desc}${statRows}
 ${tagRows}

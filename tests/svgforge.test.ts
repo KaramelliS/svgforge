@@ -18,8 +18,16 @@ import { project } from "../src/cards/project.js";
 import { wave } from "../src/cards/wave.js";
 import { timeline } from "../src/cards/timeline.js";
 import { contributions, levelColors, randomWeeks } from "../src/cards/contrib.js";
+import { counter } from "../src/cards/counter.js";
+import { sparkline } from "../src/cards/sparkline.js";
+import { gauge } from "../src/cards/gauge.js";
+import { radar } from "../src/cards/radar.js";
+import { columns } from "../src/cards/columns.js";
+import { rating } from "../src/cards/rating.js";
+import { figure } from "../src/cards/figure.js";
+import { mark } from "../src/cards/mark.js";
 import { renderManifest, safeOutputPath, substituteVars, CARD_TYPES } from "../src/render.js";
-import { escapeXml, THEMES, resolveTheme, applyOverrides, isValidColor, mixHex, seededRandom, wrapLines } from "../src/escape.js";
+import { escapeXml, THEMES, resolveTheme, applyOverrides, isValidColor, mixHex, seededRandom, scaleSvg, wrapLines } from "../src/escape.js";
 import { run } from "../src/cli.js";
 
 describe("cards", () => {
@@ -249,7 +257,7 @@ describe("manifest + cli", () => {
     const out = renderManifest({ cards: [{ type: "banner", title: "x" }] });
     expect(out[0].file).toBe("banner-1.svg");
     expect(out[0].svg).toContain("x");
-    expect(CARD_TYPES).toHaveLength(16);
+    expect(CARD_TYPES).toHaveLength(24);
   });
 
   it("rejects path traversal in manifest out", () => {
@@ -274,6 +282,25 @@ describe("manifest + cli", () => {
     expect(run(["banner", "--title", "x", "--width", "abc"])).toBe(1);
     expect(run(["badge", "--label", "a", "--value", "b", "--style", "nope"])).toBe(1);
     expect(run(["unknown"])).toBe(1);
+  });
+
+  it("renders the extra card types and rejects bad input", () => {
+    expect(counter({ title: "downloads", value: 1337, suffix: "/mo" })).toContain("1337/mo");
+    expect(sparkline({ values: [1, 4, 2, 8], unit: "k" })).toContain("8k");
+    expect(gauge({ value: 64, unit: "%" })).toContain("64%");
+    expect(radar({ items: [{ label: "A", value: 90 }, { label: "B", value: 40 }, { label: "C", value: 70 }] })).toContain("A");
+    expect(columns({ items: [{ label: "Mon", value: 3 }, { label: "Tue", value: 9 }] })).toContain("Mon");
+    expect(rating({ value: 4.5, count: 5 })).toContain("4.5/5");
+    expect(figure({ url: "https://example.com/a.svg", caption: "cap" })).toContain("https://example.com/a.svg");
+    expect(mark({ letter: "K" })).toContain(">K</text>");
+    expect(() => sparkline({ values: [1] })).toThrow(/two numbers/);
+    expect(() => radar({ items: [{ label: "A", value: 1 }] })).toThrow(/three axes/);
+    expect(() => figure({ url: "http://insecure.example/x.png" })).toThrow(/https/);
+    expect(() => mark({ letter: "" })).toThrow(/letter/);
+    const scaled = scaleSvg(banner({ title: "x" }), 0.5);
+    expect(scaled).toContain('width="440"');
+    expect(scaled).toContain('viewBox="0 0 880 160"');
+    expect(stats({ items: [{ label: "A", value: 1 }], borderWidth: 0 })).toContain('stroke-width="0"');
   });
 
   it("cli renders timeline and contributions", () => {

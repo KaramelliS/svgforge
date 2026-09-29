@@ -4,7 +4,7 @@
 
 <p align="center">
   <strong>Generate GitHub README SVGs on your machine.</strong><br/>
-  Banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves, timelines, contribution graphs. No third-party render service.
+  Banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves, timelines, contribution graphs, counters, sparklines, gauges, radars, columns, ratings, figures, marks. No third-party render service.
 </p>
 
 <p align="center">
@@ -106,6 +106,14 @@ svgforge project --name ctxpack --description "Pack a codebase" --item Stars=12 
 svgforge wave --title "hello" --subtitle "v2" -o wave.svg
 svgforge timeline --item 2026-09-01=v1.0 --item 2026-09-28=v2.0 -o timeline.svg
 svgforge contributions --seed 42 --total 1337 -o contrib.svg
+svgforge counter --value 1337 --suffix /mo -o counter.svg
+svgforge sparkline --values 4,9,6,12,8,15 --unit k --smooth -o sparkline.svg
+svgforge gauge --value 96 --unit % -o gauge.svg
+svgforge radar --item Frontend=90 --item Backend=85 --item DevOps=70 -o radar.svg
+svgforge columns --item Mon=3 --item Tue=7 --item Fri=12 -o columns.svg
+svgforge rating --value 4.5 -o rating.svg
+svgforge figure --url https://example.com/shot.svg --caption "any https image" -o figure.svg
+svgforge mark --letter K -o mark.svg
 svgforge render examples/demo.json -o examples/
 svgforge demo -o ./svgforge-demo
 svgforge themes
@@ -133,6 +141,14 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 | `wave` | `--title` `--subtitle` `--animate` | Layered sine-wave header, capsule-render style |
 | `timeline` | `--title` `--item Date=Label` (repeat) | Vertical milestone rail with dots |
 | `contributions` | `--title` `--seed n --density 0.4` or `--file weeks.json` `--total` | 52-week heatmap; `randomWeeks`/`levelColors` are exported for real data |
+| `counter` | `--title` `--value` `--prefix` `--suffix` | One big number |
+| `sparkline` | `--title` `--values 3,5,2,8` `--unit` `--smooth` `--no-area` | Line chart from a comma list |
+| `gauge` | `--title` `--value` `--min` `--hi` `--unit` | Semicircle meter; values outside the range pin to the ends |
+| `radar` | `--title` `--item Axis=0-100` (min 3) `--levels` | Polygon skill chart |
+| `columns` | `--title` `--item Label=Value` `--unit` | Vertical bars scaled to the largest value |
+| `rating` | `--title` `--value` `--count` | Star row, half stars included |
+| `figure` | `--url https://...` `--caption` `--alt` `--fit cover\|contain` | Framed https image |
+| `mark` | `--letter` `--shape circle\|square\|squircle` `--gradient` | Monogram logo |
 
 All commands accept `--theme` and the [common flags](#custom-colors-and-layout). Rendered examples with copy-paste commands per card: [ALL-SVG-FORMS.md](./ALL-SVG-FORMS.md).
 
@@ -157,6 +173,8 @@ Every card accepts these. Defaults reproduce the theme exactly — pass nothing 
 | `--radius <px>` | Corner radius |
 | `--font <family>` | Replace the font stack everywhere on the card |
 | `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
+| `--border-width <px>` | Outline thickness, `0` hides it |
+| `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
 | `--gradient #aabbcc,#111111` | Custom two-stop gradient (`banner`) |
 
 ```bash
@@ -176,7 +194,7 @@ svgforge themes | types
 svgforge --help | --version
 ```
 
-`demo` writes one sample of each of the 16 card types — the fastest way to see everything a theme can do. `render` writes one file per card. Nested `out` paths are created (`assets/hero/banner.svg`) **inside** `-o`.
+`demo` writes one sample of each of the 24 card types — the fastest way to see everything a theme can do. `render` writes one file per card. Nested `out` paths are created (`assets/hero/banner.svg`) **inside** `-o`.
 
 ## Manifest
 
@@ -237,7 +255,7 @@ const files = renderManifest({
 });
 ```
 
-Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `divider`, `progress`, `donut`, `chart`, `links`, `quote`, `code`, `project`, `wave`, `timeline`, `contributions`, `randomWeeks`, `levelColors`, `renderCard`, `renderManifest`, `substituteVars`, `CARD_TYPES`, `safeOutputPath`, `THEMES`, `applyOverrides`, `cardTheme`, `isValidColor`, `escapeXml`, `svgId`, `mixHex`, `seededRandom`, `wrapLines`, `FONT_MONO`, `FONT_SANS`, `fontStack`.
+Exports: `banner`, `stats`, `skills`, `terminal`, `badge`, `divider`, `progress`, `donut`, `chart`, `links`, `quote`, `code`, `project`, `wave`, `timeline`, `contributions`, `counter`, `sparkline`, `gauge`, `radar`, `columns`, `rating`, `figure`, `mark`, `randomWeeks`, `levelColors`, `renderCard`, `renderManifest`, `substituteVars`, `CARD_TYPES`, `safeOutputPath`, `THEMES`, `applyOverrides`, `cardTheme`, `isValidColor`, `escapeXml`, `svgId`, `mixHex`, `seededRandom`, `scaleSvg`, `borderAttr`, `wrapLines`, `FONT_MONO`, `FONT_SANS`, `fontStack`.
 
 Every card options object takes the same optional fields as the CLI flags (`theme`, `bg`, `fg`, `accent`, `width`, `radius`, `font`, …) — v1 call sites keep working unchanged.
 

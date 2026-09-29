@@ -13,7 +13,9 @@ default `midnight` theme.
 [terminal](#terminal) · [badge](#badge) · [divider](#divider) · [progress](#progress) ·
 [donut](#donut) · [chart](#chart) · [links](#links) · [quote](#quote) ·
 [code](#code) · [project](#project) · [timeline](#timeline) ·
-[contributions](#contributions) ·
+[contributions](#contributions) · [counter](#counter) · [sparkline](#sparkline) ·
+[gauge](#gauge) · [radar](#radar) · [columns](#columns) · [rating](#rating) ·
+[figure](#figure) · [mark](#mark) ·
 [common flags](#common-flags-every-card) · [themes](#themes) · [manifests](#manifests)
 
 ---
@@ -409,6 +411,180 @@ if you want to build weeks from your own commit data.
 
 ---
 
+## counter
+
+One big number. The font shrinks automatically when the text gets long.
+Default 480×132.
+
+![counter](examples/counter.svg)
+
+```bash
+svgforge counter \
+  --title "npm downloads" \
+  --value 1337 \
+  --suffix /mo \
+  -o examples/counter.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--title` | Small label above the number |
+| `--value` | The number (required) |
+| `--prefix` `--suffix` | Text glued to the number (`$`, `/mo`) |
+
+---
+
+## sparkline
+
+A line chart from a comma-separated list. The last point is highlighted and
+printed at the bottom right. Default 560×190.
+
+![sparkline](examples/sparkline.svg)
+
+```bash
+svgforge sparkline \
+  --title "Traffic" \
+  --values 4,9,6,12,8,15,11,18,14,22 \
+  --unit k \
+  --smooth \
+  -o examples/sparkline.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--values 3,5,2,8` | At least two numbers |
+| `--unit` | Suffix on the min, max, and last value |
+| `--smooth` | Curve the line |
+| `--no-area` | Hide the filled area under the line |
+
+---
+
+## gauge
+
+A semicircle meter. Values below `--min` or above `--hi` pin to the ends
+(0–100 by default). Default 420×220.
+
+![gauge](examples/gauge.svg)
+
+```bash
+svgforge gauge --title "Coverage" --value 96 --unit % -o examples/gauge.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--value` | Current reading (required) |
+| `--min` `--hi` | Range; readings outside it pin to the ends |
+| `--unit` | Suffix on the printed value |
+
+---
+
+## radar
+
+A polygon chart. Each `--item` is one axis, scored 0–100. Needs at least
+three axes. Default 440×340.
+
+![radar](examples/radar.svg)
+
+```bash
+svgforge radar \
+  --title "Skill spread" \
+  --item "Frontend=90" \
+  --item "Backend=85" \
+  --item "DevOps=70" \
+  --item "Docs=80" \
+  --item "Testing=75" \
+  -o examples/radar.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--item Axis=level` | One axis each, repeatable |
+| `--levels` | Number of grid rings (2–6, default 4) |
+
+---
+
+## columns
+
+Vertical bars scaled to the largest value. Default 560×260.
+
+![columns](examples/columns.svg)
+
+```bash
+svgforge columns \
+  --title "Issues closed" \
+  --item "Mon=3" \
+  --item "Tue=7" \
+  --item "Wed=5" \
+  --item "Thu=9" \
+  --item "Fri=12" \
+  -o examples/columns.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--item Label=Value` | One column each, repeatable |
+| `--unit` | Suffix printed above the bar |
+
+---
+
+## rating
+
+A star row with half stars. `--value 4.5` fills four and a half of five.
+Default 380×132.
+
+![rating](examples/rating.svg)
+
+```bash
+svgforge rating --title "Community rating" --value 4.5 --count 5 -o examples/rating.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--value` | Score, 0 to `--count` |
+| `--count` | How many stars (1–10, default 5) |
+
+---
+
+## figure
+
+A framed image. Only `https` URLs are accepted. Default 640×260.
+
+![figure](examples/figure.svg)
+
+```bash
+svgforge figure \
+  --url "https://raw.githubusercontent.com/KodYazicam/svgforge/main/examples/wave.svg" \
+  --caption "figure embeds any https image" \
+  -o examples/figure.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--url` | https image (required) |
+| `--caption` `--alt` | Caption under the image, and the accessible label |
+| `--fit cover\|contain` | Crop to fill, or fit the whole image |
+
+---
+
+## mark
+
+A monogram logo. One to three characters, centered on a gradient.
+Default 160×160.
+
+![mark](examples/mark.svg)
+
+```bash
+svgforge mark --letter K -o examples/mark.svg
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--letter` | 1–3 characters (required) |
+| `--shape circle\|square\|squircle` | Squircle is the default |
+| `--gradient #aabbcc,#111111` | Custom two-stop fill |
+
+---
+
 ## Common flags (every card)
 
 | Flag | Effect |
@@ -419,6 +595,8 @@ if you want to build weeks from your own commit data.
 | `--bg --bg2 --fg --muted --accent --accent2 --line-color <#rrggbb>` | Override one theme color at a time |
 | `--font <family>` | Replace the font stack everywhere on the card |
 | `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
+| `--border-width <px>` | Outline thickness; `0` hides the outline |
+| `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
 | `-o, --out <path>` | Output file; omit for stdout |
 
 Bad colors (`red`) and bad sizes (`--width abc`) exit 1 with the flag named
