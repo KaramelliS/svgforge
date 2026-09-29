@@ -7,7 +7,7 @@
 ## Mevcut Durum (v2.5.0 baseline)
 
 - 32 kart tipi (`src/cards/*.ts`), her kart tek dosya, saf fonksiyon → SVG string
-- 22 tema (`src/escape.ts` içinde `THEMES`)
+- 30 tema (`src/escape.ts` içinde `THEMES`)
 - CLI (`src/cli.ts`) + kütüphane API'si (`src/index.ts`) + manifest render (`src/render.ts`)
 - Node 22+, sıfır runtime bağımlılığı, ağ yok
 - 24 test (tek dosya: `tests/svgforge.test.ts`), CI (build+test) ve release workflow mevcut

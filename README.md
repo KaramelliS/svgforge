@@ -170,7 +170,7 @@ All commands accept `--theme` and the [common flags](#custom-colors-and-layout).
 
 ## Themes
 
-`midnight` (default) · `tokyonight` · `dracula` · `nord` · `github` · `github-light` · `gruvbox` · `catppuccin` · `catppuccin-latte` · `onedark` · `monokai` · `solarized` · `solarized-light` · `synthwave` · `rose-pine` · `tokyo-night-storm` · `kanagawa` · `everforest` · `ayu` · `horizon` · `material` · `paper`
+`midnight` (default) · `tokyonight` · `dracula` · `nord` · `github` · `github-light` · `gruvbox` · `catppuccin` · `catppuccin-latte` · `onedark` · `monokai` · `solarized` · `solarized-light` · `synthwave` · `rose-pine` · `tokyo-night-storm` · `kanagawa` · `everforest` · `ayu` · `horizon` · `material` · `paper` · `poimandres` · `vesper` · `nightowl` · `palenight` · `moonlight` · `vitesse` · `flexoki` · `flexoki-light`
 
 ```bash
 svgforge themes
@@ -178,7 +178,7 @@ svgforge themes
 
 Rendered sample of every theme: [ALL-SVG-FORMS.md](./ALL-SVG-FORMS.md#theme-gallery).
 
-Unknown names fall back to `midnight`. For light GitHub UIs try `paper`, `github-light`, `catppuccin-latte`, or `solarized-light`.
+Unknown names fall back to `midnight`. For light GitHub UIs try `paper`, `github-light`, `catppuccin-latte`, `solarized-light`, or `flexoki-light`.
 
 ## Custom colors and layout
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="160" viewBox="0 0 880 160" role="img" aria-label="flexoki">
+
+<rect width="880" height="160" rx="16" fill="#100f0f" stroke="#282726" stroke-width="1"/>
+  <rect x="28" y="52" width="4" height="80" rx="2" fill="#4385be"/>
+  <circle cx="808" cy="52" r="40" fill="none" stroke="#879a39" stroke-opacity="0.35" stroke-width="1.5"/>
+  <circle cx="808" cy="52" r="4" fill="#879a39" fill-opacity="0.8"/>
+  <text x="52" y="48" fill="#4385be" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" letter-spacing="3">THEME</text>
+  <text x="52" y="84" fill="#cecdc3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" font-weight="700">flexoki</text>
+  <text x="52" y="120" fill="#878580" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">svgforge theme</text>
+
+</svg>

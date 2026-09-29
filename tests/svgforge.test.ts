@@ -157,8 +157,8 @@ function themeAccent2(): string {
 }
 
 describe("themes and overrides", () => {
-  it("ships twenty-two themes", () => {
-    expect(Object.keys(THEMES)).toHaveLength(22);
+  it("ships thirty themes", () => {
+    expect(Object.keys(THEMES)).toHaveLength(30);
     expect(resolveTheme("gruvbox").bg).toBe("#282828");
     expect(resolveTheme("catppuccin-latte").name).toBe("catppuccin-latte");
     expect(resolveTheme("paper").bg).toBe("#fafafa");
@@ -166,7 +166,15 @@ describe("themes and overrides", () => {
     expect(resolveTheme("rose-pine").name).toBe("rose-pine");
     expect(resolveTheme("kanagawa").bg).toBe("#1f1f28");
     expect(resolveTheme("material").accent).toBe("#82aaff");
-    expect(Object.keys(THEMES)).toHaveLength(22);
+    expect(resolveTheme("poimandres").accent).toBe("#5de4c7");
+    expect(resolveTheme("vesper").bg).toBe("#101010");
+    expect(resolveTheme("nightowl").bg).toBe("#011627");
+    expect(resolveTheme("palenight").bg).toBe("#292d3e");
+    expect(resolveTheme("moonlight").bg).toBe("#212337");
+    expect(resolveTheme("vitesse").accent).toBe("#4d9375");
+    expect(resolveTheme("flexoki").bg).toBe("#100f0f");
+    expect(resolveTheme("flexoki-light").bg).toBe("#fffcf0");
+    expect(Object.keys(THEMES)).toHaveLength(30);
     expect(resolveTheme("nope").name).toBe("midnight");
   });
 
