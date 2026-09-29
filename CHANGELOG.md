@@ -18,11 +18,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `--shadow` is applied once in `wrap()`, not both in the card and in `wrap()`.
 - `callout` uses `*` for `tip` and `i` for `info`.
+- `links` card renders plain pills by default; pass `--link` to enable anchors (previously `--no-link` to disable).
+- `contributions` card uses title `"Contributions (sample)"` when `--seed` is set and no `--title` is given.
+- README: Node.js requirement updated to 22+.
+- README: exports list updated to match current public API.
+- README: path confinement section rewritten to reflect actual substitution-then-check order.
 
 ### Fixed
 
 - `figure` places its `clipPath` inside `<defs>`.
 - `rating` clips only the partial star.
+- Removed "v1 call sites keep working unchanged" claim after public API was narrowed.
+- Removed personal project names (ctxpack, hookyard, envsentinel) from examples.
+- Removed contradictory "do not feed untrusted manifest" warning (check runs on substituted path).
 
 ### Security
 

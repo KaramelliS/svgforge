@@ -75,7 +75,7 @@ Card flags:
   progress  --title --value 0-100 [--caption text] [--no-value]
   donut     --title --item Label=Value (repeat) [--center text] [--unit suffix]
   chart     --title --item Label=Value (repeat) [--unit suffix]
-  links     --item Text=https://... (repeat) [--no-link]
+  links     --item Text=https://... (repeat) [--link]
   quote     --text --author
   code      --title --lang ts|py|sh [--line text (repeat)] [--line-numbers]
   project   --name --description --host --item Label=Value (repeat) --tag text (repeat)
