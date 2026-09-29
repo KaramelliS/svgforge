@@ -25,6 +25,14 @@ import { columns } from "./cards/columns.js";
 import { rating } from "./cards/rating.js";
 import { figure } from "./cards/figure.js";
 import { mark } from "./cards/mark.js";
+import { profile } from "./cards/profile.js";
+import { steps } from "./cards/steps.js";
+import { pills } from "./cards/pills.js";
+import { callout } from "./cards/callout.js";
+import { compare } from "./cards/compare.js";
+import { social } from "./cards/social.js";
+import { checklist } from "./cards/checklist.js";
+import { cover } from "./cards/cover.js";
 import { CARD_TYPES, renderCard, renderManifest, safeOutputPath, substituteVars, type Card, type Manifest } from "./render.js";
 import {
   isValidColor,
@@ -81,6 +89,14 @@ Card flags:
   rating    --title --value 0-5 [--count 5]
   figure    --url https://... [--caption] [--alt] [--fit cover|contain]
   mark      --letter K [--shape circle|square|squircle] [--gradient #a,#b]
+  profile   --name --handle --bio [--avatar AB] --item Label=Value (repeat)
+  steps     --title --item text (repeat)
+  pills     --title --tag text (repeat)
+  callout   --title --text [--tone info|tip|warn]
+  compare   --left A --right B --item Label|left|right (repeat)
+  social    --item Name=handle (repeat)
+  checklist --title --item text  or  --item done:text (repeat)
+  cover     --title --subtitle [--kicker]
 
 Common flags (every card type):
   --theme <name>        one of \`svgforge themes\` (default midnight)
@@ -91,6 +107,7 @@ Common flags (every card type):
   --font <family>       override the font stack
   --flat                solid background instead of gradient
   --border-width <px>   card outline thickness (0 hides it)
+  --shadow              soft drop shadow
   --scale <0.1-4>       shrink/grow the rendered size (viewBox untouched)
   -o, --out <path>      output file (directory for render/demo)
 
@@ -132,6 +149,7 @@ interface Common {
   flat?: boolean;
   scale?: number;
   borderWidth?: number;
+  shadow?: boolean;
   overrides: StyleOverrides;
 }
 
@@ -168,6 +186,7 @@ function parseCommon(argv: string[]): Common {
     borderWidth: borderWidth !== undefined ? parseNonNegativeInt(borderWidth, "--border-width") : undefined,
     font: take(argv, "--font"),
     flat: has(argv, "--flat"),
+    shadow: has(argv, "--shadow"),
     overrides,
   };
 }
@@ -181,6 +200,7 @@ function base(common: Common): BaseCardOptions {
     font: common.font,
     flat: common.flat,
     borderWidth: common.borderWidth,
+    shadow: common.shadow,
     ...common.overrides,
   };
 }
@@ -232,6 +252,14 @@ function demoCards(common: Common): Array<{ file: string; card: Card }> {
     { file: "rating.svg", card: { ...b, type: "rating", title: "Community rating", value: 4.5, count: 5 } },
     { file: "figure.svg", card: { ...b, type: "figure", url: "https://raw.githubusercontent.com/KodYazicam/svgforge/main/examples/wave.svg", caption: "figure embeds any https image" } },
     { file: "mark.svg", card: { ...b, type: "mark", letter: "K" } },
+    { file: "profile.svg", card: { ...b, type: "profile", name: "KodYazicam", handle: "@kodyazicam", bio: "Ships local tools.", avatar: "KY", items: [{ label: "Repos", value: "12" }, { label: "Cards", value: "32" }] } },
+    { file: "steps.svg", card: { ...b, type: "steps", title: "Ship it", items: ["Clone", "npm ci", "npm run build", "Commit the SVG"] } },
+    { file: "pills.svg", card: { ...b, type: "pills", title: "Stack", tags: ["TypeScript", "Node", "Python", "Discord", "SVG", "Linux"] } },
+    { file: "callout.svg", card: { ...b, type: "callout", title: "No network", text: "The SVG is a file in your repo. GitHub serves it.", tone: "tip" } },
+    { file: "compare.svg", card: { ...b, type: "compare", title: "Why local", left: "CDN card", right: "svgforge", items: [{ label: "Offline", left: "no", right: "yes" }, { label: "Rate limit", left: "yes", right: "no" }] } },
+    { file: "social.svg", card: { ...b, type: "social", items: [{ name: "GitHub", handle: "@KodYazicam" }, { name: "Site", handle: "kodyazicam.dev" }] } },
+    { file: "checklist.svg", card: { ...b, type: "checklist", title: "Release", items: [{ text: "Tests", done: true }, { text: "Examples", done: true }, { text: "Tag", done: false }] } },
+    { file: "cover.svg", card: { ...b, type: "cover", kicker: "local svg", title: "svgforge", subtitle: "thirty-two cards, zero network" } },
   ];
 }
 
@@ -637,6 +665,52 @@ export function run(argv: string[]): number {
         common.out,
         common.scale,
       );
+    }
+    if (cmd === "profile") {
+      const items = parsePairItems(takeAll(argv, "--item")).map((item) => ({ label: item.label, value: item.value }));
+      const name = take(argv, "--name");
+      if (!name) throw new Error("profile needs --name");
+      return emit(profile({ ...base(common), name, handle: take(argv, "--handle"), bio: take(argv, "--bio"), avatar: take(argv, "--avatar"), items }), common.out, common.scale);
+    }
+    if (cmd === "steps") {
+      const items = takeAll(argv, "--item");
+      if (items.length === 0) throw new Error("steps needs --item text");
+      return emit(steps({ ...base(common), title: take(argv, "--title"), items }), common.out, common.scale);
+    }
+    if (cmd === "pills") {
+      const tags = takeAll(argv, "--tag");
+      if (tags.length === 0) throw new Error("pills needs --tag text");
+      return emit(pills({ ...base(common), title: take(argv, "--title"), tags }), common.out, common.scale);
+    }
+    if (cmd === "callout") {
+      const text = take(argv, "--text");
+      if (!text) throw new Error("callout needs --text");
+      const tone = take(argv, "--tone");
+      if (tone !== undefined && !["info", "tip", "warn"].includes(tone)) throw new Error(`invalid --tone: ${tone}`);
+      return emit(callout({ ...base(common), title: take(argv, "--title"), text, tone: tone as "info" | "tip" | "warn" | undefined }), common.out, common.scale);
+    }
+    if (cmd === "compare") {
+      const items = takeAll(argv, "--item").map((pair) => {
+        const [label, left, ...rest] = pair.split("|");
+        return { label, left: left ?? "", right: rest.join("|") };
+      });
+      if (items.length === 0) throw new Error("compare needs --item Label|left|right");
+      return emit(compare({ ...base(common), title: take(argv, "--title"), left: take(argv, "--left") ?? "A", right: take(argv, "--right") ?? "B", items }), common.out, common.scale);
+    }
+    if (cmd === "social") {
+      const items = parsePairItems(takeAll(argv, "--item")).map((item) => ({ name: item.label, handle: item.value }));
+      if (items.length === 0) throw new Error("social needs --item Name=handle");
+      return emit(social({ ...base(common), items }), common.out, common.scale);
+    }
+    if (cmd === "checklist") {
+      const items = takeAll(argv, "--item").map((item) => item.startsWith("done:") ? { text: item.slice(5), done: true } : { text: item, done: false });
+      if (items.length === 0) throw new Error("checklist needs --item text");
+      return emit(checklist({ ...base(common), title: take(argv, "--title"), items }), common.out, common.scale);
+    }
+    if (cmd === "cover") {
+      const title = take(argv, "--title");
+      if (!title) throw new Error("cover needs --title");
+      return emit(cover({ ...base(common), title, subtitle: take(argv, "--subtitle"), kicker: take(argv, "--kicker") }), common.out, common.scale);
     }
     if (cmd === "render") {
       const file = argv[1];

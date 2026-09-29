@@ -191,6 +191,66 @@ export const THEMES: Record<string, Theme> = {
     accent2: "#01cdfe",
     line: "#3a2b4a",
   },
+  "tokyo-night-storm": {
+    name: "tokyo-night-storm",
+    bg: "#24283b",
+    bg2: "#1f2335",
+    text: "#c0caf5",
+    muted: "#a9b1d6",
+    accent: "#7dcfff",
+    accent2: "#bb9af7",
+    line: "#414868",
+  },
+  kanagawa: {
+    name: "kanagawa",
+    bg: "#1f1f28",
+    bg2: "#16161d",
+    text: "#dcd7ba",
+    muted: "#c8c093",
+    accent: "#7e9cd8",
+    accent2: "#957fb8",
+    line: "#363646",
+  },
+  "everforest": {
+    name: "everforest",
+    bg: "#2d353b",
+    bg2: "#343f44",
+    text: "#d3c6aa",
+    muted: "#9da9a0",
+    accent: "#a7c080",
+    accent2: "#7fbbb3",
+    line: "#475258",
+  },
+  "ayu": {
+    name: "ayu",
+    bg: "#0b0e14",
+    bg2: "#11151c",
+    text: "#bfbdb6",
+    muted: "#646870",
+    accent: "#e6b450",
+    accent2: "#59c2ff",
+    line: "#1c212b",
+  },
+  "horizon": {
+    name: "horizon",
+    bg: "#1c1e26",
+    bg2: "#232530",
+    text: "#d5d8da",
+    muted: "#6c6f93",
+    accent: "#e95678",
+    accent2: "#fab795",
+    line: "#2e303e",
+  },
+  "material": {
+    name: "material",
+    bg: "#263238",
+    bg2: "#1e272c",
+    text: "#eeffff",
+    muted: "#b0bec5",
+    accent: "#82aaff",
+    accent2: "#c3e88d",
+    line: "#37474f",
+  },
   paper: {
     name: "paper",
     bg: "#fafafa",
@@ -258,6 +318,7 @@ export interface BaseCardOptions extends StyleOverrides {
   font?: string;
   flat?: boolean;
   borderWidth?: number;
+  shadow?: boolean;
 }
 
 const COLOR_KEYS: Array<keyof StyleOverrides> = ["bg", "bg2", "fg", "muted", "accent", "accent2", "line"];
@@ -310,6 +371,15 @@ export function borderAttr(options: { borderWidth?: number }): string {
   if (width === undefined) return "";
   if (!Number.isFinite(width) || width < 0 || width > 16) return "";
   return ` stroke-width="${width}"`;
+}
+
+export function shadowFilter(id: string, on?: boolean): string {
+  if (!on) return "";
+  return `<filter id="${id}" x="-8%" y="-8%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.28"/></filter>`;
+}
+
+export function shadowAttr(id: string, on?: boolean): string {
+  return on ? ` filter="url(#${id})"` : "";
 }
 
 /** Multiply an SVG's intrinsic size (width/height attributes) keeping the viewBox. */

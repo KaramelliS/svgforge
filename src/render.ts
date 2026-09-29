@@ -23,6 +23,14 @@ import { columns, type ColumnsOptions } from "./cards/columns.js";
 import { rating, type RatingOptions } from "./cards/rating.js";
 import { figure, type FigureOptions } from "./cards/figure.js";
 import { mark, type MarkOptions } from "./cards/mark.js";
+import { profile, type ProfileOptions } from "./cards/profile.js";
+import { steps, type StepsOptions } from "./cards/steps.js";
+import { pills, type PillsOptions } from "./cards/pills.js";
+import { callout, type CalloutOptions } from "./cards/callout.js";
+import { compare, type CompareOptions } from "./cards/compare.js";
+import { social, type SocialOptions } from "./cards/social.js";
+import { checklist, type ChecklistOptions } from "./cards/checklist.js";
+import { cover, type CoverOptions } from "./cards/cover.js";
 
 export type Card =
   | ({ type: "banner"; out?: string } & BannerOptions)
@@ -48,7 +56,15 @@ export type Card =
   | ({ type: "columns"; out?: string } & ColumnsOptions)
   | ({ type: "rating"; out?: string } & RatingOptions)
   | ({ type: "figure"; out?: string } & FigureOptions)
-  | ({ type: "mark"; out?: string } & MarkOptions);
+  | ({ type: "mark"; out?: string } & MarkOptions)
+  | ({ type: "profile"; out?: string } & ProfileOptions)
+  | ({ type: "steps"; out?: string } & StepsOptions)
+  | ({ type: "pills"; out?: string } & PillsOptions)
+  | ({ type: "callout"; out?: string } & CalloutOptions)
+  | ({ type: "compare"; out?: string } & CompareOptions)
+  | ({ type: "social"; out?: string } & SocialOptions)
+  | ({ type: "checklist"; out?: string } & ChecklistOptions)
+  | ({ type: "cover"; out?: string } & CoverOptions);
 
 export const CARD_TYPES = [
   "banner",
@@ -75,6 +91,14 @@ export const CARD_TYPES = [
   "rating",
   "figure",
   "mark",
+  "profile",
+  "steps",
+  "pills",
+  "callout",
+  "compare",
+  "social",
+  "checklist",
+  "cover",
 ] as const;
 
 export interface Manifest {
@@ -154,6 +178,22 @@ export function renderCard(card: Card, fallbackTheme?: string): string {
       return figure({ ...card, theme });
     case "mark":
       return mark({ ...card, theme });
+    case "profile":
+      return profile({ ...card, theme });
+    case "steps":
+      return steps({ ...card, theme });
+    case "pills":
+      return pills({ ...card, theme });
+    case "callout":
+      return callout({ ...card, theme });
+    case "compare":
+      return compare({ ...card, theme });
+    case "social":
+      return social({ ...card, theme });
+    case "checklist":
+      return checklist({ ...card, theme });
+    case "cover":
+      return cover({ ...card, theme });
     default: {
       const never: never = card;
       throw new Error(`unknown card type: ${(never as Card).type}`);

@@ -27,6 +27,14 @@ export { columns, type ColumnsOptions, type ColumnItem } from "./cards/columns.j
 export { rating, type RatingOptions } from "./cards/rating.js";
 export { figure, type FigureOptions, assertHttpsUrl } from "./cards/figure.js";
 export { mark, type MarkOptions } from "./cards/mark.js";
+export { profile, type ProfileOptions } from "./cards/profile.js";
+export { steps, type StepsOptions } from "./cards/steps.js";
+export { pills, type PillsOptions } from "./cards/pills.js";
+export { callout, type CalloutOptions } from "./cards/callout.js";
+export { compare, type CompareOptions } from "./cards/compare.js";
+export { social, type SocialOptions } from "./cards/social.js";
+export { checklist, type ChecklistOptions } from "./cards/checklist.js";
+export { cover, type CoverOptions } from "./cards/cover.js";
 export {
   renderCard,
   renderManifest,
@@ -49,6 +57,8 @@ export {
   wrapLines,
   scaleSvg,
   borderAttr,
+  shadowFilter,
+  shadowAttr,
   FONT_MONO,
   FONT_SANS,
   fontStack,

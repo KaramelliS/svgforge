@@ -15,7 +15,9 @@ default `midnight` theme.
 [code](#code) · [project](#project) · [timeline](#timeline) ·
 [contributions](#contributions) · [counter](#counter) · [sparkline](#sparkline) ·
 [gauge](#gauge) · [radar](#radar) · [columns](#columns) · [rating](#rating) ·
-[figure](#figure) · [mark](#mark) ·
+[figure](#figure) · [mark](#mark) · [profile](#profile) · [steps](#steps) ·
+[pills](#pills) · [callout](#callout) · [compare](#compare) · [social](#social) ·
+[checklist](#checklist) · [cover](#cover) ·
 [common flags](#common-flags-every-card) · [themes](#themes) · [manifests](#manifests)
 
 ---
@@ -585,6 +587,86 @@ svgforge mark --letter K -o examples/mark.svg
 
 ---
 
+## profile
+
+Avatar initials, handle, bio, and a stat row.
+
+![profile](examples/profile.svg)
+
+```bash
+svgforge profile --name KodYazicam --handle @kodyazicam --bio "Ships local tools." --item Repos=12 --item Cards=32
+```
+
+## steps
+
+Numbered list. Earlier steps are filled; the last one stays open.
+
+![steps](examples/steps.svg)
+
+```bash
+svgforge steps --title "Ship it" --item Clone --item "npm ci" --item "npm run build"
+```
+
+## pills
+
+Wrapping chip cloud.
+
+![pills](examples/pills.svg)
+
+```bash
+svgforge pills --title Stack --tag TypeScript --tag Node --tag SVG
+```
+
+## callout
+
+A short note. `--tone` is `info`, `tip`, or `warn`.
+
+![callout](examples/callout.svg)
+
+```bash
+svgforge callout --title "No network" --text "Commit the SVG." --tone tip
+```
+
+## compare
+
+Two columns. Each row is `Label|left|right`.
+
+![compare](examples/compare.svg)
+
+```bash
+svgforge compare --left "CDN card" --right svgforge --item "Offline|no|yes"
+```
+
+## social
+
+Name plus handle.
+
+![social](examples/social.svg)
+
+```bash
+svgforge social --item "GitHub=@KodYazicam"
+```
+
+## checklist
+
+Prefix a row with `done:` to check it.
+
+![checklist](examples/checklist.svg)
+
+```bash
+svgforge checklist --title Release --item "done:Tests" --item Tag
+```
+
+## cover
+
+A large hero. `--shadow` adds a soft drop shadow; it works on every card.
+
+![cover](examples/cover.svg)
+
+```bash
+svgforge cover --kicker "local svg" --title svgforge --subtitle "zero network" --shadow
+```
+
 ## Common flags (every card)
 
 | Flag | Effect |
@@ -596,6 +678,7 @@ svgforge mark --letter K -o examples/mark.svg
 | `--font <family>` | Replace the font stack everywhere on the card |
 | `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
 | `--border-width <px>` | Outline thickness; `0` hides the outline |
+| `--shadow` | Soft drop shadow on the card |
 | `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
 | `-o, --out <path>` | Output file; omit for stdout |
 
@@ -615,7 +698,7 @@ svgforge stats --item "Stars=12" --theme paper --radius 4
 16 built in: `midnight` (default) · `tokyonight` · `dracula` · `nord` ·
 `github` · `github-light` · `gruvbox` · `catppuccin` · `catppuccin-latte` ·
 `onedark` · `monokai` · `solarized` · `solarized-light` · `synthwave` ·
-`rose-pine` · `paper`
+`rose-pine` · `tokyo-night-storm` · `kanagawa` · `everforest` · `ayu` · `horizon` · `material` · `paper`
 
 Unknown names fall back to `midnight`. Preview a whole theme in one shot:
 

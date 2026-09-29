@@ -1,6 +1,6 @@
 {
   "name": "@kodyazicam/svgforge",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "description": "Generate GitHub README SVGs locally: banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves. No third-party render service.",
   "keywords": [

@@ -155,13 +155,16 @@ function themeAccent2(): string {
 }
 
 describe("themes and overrides", () => {
-  it("ships sixteen themes", () => {
-    expect(Object.keys(THEMES)).toHaveLength(16);
+  it("ships twenty-two themes", () => {
+    expect(Object.keys(THEMES)).toHaveLength(22);
     expect(resolveTheme("gruvbox").bg).toBe("#282828");
     expect(resolveTheme("catppuccin-latte").name).toBe("catppuccin-latte");
     expect(resolveTheme("paper").bg).toBe("#fafafa");
     expect(resolveTheme("github-light").bg).toBe("#ffffff");
     expect(resolveTheme("rose-pine").name).toBe("rose-pine");
+    expect(resolveTheme("kanagawa").bg).toBe("#1f1f28");
+    expect(resolveTheme("material").accent).toBe("#82aaff");
+    expect(Object.keys(THEMES)).toHaveLength(22);
     expect(resolveTheme("nope").name).toBe("midnight");
   });
 
@@ -257,7 +260,7 @@ describe("manifest + cli", () => {
     const out = renderManifest({ cards: [{ type: "banner", title: "x" }] });
     expect(out[0].file).toBe("banner-1.svg");
     expect(out[0].svg).toContain("x");
-    expect(CARD_TYPES).toHaveLength(24);
+    expect(CARD_TYPES).toHaveLength(32);
   });
 
   it("rejects path traversal in manifest out", () => {

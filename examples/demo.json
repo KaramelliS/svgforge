@@ -177,15 +177,15 @@
       "type": "project",
       "name": "svgforge",
       "host": "github.com/KodYazicam/svgforge",
-      "description": "Twenty-four README card types from one offline CLI. Zero runtime dependencies, no network, no render API.",
+      "description": "Thirty-two README card types from one offline CLI. Zero runtime dependencies, no network, no render API.",
       "items": [
         {
           "label": "Card types",
-          "value": "24"
+          "value": "32"
         },
         {
           "label": "Themes",
-          "value": "16"
+          "value": "22"
         },
         {
           "label": "Runtime deps",
@@ -329,6 +329,114 @@
       "type": "mark",
       "letter": "K",
       "out": "mark.svg"
+    },
+    {
+      "type": "profile",
+      "name": "KodYazicam",
+      "handle": "@kodyazicam",
+      "bio": "Ships local tools.",
+      "avatar": "KY",
+      "items": [
+        {
+          "label": "Repos",
+          "value": "12"
+        },
+        {
+          "label": "Cards",
+          "value": "32"
+        }
+      ],
+      "out": "profile.svg"
+    },
+    {
+      "type": "steps",
+      "title": "Ship it",
+      "items": [
+        "Clone",
+        "npm ci",
+        "npm run build",
+        "Commit the SVG"
+      ],
+      "out": "steps.svg"
+    },
+    {
+      "type": "pills",
+      "title": "Stack",
+      "tags": [
+        "TypeScript",
+        "Node",
+        "Python",
+        "Discord",
+        "SVG",
+        "Linux"
+      ],
+      "out": "pills.svg"
+    },
+    {
+      "type": "callout",
+      "title": "No network",
+      "text": "The SVG is a file in your repo. GitHub serves it.",
+      "tone": "tip",
+      "out": "callout.svg"
+    },
+    {
+      "type": "compare",
+      "title": "Why local",
+      "left": "CDN card",
+      "right": "svgforge",
+      "items": [
+        {
+          "label": "Offline",
+          "left": "no",
+          "right": "yes"
+        },
+        {
+          "label": "Rate limit",
+          "left": "yes",
+          "right": "no"
+        }
+      ],
+      "out": "compare.svg"
+    },
+    {
+      "type": "social",
+      "items": [
+        {
+          "name": "GitHub",
+          "handle": "@KodYazicam"
+        },
+        {
+          "name": "Site",
+          "handle": "kodyazicam.dev"
+        }
+      ],
+      "out": "social.svg"
+    },
+    {
+      "type": "checklist",
+      "title": "Release",
+      "items": [
+        {
+          "text": "Tests",
+          "done": true
+        },
+        {
+          "text": "Examples",
+          "done": true
+        },
+        {
+          "text": "Tag",
+          "done": false
+        }
+      ],
+      "out": "checklist.svg"
+    },
+    {
+      "type": "cover",
+      "kicker": "local svg",
+      "title": "svgforge",
+      "subtitle": "thirty-two cards, zero network",
+      "out": "cover.svg"
     }
   ]
 }

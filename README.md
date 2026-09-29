@@ -4,7 +4,7 @@
 
 <p align="center">
   <strong>Generate GitHub README SVGs on your machine.</strong><br/>
-  Banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves, timelines, contribution graphs, counters, sparklines, gauges, radars, columns, ratings, figures, marks. No third-party render service.
+  Banners, stats, skills, terminals, badges, dividers, progress, donuts, charts, links, quotes, code, projects, waves, timelines, contribution graphs,   counters, sparklines, gauges, radars, columns, ratings, figures, marks, profiles, steps, pills, callouts, comparisons, social rows, checklists, and covers. No third-party render service.
 </p>
 
 <p align="center">
@@ -114,6 +114,14 @@ svgforge columns --item Mon=3 --item Tue=7 --item Fri=12 -o columns.svg
 svgforge rating --value 4.5 -o rating.svg
 svgforge figure --url https://example.com/shot.svg --caption "any https image" -o figure.svg
 svgforge mark --letter K -o mark.svg
+svgforge profile --name KodYazicam --handle @kodyazicam --bio "local tools" --item Repos=12 -o profile.svg
+svgforge steps --item Clone --item Build --item Commit -o steps.svg
+svgforge pills --tag TypeScript --tag Node --tag SVG -o pills.svg
+svgforge callout --title "No network" --text "Commit the SVG." --tone tip -o callout.svg
+svgforge compare --left CDN --right local --item "Offline|no|yes" -o compare.svg
+svgforge social --item "GitHub=@KodYazicam" -o social.svg
+svgforge checklist --item "done:tests" --item tag -o checklist.svg
+svgforge cover --kicker "local svg" --title svgforge --subtitle "zero network" --shadow -o cover.svg
 svgforge render examples/demo.json -o examples/
 svgforge demo -o ./svgforge-demo
 svgforge themes
@@ -149,12 +157,20 @@ Without `-o` / `--out`, SVG goes to stdout (redirect with `> file.svg`).
 | `rating` | `--title` `--value` `--count` | Star row, half stars included |
 | `figure` | `--url https://...` `--caption` `--alt` `--fit cover\|contain` | Framed https image |
 | `mark` | `--letter` `--shape circle\|square\|squircle` `--gradient` | Monogram logo |
+| `profile` | `--name` `--handle` `--bio` `--avatar` `--item` | Avatar, bio, stat row |
+| `steps` | `--title` `--item` | Numbered steps |
+| `pills` | `--title` `--tag` | Wrapping chip cloud |
+| `callout` | `--title` `--text` `--tone info\|tip\|warn` | Accent note |
+| `compare` | `--left` `--right` `--item Label\|a\|b` | Two-column comparison |
+| `social` | `--item Name=handle` | Handle list |
+| `checklist` | `--item` or `--item done:text` | Checkbox list |
+| `cover` | `--title` `--subtitle` `--kicker` | Large hero, bigger than banner |
 
 All commands accept `--theme` and the [common flags](#custom-colors-and-layout). Rendered examples with copy-paste commands per card: [ALL-SVG-FORMS.md](./ALL-SVG-FORMS.md).
 
 ## Themes
 
-`midnight` (default) · `tokyonight` · `dracula` · `nord` · `github` · `github-light` · `gruvbox` · `catppuccin` · `catppuccin-latte` · `onedark` · `monokai` · `solarized` · `solarized-light` · `synthwave` · `rose-pine` · `paper`
+`midnight` (default) · `tokyonight` · `dracula` · `nord` · `github` · `github-light` · `gruvbox` · `catppuccin` · `catppuccin-latte` · `onedark` · `monokai` · `solarized` · `solarized-light` · `synthwave` · `rose-pine` · `tokyo-night-storm` · `kanagawa` · `everforest` · `ayu` · `horizon` · `material` · `paper`
 
 ```bash
 svgforge themes
@@ -174,6 +190,7 @@ Every card accepts these. Defaults reproduce the theme exactly — pass nothing 
 | `--font <family>` | Replace the font stack everywhere on the card |
 | `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
 | `--border-width <px>` | Outline thickness, `0` hides it |
+| `--shadow` | Soft drop shadow |
 | `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
 | `--gradient #aabbcc,#111111` | Custom two-stop gradient (`banner`) |
 
@@ -194,7 +211,7 @@ svgforge themes | types
 svgforge --help | --version
 ```
 
-`demo` writes one sample of each of the 24 card types — the fastest way to see everything a theme can do. `render` writes one file per card. Nested `out` paths are created (`assets/hero/banner.svg`) **inside** `-o`.
+`demo` writes one sample of each of the 32 card types — the fastest way to see everything a theme can do. `render` writes one file per card. Nested `out` paths are created (`assets/hero/banner.svg`) **inside** `-o`.
 
 ## Manifest
 

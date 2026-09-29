@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="116" viewBox="0 0 640 116" role="img" aria-label="Stack">
+
+  <defs></defs>
+  <rect width="640" height="116" rx="16" fill="#0f0c29" stroke="#302b63"/>
+  <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Stack</text>
+  <rect x="28" y="64" width="108" height="28" rx="14" fill="#24243e" stroke="#302b63"/>
+  <text x="82" y="83" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">TypeScript</text>
+  <rect x="146" y="64" width="60" height="28" rx="14" fill="#24243e" stroke="#302b63"/>
+  <text x="176" y="83" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Node</text>
+  <rect x="216" y="64" width="76" height="28" rx="14" fill="#24243e" stroke="#302b63"/>
+  <text x="254" y="83" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Python</text>
+  <rect x="302" y="64" width="84" height="28" rx="14" fill="#24243e" stroke="#302b63"/>
+  <text x="344" y="83" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Discord</text>
+  <rect x="396" y="64" width="52" height="28" rx="14" fill="#24243e" stroke="#302b63"/>
+  <text x="422" y="83" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">SVG</text>
+  <rect x="458" y="64" width="68" height="28" rx="14" fill="#24243e" stroke="#302b63"/>
+  <text x="492" y="83" text-anchor="middle" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Linux</text>
+
+</svg>
