@@ -31,7 +31,7 @@ export function rating(options: RatingOptions): string {
   const width = options.width ?? 380;
   const radius = options.radius ?? 16;
   const height = 132;
-  const gid = svgId(`rating|${theme.name}|${value}`, "half");
+  const gid = svgId(`rating|${theme.name}|${value}`, "star");
   const r = 12;
   const gap = 8;
   const startX = 40;
@@ -41,18 +41,16 @@ export function rating(options: RatingOptions): string {
     const path = starPath(cx, cy, r);
     if (i < full) return `  <path d="${path}" fill="${theme.accent}"/>`;
     if (i === full && fraction >= 0.25) {
+      const halfId = `${gid}-${i}`;
+      const cover = fraction >= 0.75 ? r * 2 : r;
       return `  <path d="${path}" fill="${theme.bg2}"/>
-  <path d="${path}" fill="${theme.accent}" clip-path="url(#${gid})"/>`;
+  <path d="${path}" fill="${theme.accent}" clip-path="url(#${halfId})"/>
+  <clipPath id="${halfId}"><rect x="${cx - r}" y="0" width="${cover}" height="${height}"/></clipPath>`;
     }
     return `  <path d="${path}" fill="${theme.bg2}"/>`;
   }).join("\n");
   const shown = (Math.round(value * 2) / 2).toFixed(1).replace(/\.0$/, "");
-  const clipX = startX + full * (r * 2 + gap) - r;
-  const clipW = fraction >= 0.75 ? r * 2 : r;
   const inner = `
-  <defs>
-    <clipPath id="${gid}"><rect x="${clipX}" y="0" width="${clipW}" height="${height}"/></clipPath>
-  </defs>
   <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Rating")}</text>
 ${stars}

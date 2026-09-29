@@ -343,13 +343,18 @@ describe("manifest + cli", () => {
     ];
     expect(samples.map((card) => card.type).sort()).toEqual([...CARD_TYPES].sort());
     for (const card of samples) {
-      const svg = renderCard(card);
+      const svg = renderCard({ ...card, shadow: true, theme: "paper" });
       expect(svg.startsWith("<?xml"), card.type).toBe(true);
       expect(svg.match(/<svg /g)?.length, card.type).toBe(1);
       expect(svg.includes("</svg>"), card.type).toBe(true);
-      expect(svg.includes("<"), card.type).toBe(true);
+      expect(svg.includes("feDropShadow"), card.type).toBe(true);
+      expect(svg.includes("undefined"), card.type).toBe(false);
+      expect(svg.includes("NaN"), card.type).toBe(false);
+      const width = Number(svg.match(/width="(\d+)"/)?.[1]);
+      const height = Number(svg.match(/height="(\d+)"/)?.[1]);
+      expect(width, card.type).toBeGreaterThan(20);
+      expect(height, card.type).toBeGreaterThan(20);
     }
-    expect(renderCard(samples[samples.length - 1])).toContain("feDropShadow");
     expect(rating({ value: 4.5 })).toContain("<path");
   });
 

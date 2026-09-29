@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="380" height="132" viewBox="0 0 380 132" role="img" aria-label="Community rating">
 
-  <defs>
-    <clipPath id="half-ratingmidnight45-3d8765ce"><rect x="156" y="0" width="12" height="132"/></clipPath>
-  </defs>
   <rect width="380" height="132" rx="16" fill="#0f0c29" stroke="#302b63"/>
   <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Community rating</text>
   <path d="M40.0,74.0L43.0,81.9L51.4,82.3L44.8,87.6L47.1,95.7L40.0,91.0L32.9,95.7L35.2,87.6L28.6,82.3L37.0,81.9Z" fill="#a78bfa"/>
@@ -11,7 +8,8 @@
   <path d="M104.0,74.0L107.0,81.9L115.4,82.3L108.8,87.6L111.1,95.7L104.0,91.0L96.9,95.7L99.2,87.6L92.6,82.3L101.0,81.9Z" fill="#a78bfa"/>
   <path d="M136.0,74.0L139.0,81.9L147.4,82.3L140.8,87.6L143.1,95.7L136.0,91.0L128.9,95.7L131.2,87.6L124.6,82.3L133.0,81.9Z" fill="#a78bfa"/>
   <path d="M168.0,74.0L171.0,81.9L179.4,82.3L172.8,87.6L175.1,95.7L168.0,91.0L160.9,95.7L163.2,87.6L156.6,82.3L165.0,81.9Z" fill="#24243e"/>
-  <path d="M168.0,74.0L171.0,81.9L179.4,82.3L172.8,87.6L175.1,95.7L168.0,91.0L160.9,95.7L163.2,87.6L156.6,82.3L165.0,81.9Z" fill="#a78bfa" clip-path="url(#half-ratingmidnight45-3d8765ce)"/>
+  <path d="M168.0,74.0L171.0,81.9L179.4,82.3L172.8,87.6L175.1,95.7L168.0,91.0L160.9,95.7L163.2,87.6L156.6,82.3L165.0,81.9Z" fill="#a78bfa" clip-path="url(#star-ratingmidnight45-3d8765ce-4)"/>
+  <clipPath id="star-ratingmidnight45-3d8765ce-4"><rect x="156" y="0" width="12" height="132"/></clipPath>
   <text x="352" y="92" text-anchor="end" fill="#ffffff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700">4.5/5</text>
 
 </svg>
