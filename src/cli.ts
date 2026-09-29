@@ -430,7 +430,7 @@ export function run(argv: string[]): number {
       }));
       if (items.length === 0) throw new Error("links needs --item Text=URL");
       return emit(
-        links({ ...base(common), items, link: !has(argv, "--no-link") }),
+        links({ ...base(common), items, link: has(argv, "--link") }),
         common.out,
         common.scale,
       );
@@ -515,10 +515,12 @@ export function run(argv: string[]): number {
         throw new Error("contributions needs --seed <n> or --file <weeks.json>");
       }
       const total = Number(take(argv, "--total"));
+      const explicitTitle = take(argv, "--title");
+      const sampled = !file;
       return emit(
         contributions({
           ...base(common),
-          title: take(argv, "--title"),
+          title: explicitTitle ?? (sampled ? "Contributions (sample)" : undefined),
           weeks,
           total: Number.isFinite(total) ? total : undefined,
         }),
