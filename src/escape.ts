@@ -46,16 +46,20 @@ export function wrap(
   inner: string,
   width: number,
   height: number,
-  options: { shadow?: boolean } = {},
+  options: { shadow?: boolean; opacity?: number } = {},
 ): string {
   const filterId = svgId(id, "shadow");
-  const defs = options.shadow
+  const ownShadow = options.shadow && !inner.includes("feDropShadow");
+  const defs = ownShadow
     ? `<defs><filter id="${filterId}" x="-8%" y="-8%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.28"/></filter></defs>\n`
     : "";
-  const group = options.shadow ? `<g filter="url(#${filterId})">\n${inner}\n</g>` : inner;
+  const opacity = options.opacity !== undefined && options.opacity >= 0 && options.opacity < 1
+    ? ` opacity="${options.opacity}"`
+    : "";
+  const body = ownShadow ? `<g filter="url(#${filterId})"${opacity}>\n${inner}\n</g>` : opacity ? `<g${opacity}>\n${inner}\n</g>` : inner;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeXml(id)}">
-${defs}${group}
+${defs}${body}
 </svg>
 `;
 }
@@ -330,6 +334,7 @@ export interface BaseCardOptions extends StyleOverrides {
   flat?: boolean;
   borderWidth?: number;
   shadow?: boolean;
+  opacity?: number;
 }
 
 const COLOR_KEYS: Array<keyof StyleOverrides> = ["bg", "bg2", "fg", "muted", "accent", "accent2", "line"];
@@ -366,6 +371,15 @@ export function parseNonNegativeInt(value: string, flag: string, max = 16): numb
     throw new Error(`invalid ${flag}: ${value} (use an integer from 0 to ${max})`);
   }
   return n;
+}
+
+export function parseOpacity(value: string, flag: string): number {
+  const n = Number(value);
+  const unit = n > 1 && n <= 100 ? n / 100 : n;
+  if (!Number.isFinite(unit) || unit < 0 || unit > 1) {
+    throw new Error(`invalid ${flag}: ${value} (use 0–1 or 0–100)`);
+  }
+  return unit;
 }
 
 export function parseScale(value: string, flag: string): number {

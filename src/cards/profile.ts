@@ -1,4 +1,4 @@
-import { borderAttr, cardTheme, escapeXml, fontStack, shadowAttr, shadowFilter, svgId, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface ProfileOptions extends BaseCardOptions {
   name: string;
@@ -25,8 +25,7 @@ export function profile(options: ProfileOptions): string {
     })
     .join("\n");
   const inner = `
-  <defs>${shadowFilter(gid, options.shadow)}</defs>
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}${shadowAttr(gid, options.shadow)}/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <circle cx="64" cy="72" r="32" fill="${theme.accent}"/>
   <text x="64" y="80" text-anchor="middle" fill="${theme.bg}" font-family="${sans}" font-size="22" font-weight="800">${escapeXml((options.avatar ?? options.name).slice(0, 2).toUpperCase())}</text>
   <text x="112" y="62" fill="${theme.text}" font-family="${sans}" font-size="22" font-weight="700">${escapeXml(options.name)}</text>

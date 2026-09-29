@@ -7,7 +7,6 @@
       <stop offset="55%" stop-color="#302b63"/>
       <stop offset="100%" stop-color="#24243e"/>
     </linearGradient>
-    
   </defs>
   <rect width="880" height="280" rx="24" fill="url(#cover-svgforge-c1db2b83)"/>
   <circle cx="790" cy="70" r="120" fill="#a78bfa" fill-opacity="0.16"/>

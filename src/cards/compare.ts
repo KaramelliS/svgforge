@@ -1,4 +1,4 @@
-import { borderAttr, cardTheme, escapeXml, fontStack, shadowAttr, shadowFilter, svgId, type BaseCardOptions, wrap } from "../escape.js";
+import { borderAttr, cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface CompareOptions extends BaseCardOptions {
   title?: string;
@@ -28,8 +28,7 @@ export function compare(options: CompareOptions): string {
     })
     .join("\n");
   const inner = `
-  <defs>${shadowFilter(gid, options.shadow)}</defs>
-  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}${shadowAttr(gid, options.shadow)}/>
+  <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"${borderAttr(options)}/>
   <text x="28" y="36" fill="${theme.text}" font-family="${sans}" font-size="18" font-weight="700">${escapeXml(options.title ?? "Compare")}</text>
   <text x="${mid}" y="64" fill="${theme.muted}" font-family="${sans}" font-size="13" font-weight="700">${escapeXml(options.left)}</text>
   <text x="${rightX}" y="64" fill="${theme.accent}" font-family="${sans}" font-size="13" font-weight="700">${escapeXml(options.right)}</text>

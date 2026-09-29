@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="260" viewBox="0 0 640 260" role="img" aria-label="figure embeds any https image">
 
+  <defs>
+    <clipPath id="fig-640x260x184">
+      <rect x="12" y="12" width="616" height="184" rx="8"/>
+    </clipPath>
+  </defs>
   <rect width="640" height="260" rx="16" fill="#0f0c29" stroke="#302b63"/>
-  <clipPath id="fig-clip-640x260">
-    <rect x="12" y="12" width="616" height="184" rx="8"/>
-  </clipPath>
-  <image href="https://raw.githubusercontent.com/KodYazicam/svgforge/main/examples/wave.svg" x="12" y="12" width="616" height="184" preserveAspectRatio="xMidYMid slice" clip-path="url(#fig-clip-640x260)"/>
+  <image href="https://raw.githubusercontent.com/KodYazicam/svgforge/main/examples/wave.svg" x="12" y="12" width="616" height="184" preserveAspectRatio="xMidYMid slice" clip-path="url(#fig-640x260x184)"/>
   <text x="320" y="242" text-anchor="middle" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">figure embeds any https image</text>
 
 </svg>

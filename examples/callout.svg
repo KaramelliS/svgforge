@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="120" viewBox="0 0 640 120" role="img" aria-label="No network">
 
-  <defs></defs>
   <rect width="640" height="120" rx="16" fill="#0f0c29" stroke="#302b63"/>
   <rect x="0" y="0" width="8" height="120" rx="4" fill="#a78bfa"/>
   <circle cx="40" cy="44" r="14" fill="#24243e"/>
-  <text x="40" y="49" text-anchor="middle" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800">i</text>
+  <text x="40" y="49" text-anchor="middle" fill="#a78bfa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800">*</text>
   <text x="68" y="40" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="700">No network</text>
   <text x="68" y="68" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">The SVG is a file in your repo. GitHub serves it.</text>
 

@@ -1,4 +1,4 @@
-import { cardTheme, escapeXml, fontStack, shadowAttr, shadowFilter, svgId, type BaseCardOptions, wrap } from "../escape.js";
+import { cardTheme, escapeXml, fontStack, svgId, type BaseCardOptions, wrap } from "../escape.js";
 
 export interface CoverOptions extends BaseCardOptions {
   kicker?: string;
@@ -19,9 +19,8 @@ export function cover(options: CoverOptions): string {
       <stop offset="55%" stop-color="${theme.line}"/>
       <stop offset="100%" stop-color="${theme.bg2}"/>
     </linearGradient>
-    ${shadowFilter(`${gid}-s`, options.shadow)}
   </defs>
-  <rect width="${width}" height="${height}" rx="${options.radius ?? 24}" fill="${options.flat ? theme.bg : `url(#${gid})`}"${shadowAttr(`${gid}-s`, options.shadow)}/>
+  <rect width="${width}" height="${height}" rx="${options.radius ?? 24}" fill="${options.flat ? theme.bg : `url(#${gid})`}"/>
   <circle cx="${width - 90}" cy="70" r="120" fill="${theme.accent}" fill-opacity="0.16"/>
   <circle cx="80" cy="${height - 20}" r="70" fill="${theme.accent2}" fill-opacity="0.18"/>
   <text x="48" y="${height * 0.38}" fill="${theme.accent}" font-family="${sans}" font-size="14" letter-spacing="3">${escapeXml((options.kicker ?? "").toUpperCase())}</text>

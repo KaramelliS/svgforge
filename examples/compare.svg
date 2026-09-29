@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="160" viewBox="0 0 680 160" role="img" aria-label="Why local">
 
-  <defs></defs>
   <rect width="680" height="160" rx="16" fill="#0f0c29" stroke="#302b63"/>
   <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Why local</text>
   <text x="286" y="64" fill="#c4b5fd" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700">CDN card</text>

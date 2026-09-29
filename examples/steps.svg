@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="272" viewBox="0 0 640 272" role="img" aria-label="Ship it">
 
-  <defs></defs>
   <rect width="640" height="272" rx="16" fill="#0f0c29" stroke="#302b63"/>
   <text x="28" y="36" fill="#ffffff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700">Ship it</text>
   <circle cx="40" cy="78" r="14" fill="#a78bfa" stroke="#a78bfa"/>

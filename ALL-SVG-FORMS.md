@@ -860,6 +860,7 @@ svgforge banner --theme rose-pine --title rose-pine --subtitle "svgforge theme" 
 | `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
 | `--border-width <px>` | Outline thickness; `0` hides the outline |
 | `--shadow` | Soft drop shadow on the card |
+| `--opacity <0-1 or 0-100>` | Fade the whole card |
 | `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
 | `-o, --out <path>` | Output file; omit for stdout |
 

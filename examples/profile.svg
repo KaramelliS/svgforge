@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="224" viewBox="0 0 640 224" role="img" aria-label="KodYazicam">
 
-  <defs></defs>
   <rect width="640" height="224" rx="20" fill="#0f0c29" stroke="#302b63"/>
   <circle cx="64" cy="72" r="32" fill="#a78bfa"/>
   <text x="64" y="80" text-anchor="middle" fill="#0f0c29" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="800">KY</text>

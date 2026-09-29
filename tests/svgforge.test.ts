@@ -356,6 +356,11 @@ describe("manifest + cli", () => {
       expect(height, card.type).toBeGreaterThan(20);
     }
     expect(rating({ value: 4.5 })).toContain("<path");
+    const faded = renderCard({ type: "badge", label: "a", value: "b", opacity: 0.4 });
+    expect(faded).toContain('opacity="0.4"');
+    expect(renderCard({ type: "cover", title: "x", shadow: true }).match(/feDropShadow/g)?.length).toBe(1);
+    expect(run(["banner", "--title", "x", "--opacity", "40"])).toBe(0);
+    expect(run(["banner", "--title", "x", "--opacity", "200"])).toBe(1);
   });
 
   it("cli renders timeline and contributions", () => {

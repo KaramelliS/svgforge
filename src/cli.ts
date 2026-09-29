@@ -38,6 +38,7 @@ import {
   isValidColor,
   parseNonNegativeInt,
   parsePositiveInt,
+  parseOpacity,
   parseScale,
   scaleSvg,
   THEMES,
@@ -108,6 +109,7 @@ Common flags (every card type):
   --flat                solid background instead of gradient
   --border-width <px>   card outline thickness (0 hides it)
   --shadow              soft drop shadow
+  --opacity <0-1|0-100> fade the whole card
   --scale <0.1-4>       shrink/grow the rendered size (viewBox untouched)
   -o, --out <path>      output file (directory for render/demo)
 
@@ -150,6 +152,7 @@ interface Common {
   scale?: number;
   borderWidth?: number;
   shadow?: boolean;
+  opacity?: number;
   overrides: StyleOverrides;
 }
 
@@ -176,6 +179,7 @@ function parseCommon(argv: string[]): Common {
   const radius = take(argv, "--radius");
   const scale = take(argv, "--scale");
   const borderWidth = take(argv, "--border-width");
+  const opacity = take(argv, "--opacity");
   return {
     theme: take(argv, "--theme"),
     out: take(argv, "-o") ?? take(argv, "--out"),
@@ -187,6 +191,7 @@ function parseCommon(argv: string[]): Common {
     font: take(argv, "--font"),
     flat: has(argv, "--flat"),
     shadow: has(argv, "--shadow"),
+    opacity: opacity !== undefined ? parseOpacity(opacity, "--opacity") : undefined,
     overrides,
   };
 }
@@ -201,6 +206,7 @@ function base(common: Common): BaseCardOptions {
     flat: common.flat,
     borderWidth: common.borderWidth,
     shadow: common.shadow,
+    opacity: common.opacity,
     ...common.overrides,
   };
 }

@@ -22,12 +22,16 @@ export function figure(options: FigureOptions): string {
   const sans = fontStack(options.font, "sans");
   const fit = options.fit === "contain" ? "xMidYMid meet" : "xMidYMid slice";
   const captionY = options.caption ? height - 18 : 0;
+  const imageHeight = (options.caption ? height - 52 : height) - 24;
+  const clipId = `fig-${width}x${height}x${imageHeight}`;
   const inner = `
+  <defs>
+    <clipPath id="${clipId}">
+      <rect x="12" y="12" width="${width - 24}" height="${imageHeight}" rx="${Math.max(0, radius - 8)}"/>
+    </clipPath>
+  </defs>
   <rect width="${width}" height="${height}" rx="${radius}" fill="${theme.bg}" stroke="${theme.line}"/>
-  <clipPath id="fig-clip-${width}x${height}">
-    <rect x="12" y="12" width="${width - 24}" height="${(options.caption ? height - 52 : height) - 24}" rx="${Math.max(0, radius - 8)}"/>
-  </clipPath>
-  <image href="${escapeXml(assertHttpsUrl(options.url))}" x="12" y="12" width="${width - 24}" height="${(options.caption ? height - 52 : height) - 24}" preserveAspectRatio="${fit}" clip-path="url(#fig-clip-${width}x${height})"/>
+  <image href="${escapeXml(assertHttpsUrl(options.url))}" x="12" y="12" width="${width - 24}" height="${imageHeight}" preserveAspectRatio="${fit}" clip-path="url(#${clipId})"/>
 ${options.caption ? `  <text x="${width / 2}" y="${captionY}" text-anchor="middle" fill="${theme.muted}" font-family="${sans}" font-size="13">${escapeXml(options.caption)}</text>` : ""}
 `;
   return wrap(options.alt ?? options.caption ?? "figure", inner, width, height, options);

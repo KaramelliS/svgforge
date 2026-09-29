@@ -193,6 +193,7 @@ Every card accepts these. Defaults reproduce the theme exactly — pass nothing 
 | `--flat` | Solid background instead of a gradient (`banner`, `wave`) |
 | `--border-width <px>` | Outline thickness, `0` hides it |
 | `--shadow` | Soft drop shadow |
+| `--opacity <0-1 or 0-100>` | Fade the whole card |
 | `--scale <0.1-4>` | Shrink or grow the rendered size; the viewBox stays the same |
 | `--gradient #aabbcc,#111111` | Custom two-stop gradient (`banner`) |
 

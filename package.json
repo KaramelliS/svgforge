@@ -1,6 +1,6 @@
 {
   "name": "@kodyazicam/svgforge",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": true,
   "description": "Generate GitHub README SVGs locally. 32 card types, 22 themes, no third-party render service.",
   "keywords": [
